@@ -1,22 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './shared/routing/app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './auth/auth.module';
+import { HomeComponent } from './components/others/home/home.component';
+import { UiService } from './shared/ui.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     SharedModule,
     AuthModule
   ],
-  providers: [],
+  providers: [UiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

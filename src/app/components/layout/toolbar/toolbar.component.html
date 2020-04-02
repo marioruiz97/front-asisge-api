@@ -1,0 +1,36 @@
+<mat-toolbar class=".bg-darken-gray expanded" *ngIf="isLogged">
+  <div fxHide.gt-sm>
+    <button mat-icon-button (click)="openMenu.emit()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
+  <div fxFlex fxLayoutAlign.lt-md="center" fxLayoutAlign.gt-sm="space-between">
+    <div class="logo" [routerLink]="['/home']"></div>
+
+    <mat-nav-list fxLayout="row" fxHide.lt-md>
+      <mat-list-item *ngFor="let item of menu">
+        <a *ngIf="!(item.children)" [routerLink]="[item.url]"> {{item.name}} </a>
+        <a *ngIf="item.children" [matMenuTriggerFor]="submenu">
+          {{item.name}}
+        </a>
+        <mat-menu #submenu>
+          <a mat-menu-item *ngFor="let child of item.children" [routerLink]="[item.url]">
+            <mat-icon>{{child.icon}}</mat-icon> <span> {{child.name}} </span>
+          </a>
+        </mat-menu>
+      </mat-list-item>
+      <button mat-button [matMenuTriggerFor]="settingsMenu" matTooltip="Ajustes">
+        <mat-icon>widgets</mat-icon>
+      </button>
+      <mat-menu #settingsMenu="matMenu">
+        <button mat-menu-item *ngFor="let setting of settings" [routerLink]="[setting.url]">
+          <mat-icon>{{setting.icon}}</mat-icon> {{setting.name}}
+        </button>
+        <button mat-menu-item (click)="onLogout()">
+          <mat-icon>exit_to_app</mat-icon> Cerrar Sesión
+        </button>
+      </mat-menu>
+    </mat-nav-list>
+  </div>
+</mat-toolbar>

@@ -1,5 +1,16 @@
+export interface NavItem {
+  name: string;
+  url: string;
+  icon: string;
+  children?: NavItem[];
+  isDisabled?: boolean;
+}
+
 export class AppMenu {
 
+  /**
+   * TODO agregar boolean isDisabled?
+   */
   private $menu = [{
     name: 'Maestros', url: '/maestros', icon: 'work_outline',
     children: [

@@ -1,0 +1,32 @@
+<div gdAreas="header | content" gdGap="1em" gdRows="auto auto auto">
+
+  <header class="home-header mx-1 mt-5" gdArea="header" fxLayoutAlign="center center">
+    <h1>Bienvenidos<br/> Asisge SAS</h1>
+  </header>
+
+  <section class="m-1" gdArea="content">
+    <div fxLayout="row wrap" fxLayoutAlign="space-evenly start">
+
+      <mat-card class="mb-4" fxFlex="30" fxFlex.lt-sm="100" *ngFor="let card of cards">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>{{card.avatar}}</mat-icon>
+          <mat-card-title>{{card.title}}</mat-card-title>
+          <mat-card-subtitle>{{card.subtitle}}</mat-card-subtitle>
+        </mat-card-header>
+
+        <img class="home-img" mat-card-image [src]="card.img" alt="Photo" />
+
+        <mat-card-content>
+          <p>
+            {{card.content}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions fxLayout="column" fxLayoutAlign="center center">
+          <button class="card-button mb-3" mat-button [routerLink]="[card.urlTo]">{{card.button}}</button>
+        </mat-card-actions>
+      </mat-card> <!-- fin shiba -->
+
+    </div>
+  </section>
+</div>
+

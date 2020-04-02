@@ -13,12 +13,10 @@ header {
 .login-title {
   font-weight: 200 !important;
 }
-
 mat-form-field {
   min-width: 95%;
   align-self: center;
 }
-
 mat-card-actions button {
   min-width: 40%;
 }
@@ -33,7 +31,6 @@ mat-card-actions button {
   font-weight: 200;
   letter-spacing: -1px;
 }
-
 
 .redes .red-social {
   padding: 10px 5px;
@@ -76,5 +73,10 @@ mat-card-actions button {
 @media (max-width: 960px) {
   header {
     background-size: 65% 60%;
+  }
+}
+@media (max-width: 600px) {
+  mat-card-actions button {
+    min-width: 80%;
   }
 }

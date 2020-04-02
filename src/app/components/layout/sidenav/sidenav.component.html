@@ -1,0 +1,49 @@
+<section fxLayout="column" *ngIf="isLogged">
+
+  <div class="primary mb-1 px-3 py-5" fxFlex fxLayoutAlign="start">
+    <button mat-fab color="primary" class="mat-elevation-z5 photo-button" matTooltip="Ir a Mi perfil" routerLink="/"
+      (click)="onToggle()"></button>
+    <mat-list>
+      <mat-list-item>
+        <span matLine class="person-info"> Mario Andres Ruiz</span>
+        <span matLine>nombre</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matLine class="person-info"> Marioarb.97@gmail.com</span>
+        <span matLine>correo electrónico</span>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <mat-divider></mat-divider>
+
+  <mat-nav-list>
+    <mat-accordion displayMode="flat" [multi]="true" #accordion="matAccordion">
+      <mat-expansion-panel *ngFor="let item of collapsible">
+        <mat-expansion-panel-header>
+          <mat-icon>{{item.icon}}</mat-icon> <span class="nav-caption">{{item.name}}</span>
+        </mat-expansion-panel-header>
+        <a mat-list-item (click)="onToggle()" [routerLink]="[child.url]" *ngFor="let child of item.children">
+          <mat-icon>{{child.icon}} </mat-icon> <span class="nav-caption"> {{child.name}}</span>
+        </a>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <a mat-list-item (click)="onToggle()" [routerLink]="[item.url]" *ngFor="let item of menu">
+      <mat-icon>{{item.icon}} </mat-icon> <span class="nav-caption"> {{item.name}}</span>
+    </a>
+
+    <mat-accordion displayMode="flat">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-icon>add</mat-icon><span class="nav-caption">Más opciones</span>
+        </mat-expansion-panel-header>
+        <a mat-list-item (click)="onToggle()" [routerLink]="[item.url]" *ngFor="let item of settings">
+          <mat-icon>{{item.icon}}</mat-icon> <span class="nav-caption">{{item.name}}</span>
+        </a>
+        <a mat-list-item (click)="onLogout()">
+          <mat-icon>exit_to_app</mat-icon> <span class="nav-caption">Cerrar Sesión</span>
+        </a>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-nav-list>
+
+</section>
