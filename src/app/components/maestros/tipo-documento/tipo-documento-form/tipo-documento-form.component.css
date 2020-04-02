@@ -1,0 +1,37 @@
+header {
+  min-height: 45vh;
+  max-height: 50vh;
+  background-image: url('/assets/img/forms-background.jpg');
+  background-attachment: fixed;
+  background-position: 50% 25%;
+  background-size: cover;
+}
+
+header h1 {
+  margin: 0 auto;
+  padding: 3% 1%;
+  font-size: 2em;
+  font-weight: 400 !important;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+
+/* .form-group {
+  min-width: 80vw;
+} */
+.form-group mat-form-field {
+  width: 474px;
+  max-width: 474px;
+}
+.form-action button {
+  min-width: 30%;
+}
+
+
+
+@media(max-width: 500px){
+  .form-group mat-form-field {
+    max-width: 275px;
+  }
+}

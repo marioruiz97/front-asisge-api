@@ -10,7 +10,7 @@ footer section mat-list h3 {
   border-bottom: 1px solid black;
 }
 mat-list {
-  min-width: 20%;
+  min-width: 25%;
 }
 mat-list mat-list-item a, mat-list h3 {
   min-width: 100% !important;

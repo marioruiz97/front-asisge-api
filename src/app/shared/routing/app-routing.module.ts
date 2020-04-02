@@ -4,11 +4,15 @@ import { LoginComponent } from 'src/app/auth/login/login.component';
 import { RecoveryComponent } from 'src/app/auth/recovery/recovery.component';
 import { HomeComponent } from 'src/app/components/others/home/home.component';
 import { AuthGuard } from 'src/app/auth/auth.guard';
+import { TipoDocumentoListComponent } from 'src/app/components/maestros/tipo-documento/tipo-documento-list/tipo-documento-list.component';
+import { TipoDocumentoFormComponent } from 'src/app/components/maestros/tipo-documento/tipo-documento-form/tipo-documento-form.component';
 
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'tipo-documento', component: TipoDocumentoListComponent, canActivate: [AuthGuard] },
+  { path: 'tipo-documento/:id', component: TipoDocumentoFormComponent, canActivate: [AuthGuard] },
 
   { path: 'login', component: LoginComponent },
   { path: 'recovery', component: RecoveryComponent },
