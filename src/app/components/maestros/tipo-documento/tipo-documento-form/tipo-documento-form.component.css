@@ -1,22 +1,4 @@
-header {
-  min-height: 45vh;
-  max-height: 50vh;
-  background-image: url('/assets/img/forms-background.jpg');
-  background-attachment: fixed;
-  background-position: 50% 25%;
-  background-size: cover;
-}
-
-header h1 {
-  margin: 0 auto;
-  padding: 3% 1%;
-  font-size: 2em;
-  font-weight: 400 !important;
-  text-align: center;
-  letter-spacing: 0;
-}
-
-
+@import '../../../../../assets/css/form-styles.css';
 /* .form-group {
   min-width: 80vw;
 } */
