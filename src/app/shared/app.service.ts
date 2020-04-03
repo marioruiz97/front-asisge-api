@@ -14,7 +14,11 @@ export interface Response {
 export class AppService {
 
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: 'Basic ' + btoa('user:clave123') })
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      Authorization: 'Basic ' + btoa('AsisgeApp:clave123')
+    })
   };
   private httpOptionsImage = {
     headers: new HttpHeaders({ enctype: 'multipart/form-data', Authorization: 'Basic ' + btoa('user:clave123') })

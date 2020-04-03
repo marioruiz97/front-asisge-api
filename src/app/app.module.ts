@@ -23,6 +23,6 @@ import { AppService } from './shared/app.service';
     MaestrosModule
   ],
   providers: [UiService, AppService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -10,11 +10,12 @@ import { ToolbarComponent } from '../components/layout/toolbar/toolbar.component
 import { UiService } from './ui.service';
 import { SidenavComponent } from '../components/layout/sidenav/sidenav.component';
 import { FooterComponent } from '../components/layout/footer/footer.component';
+import { ConfirmDialogComponent } from '../components/layout/confirm-dialog/confirm-dialog.component';
 
 
 @NgModule({
   declarations: [
-    ToolbarComponent, SidenavComponent, FooterComponent,
+    ToolbarComponent, SidenavComponent, FooterComponent, ConfirmDialogComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +39,9 @@ import { FooterComponent } from '../components/layout/footer/footer.component';
     ToolbarComponent,
     SidenavComponent,
     FooterComponent,
+    ConfirmDialogComponent
   ],
-  providers: [UiService]
+  providers: [UiService],
+  entryComponents: [ConfirmDialogComponent]
 })
 export class SharedModule { }

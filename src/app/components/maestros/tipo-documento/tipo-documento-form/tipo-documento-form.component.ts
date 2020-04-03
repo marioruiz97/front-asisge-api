@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { TipoDocumento } from 'src/app/models/terceros/tipo-documento.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TipoDocumentoService } from '../tipo-documento.service';
 
 @Component({
@@ -9,38 +9,54 @@ import { TipoDocumentoService } from '../tipo-documento.service';
   templateUrl: './tipo-documento-form.component.html',
   styleUrls: ['./tipo-documento-form.component.css']
 })
-export class TipoDocumentoFormComponent implements OnInit {
+export class TipoDocumentoFormComponent implements OnInit, AfterContentChecked {
 
-  private currentTipo: TipoDocumento;
-  private currentId: string;
+  currentId: string;
+  private validTipo: boolean;
   tipoForm: FormGroup;
 
   constructor(private activatedRoute: ActivatedRoute, private service: TipoDocumentoService) { }
 
+  ngAfterContentChecked() {
+    if (!this.validTipo) {
+      const tipo = this.service.tipo;
+      if (tipo) {
+        this.validTipo = true;
+        this.setTipo(tipo);
+      }
+    }
+  }
+
   ngOnInit() {
+    this.validTipo = false;
     this.activatedRoute.paramMap.subscribe(params => {
       const id = +params.get('id');
-      if (id) {
-        this.currentTipo = this.service.getById(id);
+      if (id && id !== 0) {
+        this.service.getById(id);
         this.currentId = id.toString();
       }
     });
     this.initForm();
   }
 
+  setTipo(tipo: TipoDocumento) {
+    this.tipoForm.setValue({ id: tipo.id, nombreTipoDocumento: tipo.nombreTipoDocumento });
+  }
+
   initForm() {
-    if (!this.currentTipo) { this.currentTipo = { idTipo: '', nombreTipo: '' }; }
-    const tipo = { ...this.currentTipo };
     this.tipoForm = new FormGroup({
-      idTipo: new FormControl({ value: tipo.idTipo, disabled: true }),
-      nombreTipo: new FormControl(tipo.nombreTipo, [Validators.minLength(2), Validators.required])
+      id: new FormControl({ value: '', disabled: true }),
+      nombreTipoDocumento: new FormControl('', [Validators.minLength(2), Validators.required])
     });
+  }
+
+  goBack() {
+    this.service.returnToList();
   }
 
   onSubmit() {
     if (this.currentId && this.currentId !== '') {
-      const id = parseInt(this.currentId, 10);
-      this.service.update(id, this.tipoForm.value);
+      this.service.update(this.currentId, this.tipoForm.value);
     } else {
       this.service.create(this.tipoForm.value);
     }

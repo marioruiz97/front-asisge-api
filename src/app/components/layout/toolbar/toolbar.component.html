@@ -15,7 +15,7 @@
           {{item.name}}
         </a>
         <mat-menu #submenu>
-          <a mat-menu-item *ngFor="let child of item.children" [routerLink]="[item.url]">
+          <a mat-menu-item *ngFor="let child of item.children" [routerLink]="[child.url]">
             <mat-icon>{{child.icon}}</mat-icon> <span> {{child.name}} </span>
           </a>
         </mat-menu>

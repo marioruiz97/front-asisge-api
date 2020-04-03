@@ -1,14 +1,21 @@
 import { Injectable } from '@angular/core';
 import { AppMenu, NavItem } from './routing/app-menu';
 import { Response } from './app.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
+import { ConfirmDialogComponent } from '../components/layout/confirm-dialog/confirm-dialog.component';
+
+export interface ConfirmDialogData {
+  title: string;
+  message: string;
+  confirm?: string;
+}
 
 @Injectable()
 export class UiService {
 
   private appMenu = new AppMenu();
 
-  constructor(private snackBar: MatSnackBar) { }
+  constructor(private snackBar: MatSnackBar, private dialog: MatDialog) { }
 
   get menu(): NavItem[] {
     return this.appMenu.menu;
@@ -38,4 +45,15 @@ export class UiService {
     promise.then((res: Response) => this.showSnackBar(res.message, 3))
       .catch(err => console.log(err));
   }
+
+  showConfirm(data: ConfirmDialogData) {
+    return this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: data.title,
+        message: data.message,
+        confirm: data.confirm
+      }
+    });
+  }
+
 }

@@ -1,4 +1,4 @@
 export interface TipoDocumento {
-  idTipo?: string;
-  nombreTipo: string;
+  id?: string;
+  nombreTipoDocumento: string;
 }

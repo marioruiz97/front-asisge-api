@@ -16,7 +16,7 @@ export class AppMenu {
     children: [
       { name: 'Gestionar Maestros', url: '/maestros', icon: 'work_outline' },
       { name: 'Gestión de Estados', url: '/estados', icon: 'supervisor_account' },
-      { name: 'Tipos de Documento', url: '/tipoDocumento', icon: 'featured_video' },
+      { name: 'Tipos de Documento', url: '/tipo-documento', icon: 'featured_video' },
       { name: 'Tipos de Servicio', url: '/tipoServicio', icon: 'room_service' },
       { name: 'Tipos de Cierre', url: '/tipoCierre', icon: 'emoji_events' },
     ]

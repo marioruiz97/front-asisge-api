@@ -1,27 +1,27 @@
 <div gdAreas="header | content" gdGap="1em" gdRows="auto auto auto">
 
   <header class="pt-4 m-2" gdArea="header" fxLayoutAlign="center center">
-    <h1 fxFlex="50">{{tipoForm.value.idTipo? 'Actualizar' : 'Crear'}} Tipo de Documento</h1>
+    <h1 fxFlex="50">{{currentId && currentId !== '0'? 'Actualizar' : 'Crear'}} Tipo de Documento</h1>
   </header>
 
   <section gdArea="content">
     <form autocomplete="off" [formGroup]="tipoForm" (ngSubmit)="onSubmit()" fxLayoutAlign="center">
-      <mat-card class="mat-elevation-z8" fxFlex="80" fxFlex.lt-sm="100">
+      <mat-card class="mat-elevation-z8 py-4" fxFlex="80" fxFlex.lt-sm="100">
         <mat-card-content class="form-group p-2" fxLayout="column" fxFlexAlign="center" fxLayoutAlign="center center">
           <mat-form-field appearance="outline">
             <mat-label>Código Asignado</mat-label>
-            <input matInput formControlName="idTipo">
+            <input matInput formControlName="id">
             <mat-hint>El código es autoasignado por el sistema</mat-hint>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Nombre Tipo Documento</mat-label>
-            <input matInput placeholder="Ej. Cédula de Ciudadania" formControlName="nombreTipo">
+            <input matInput placeholder="Ej. Cédula de Ciudadania" formControlName="nombreTipoDocumento">
             <mat-hint>Ingrese un nombre hasta 50 caracteres</mat-hint>
             <mat-error>El nombre es obligatorio</mat-error>
           </mat-form-field>
         </mat-card-content>
         <mat-card-actions class="form-action mt-4" fxLayoutAlign="center" fxLayout.lt-sm="column">
-          <button class="m-2" type="button" mat-raised-button routerLink="/tipo-documento" color="warn">
+          <button class="m-2" type="button" mat-raised-button (click)="goBack()" color="warn">
             <mat-icon>arrow_back</mat-icon>Regresar <span fxHide.lt-sm> al listado</span>
           </button>
           <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!tipoForm.valid">
