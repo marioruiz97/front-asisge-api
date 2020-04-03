@@ -1,7 +1,5 @@
 @import '../../../../../assets/css/header-styles.css';
-/* .form-group {
-  min-width: 80vw;
-} */
+
 .form-group mat-form-field {
   width: 474px;
   max-width: 474px;
@@ -9,8 +7,6 @@
 .form-action button {
   min-width: 30%;
 }
-
-
 
 @media(max-width: 500px){
   .form-group mat-form-field {

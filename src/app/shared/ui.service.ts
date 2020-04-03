@@ -7,6 +7,7 @@ import { ConfirmDialogComponent } from '../components/layout/confirm-dialog/conf
 export interface ConfirmDialogData {
   title: string;
   message: string;
+  errors?: string[];
   confirm?: string;
 }
 
@@ -20,15 +21,12 @@ export class UiService {
   get menu(): NavItem[] {
     return this.appMenu.menu;
   }
-
   get settings(): NavItem[] {
     return this.appMenu.settings;
   }
-
   get children() {
     return this.appMenu.menu.filter(menu => menu.children && menu.children.length > 0);
   }
-
   get noChild() {
     return this.appMenu.menu.filter(menu => !(menu.children));
   }
@@ -40,10 +38,16 @@ export class UiService {
       horizontalPosition: 'start'
     });
   }
-
   putSnackBar(promise: Promise<any>) {
     promise.then((res: Response) => this.showSnackBar(res.message, 3))
-      .catch(err => console.log(err));
+      .catch(err => {
+        if (err.error) {
+          const errors: string[] = err.error.errors;
+          this.showConfirm({ title: 'Error', message: err.error.message, errors, confirm: 'Ok' });
+        } else {
+          this.showConfirm({ title: 'Error', message: 'Ha ocurrido un error interno', confirm: 'Ok' });
+        }
+      });
   }
 
   showConfirm(data: ConfirmDialogData) {
@@ -51,6 +55,7 @@ export class UiService {
       data: {
         title: data.title,
         message: data.message,
+        errors: data.errors ? data.errors : [],
         confirm: data.confirm
       }
     });

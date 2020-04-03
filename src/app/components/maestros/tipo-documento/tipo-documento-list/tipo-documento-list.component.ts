@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, OnChanges } from '@angular/core';
 import { TipoDocumentoService } from '../tipo-documento.service';
 import { TipoDocumento } from 'src/app/models/terceros/tipo-documento.model';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
@@ -15,29 +15,30 @@ export class TipoDocumentoListComponent implements OnInit, OnDestroy, AfterViewI
   private listSub: Subscription;
   displayedColumns = ['id', 'nombreTipoDocumento', 'acciones'];
   datasource = new MatTableDataSource<TipoDocumento>();
-
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(private service: TipoDocumentoService) { }
 
   ngOnInit() {
-    this.listSub = this.service.fetchAll().subscribe(list => this.datasource.data = list.body as TipoDocumento[]);
+    this.fetch();
   }
-
   ngAfterViewInit() {
     this.datasource.sort = this.sort;
     this.datasource.paginator = this.paginator;
   }
 
+  fetch() {
+    this.listSub = this.service.fetchAll().subscribe(list => this.datasource.data = list.body as TipoDocumento[]);
+  }
   doFilter(filterString: string) {
     this.datasource.filter = filterString.trim().toLocaleLowerCase();
   }
 
   delete(id: string) {
     this.service.delete(id);
+    setTimeout(_ => this.fetch(), 4 * 1000);
   }
-
 
   ngOnDestroy() {
     if (this.listSub) { this.listSub.unsubscribe(); }

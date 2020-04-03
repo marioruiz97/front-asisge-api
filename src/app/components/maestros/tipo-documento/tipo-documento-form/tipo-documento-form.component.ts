@@ -60,6 +60,7 @@ export class TipoDocumentoFormComponent implements OnInit, AfterContentChecked {
     } else {
       this.service.create(this.tipoForm.value);
     }
+    this.service.returnToList(true);
   }
 
 }
