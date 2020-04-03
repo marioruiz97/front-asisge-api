@@ -6,6 +6,8 @@ import { HomeComponent } from 'src/app/components/others/home/home.component';
 import { AuthGuard } from 'src/app/auth/auth.guard';
 import { TipoDocumentoListComponent } from 'src/app/components/maestros/tipo-documento/tipo-documento-list/tipo-documento-list.component';
 import { TipoDocumentoFormComponent } from 'src/app/components/maestros/tipo-documento/tipo-documento-form/tipo-documento-form.component';
+import { ClienteListComponent } from 'src/app/components/terceros/clientes/cliente-list/cliente-list.component';
+import { ClienteFormComponent } from 'src/app/components/terceros/clientes/cliente-form/cliente-form.component';
 
 
 const routes: Routes = [
@@ -13,6 +15,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'tipo-documento', component: TipoDocumentoListComponent, canActivate: [AuthGuard] },
   { path: 'tipo-documento/:id', component: TipoDocumentoFormComponent, canActivate: [AuthGuard] },
+  { path: 'clientes', component: ClienteListComponent, canActivate:[AuthGuard]},
+  { path: 'clientes/:id', component: ClienteFormComponent, canActivate:[AuthGuard]},
 
   { path: 'login', component: LoginComponent },
   { path: 'recovery', component: RecoveryComponent },

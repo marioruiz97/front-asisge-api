@@ -37,7 +37,6 @@ export class TipoDocumentoListComponent implements OnInit, OnDestroy, AfterViewI
 
   delete(id: string) {
     this.service.delete(id);
-    setTimeout(_ => this.fetch(), 4 * 1000);
   }
 
   ngOnDestroy() {

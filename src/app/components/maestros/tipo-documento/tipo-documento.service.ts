@@ -4,7 +4,6 @@ import { TipoDocumento } from 'src/app/models/terceros/tipo-documento.model';
 import { AppService } from 'src/app/shared/app.service';
 import { UiService } from 'src/app/shared/ui.service';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
 
 
 @Injectable()
@@ -65,11 +64,13 @@ export class TipoDocumentoService {
       confirm: 'Sí, Eliminar Tipo'
     };
     const dialogRef = this.uiService.showConfirm(data);
-
     dialogRef.afterClosed().subscribe(result => {
+      let reload = false;
       if (result) {
         this.uiService.putSnackBar(this.appService.deleteRequest(`${Constant.PATH_TIPO_DOCUMENTO}/${id}`));
+        reload = true;
       }
+      if (reload) { setTimeout(_ => window.location.reload(), 1.5 * 1000); }
     });
   }
 
