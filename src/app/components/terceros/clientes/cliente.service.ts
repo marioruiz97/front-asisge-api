@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Cliente } from 'src/app/models/terceros/cliente.model';
-import { Observable } from 'rxjs';
+import { Cliente, Contacto } from 'src/app/models/terceros/cliente.model';
+import { Observable, Subject } from 'rxjs';
 import { AppConstants as Constant } from 'src/app/shared/routing/app.constants';
 import { AppService, Response } from 'src/app/shared/app.service';
-import { UiService } from 'src/app/shared/ui.service';
+import { UiService, ConfirmDialogData } from 'src/app/shared/ui.service';
 import { TipoDocumentoService } from '../../maestros/tipo-documento/tipo-documento.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ClienteService {
 
   private clientePath = Constant.PATH_CLIENTE;
+  contactosChanged = new Subject<Contacto[]>();
 
-  constructor(private appService: AppService, private uiService: UiService, private docService: TipoDocumentoService) { }
+  constructor(
+    private appService: AppService, private uiService: UiService, private docService: TipoDocumentoService, private router: Router
+  ) { }
 
   fetchAll(): Observable<Response> {
     return this.appService.getRequest(this.clientePath);
@@ -19,15 +23,22 @@ export class ClienteService {
   getById(id: number | string) {
     return this.appService.getRequest(`${this.clientePath}/${id}`).toPromise();
   }
+
   fetchTiposDoc(): Observable<Response> {
     return this.docService.fetchAll();
   }
 
   create(data: Cliente) {
-    this.uiService.putSnackBar(this.appService.postRequest(this.clientePath, data));
+    this.uiService.putSnackBar(this.appService.postRequest(this.clientePath, data))
+      .subscribe(exito => { if (exito) { this.returnToList(); } });
   }
-  update(id: string, data: Cliente) {
-    this.uiService.putSnackBar(this.appService.patchRequest(`${this.clientePath}/${id}`, data));
+  update(id: number, data: Cliente) {
+    this.uiService.putSnackBar(this.appService.patchRequest(`${this.clientePath}/${id}`, data))
+      .subscribe(exito => { if (exito) { this.returnToList(); } });
+  }
+
+  updateContacto(contacto: Contacto) {
+    return this.appService.patchRequest(`${Constant.PATH_CONTACTO}/${contacto.id}`, contacto);
   }
 
   delete(id: string): Observable<boolean> {
@@ -42,17 +53,29 @@ export class ClienteService {
         if (result) {
           this.appService.deleteRequest(`${this.clientePath}/${id}`)
             .then((res: Response) => {
-              this.uiService.showSnackBar(res.message, 3);
+              this.uiService.showSnackBar(res.message, 4);
               observer.next(true);
             })
-            .catch(err => {
+            .catch(_ => {
               const dialog = { title: 'Error', message: 'No se ha podido eliminar cliente: ' + id, confirm: 'Ok' };
-              this.uiService.showConfirm(dialog);
+              this.showError(dialog);
               observer.next(false);
             });
         }
       });
     });
+  }
+
+
+  /**
+   * MÉTODOS DE UI
+   */
+  returnToList() {
+    this.router.navigate(['/clientes']);
+  }
+
+  showError(dialog: ConfirmDialogData) {
+    return this.uiService.showConfirm(dialog);
   }
 
 }

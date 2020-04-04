@@ -1,46 +1,31 @@
-import { Component, OnInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TipoDocumento } from 'src/app/models/terceros/tipo-documento.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TipoDocumentoService } from '../tipo-documento.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tipo-documento-form',
   templateUrl: './tipo-documento-form.component.html',
   styleUrls: ['./tipo-documento-form.component.css']
 })
-export class TipoDocumentoFormComponent implements OnInit, AfterContentChecked {
+export class TipoDocumentoFormComponent implements OnInit, OnDestroy {
 
   currentId: string;
-  private validTipo: boolean;
   tipoForm: FormGroup;
+  private subs: Subscription[] = [];
 
   constructor(private activatedRoute: ActivatedRoute, private service: TipoDocumentoService) { }
 
-  ngAfterContentChecked() {
-    if (!this.validTipo) {
-      const tipo = this.service.tipo;
-      if (tipo) {
-        this.validTipo = true;
-        this.setTipo(tipo);
-      }
-    }
-  }
-
   ngOnInit() {
-    this.validTipo = false;
     this.activatedRoute.paramMap.subscribe(params => {
       const id = +params.get('id');
       if (id && id !== 0) {
-        this.service.getById(id);
-        this.currentId = id.toString();
+        this.getTipo(id);
       }
     });
     this.initForm();
-  }
-
-  setTipo(tipo: TipoDocumento) {
-    this.tipoForm.setValue({ id: tipo.id, nombreTipoDocumento: tipo.nombreTipoDocumento });
   }
 
   initForm() {
@@ -48,6 +33,21 @@ export class TipoDocumentoFormComponent implements OnInit, AfterContentChecked {
       id: new FormControl({ value: '', disabled: true }),
       nombreTipoDocumento: new FormControl('', [Validators.minLength(2), Validators.required])
     });
+  }
+
+  getTipo(id: string | number) {
+    this.service.getById(id)
+      .then(res => this.setTipo(res.body))
+      .catch(err => {
+        this.service.returnToList(true);
+        const message = err.error ? err.error.message : 'Ha ocurrido un error. Intenta nuevamente';
+        this.service.showPopUp({ title: 'Error', message, confirm: 'Ok' });
+      });
+  }
+
+  setTipo(tipo: TipoDocumento) {
+    this.currentId = tipo.id;
+    this.tipoForm.setValue({ id: tipo.id, nombreTipoDocumento: tipo.nombreTipoDocumento });
   }
 
   goBack() {
@@ -60,7 +60,10 @@ export class TipoDocumentoFormComponent implements OnInit, AfterContentChecked {
     } else {
       this.service.create(this.tipoForm.value);
     }
-    this.service.returnToList(true);
+  }
+
+  ngOnDestroy() {
+    if (this.subs) { this.subs.forEach(sub => sub.unsubscribe()); }
   }
 
 }

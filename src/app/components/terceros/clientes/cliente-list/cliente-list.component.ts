@@ -15,6 +15,7 @@ export class ClienteListComponent implements OnInit, AfterViewInit, OnDestroy {
   private listSub: Subscription[] = [];
   displayedColumns = ['idCliente', 'identificacion', 'nombreComercial', 'contactos', 'acciones'];
   datasource = new MatTableDataSource<Cliente>();
+
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 

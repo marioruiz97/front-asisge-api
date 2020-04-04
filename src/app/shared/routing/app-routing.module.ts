@@ -15,8 +15,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'tipo-documento', component: TipoDocumentoListComponent, canActivate: [AuthGuard] },
   { path: 'tipo-documento/:id', component: TipoDocumentoFormComponent, canActivate: [AuthGuard] },
-  { path: 'clientes', component: ClienteListComponent, canActivate:[AuthGuard]},
-  { path: 'clientes/:id', component: ClienteFormComponent, canActivate:[AuthGuard]},
+  { path: 'clientes', component: ClienteListComponent, canActivate: [AuthGuard] },
+  { path: 'clientes/:id', component: ClienteFormComponent, canActivate: [AuthGuard] },
 
   { path: 'login', component: LoginComponent },
   { path: 'recovery', component: RecoveryComponent },
@@ -27,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
   exports: [RouterModule],
   providers: [AuthGuard]
 })

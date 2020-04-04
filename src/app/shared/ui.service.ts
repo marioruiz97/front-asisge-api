@@ -3,6 +3,7 @@ import { AppMenu, NavItem } from './routing/app-menu';
 import { Response } from './app.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../components/layout/confirm-dialog/confirm-dialog.component';
+import { Observable } from 'rxjs';
 
 export interface ConfirmDialogData {
   title: string;
@@ -35,12 +36,17 @@ export class UiService {
     return this.snackBar.open(message, action ? action : 'Ok', {
       duration: durationInSec * 1000,
       verticalPosition: 'top',
-      horizontalPosition: 'start'
+      horizontalPosition: 'end'
     });
   }
+
   putSnackBar(promise: Promise<any>) {
-    promise.then((res: Response) => this.showSnackBar(res.message, 3))
-      .catch(err => {
+    return new Observable(exito => {
+      promise.then((res: Response) => {
+        this.showSnackBar(res.message, 4);
+        exito.next(true);
+      }).catch(err => {
+        exito.next(false);
         if (err.error) {
           const errors: string[] = err.error.errors;
           this.showConfirm({ title: 'Error', message: err.error.message, errors, confirm: 'Ok' });
@@ -48,6 +54,7 @@ export class UiService {
           this.showConfirm({ title: 'Error', message: 'Ha ocurrido un error interno', confirm: 'Ok' });
         }
       });
+    });
   }
 
   showConfirm(data: ConfirmDialogData) {

@@ -10,8 +10,8 @@ export interface Cliente {
 }
 
 export interface Contacto {
-
-  idContacto?: number;
+  id?: number;
+  idCliente?: number;
   nombre: string;
   telefono?: string;
   correo: string;

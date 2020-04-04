@@ -38,13 +38,22 @@
             </mat-form-field>
           </div>
 
-          <mat-form-field appearance="outline" class="select-group mt-3" fxFlex="48" fxFlex.lt-md="100">
+          <mat-form-field appearance="outline" class="select-group my-3" fxFlex="48" fxFlex.lt-md="100">
             <mat-label>Tipo de Documento</mat-label>
             <mat-select formControlName="tipoDocumento">
               <mat-option [value]="item.id" *ngFor="let item of tiposDoc">{{item.nombreTipoDocumento}}</mat-option>
             </mat-select>
             <mat-hint>Seleccione un tipo de documento</mat-hint>
           </mat-form-field>
+
+          <mat-divider></mat-divider>
+          <h3 class="contact-header">Contactos</h3>
+          <button type="button" mat-mini-fab color="primary" (click)="agregarContacto()">
+            <mat-icon>add</mat-icon>
+          </button>
+
+          <app-contacto-list  (eliminar)="deleteContacto($event)" (refrescar)="refrescarContactos()" (editar)="editarContacto($event)">
+          </app-contacto-list>
 
         </mat-card-content>
         <mat-card-actions class="form-action mt-4" fxLayoutAlign="center" fxLayout.lt-sm="column">

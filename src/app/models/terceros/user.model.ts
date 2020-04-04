@@ -16,7 +16,7 @@ export interface User {
 }
 
 export interface Asesor {
-  idAsesor?: number;
+  idAsesor?: string;
   usuario: number | User;
   cliente: number | Cliente;
 }

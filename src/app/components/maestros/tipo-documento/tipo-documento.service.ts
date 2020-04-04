@@ -2,33 +2,23 @@ import { Injectable } from '@angular/core';
 import { AppConstants as Constant } from '../../../shared/routing/app.constants';
 import { TipoDocumento } from 'src/app/models/terceros/tipo-documento.model';
 import { AppService } from 'src/app/shared/app.service';
-import { UiService } from 'src/app/shared/ui.service';
+import { UiService, ConfirmDialogData } from 'src/app/shared/ui.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 
 @Injectable()
 export class TipoDocumentoService {
 
-  private $tipo: TipoDocumento;
+  private apiPath = Constant.PATH_TIPO_DOCUMENTO;
 
   constructor(private appService: AppService, private uiService: UiService, private router: Router) { }
 
   fetchAll() {
-    return this.appService.getRequest(Constant.PATH_TIPO_DOCUMENTO);
+    return this.appService.getRequest(this.apiPath);
   }
   getById(id: number | string) {
-    this.appService.getRequest(`${Constant.PATH_TIPO_DOCUMENTO}/${id}`).toPromise()
-      .then(res => this.$tipo = res.body)
-      .catch(err => {
-        const dialogRef = this.uiService.showConfirm(
-          { title: 'Error', message: 'No se ha encontrado tipo documento id:' + id, confirm: 'Ok' });
-        dialogRef.afterClosed().subscribe(result => {
-          this.router.navigate(['/tipo-documento']);
-        });
-      });
-  }
-  get tipo(): TipoDocumento {
-    return this.$tipo;
+    return this.appService.getRequest(`${this.apiPath}/${id}`).toPromise();
   }
 
   returnToList(skip: boolean = false) {
@@ -50,28 +40,36 @@ export class TipoDocumentoService {
   }
 
   create(tipo: TipoDocumento) {
-    this.uiService.putSnackBar(this.appService.postRequest(Constant.PATH_TIPO_DOCUMENTO, tipo));
+    this.uiService.putSnackBar(this.appService.postRequest(this.apiPath, tipo))
+      .subscribe(res => { if (res) { this.returnToList(true); } });
   }
 
   update(id: string, tipo: TipoDocumento) {
-    this.uiService.putSnackBar(this.appService.patchRequest(`${Constant.PATH_TIPO_DOCUMENTO}/${id}`, tipo));
+    this.uiService.putSnackBar(this.appService.patchRequest(`${this.apiPath}/${id}`, tipo))
+      .subscribe(res => { if (res) { this.returnToList(true); } });
   }
 
   delete(id: string) {
-    const data = {
-      title: 'Estás seguro de eliminar el Tipo de documento?',
-      message: 'Esta acción es irreversible. \n¿Estás seguro?',
-      confirm: 'Sí, Eliminar Tipo'
-    };
-    const dialogRef = this.uiService.showConfirm(data);
-    dialogRef.afterClosed().subscribe(result => {
-      let reload = false;
-      if (result) {
-        this.uiService.putSnackBar(this.appService.deleteRequest(`${Constant.PATH_TIPO_DOCUMENTO}/${id}`));
-        reload = true;
-      }
-      if (reload) { setTimeout(_ => window.location.reload(), 1.5 * 1000); }
+    return new Observable(exito => {
+      const data = {
+        title: 'Estás seguro de eliminar el Tipo de documento?',
+        message: 'Esta acción es irreversible. \n¿Estás seguro?',
+        confirm: 'Sí, Eliminar Tipo'
+      };
+      const dialogRef = this.uiService.showConfirm(data);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.uiService.putSnackBar(this.appService.deleteRequest(`${this.apiPath}/${id}`))
+            .subscribe(res => {
+              exito.next(res);
+            });
+        }
+      });
     });
+  }
+
+  showPopUp(dialog: ConfirmDialogData) {
+    this.uiService.showConfirm(dialog);
   }
 
 }

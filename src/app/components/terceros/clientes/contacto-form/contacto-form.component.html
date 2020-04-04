@@ -1,0 +1,31 @@
+<section class="p-4">
+  <h2 matDialogTitle>Gestionar Contacto</h2>
+  <span matSubheader>Los campos con * son obligatorios</span>
+
+  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+    <mat-dialog-content fxLayout="column" style="min-width: 400px;">
+      <input type="hidden" name="idCliente" [value]="data.idCliente ? data.idCliente : 0">
+      <input type="hidden" name="id" [value]="data.id ? data.id : 0">
+      <mat-form-field>
+        <mat-label>Nombre contacto</mat-label>
+        <input type="text" matInput name="nombre" [(ngModel)]="nombre" required>
+        <mat-hint>Ingrese nombre del contacto</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Telefono</mat-label>
+        <input type="text" maxlength="11" pattern="[0-9]*" matInput name="telefono" [(ngModel)]="telefono">
+        <mat-hint>Ingrese el teléfono (hasta 11 caracteres)</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Correo electrónico</mat-label>
+        <input type="email" matInput name="correo" [(ngModel)]="correo" required>
+        <mat-hint>Ingrese el correo electrónico</mat-hint>
+      </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="mt-4">
+      <button type="submit" mat-button [matDialogClose]="false" [disabled]="form.invalid" color="primary">Guardar Contacto</button>
+      <button type="button" mat-button [matDialogClose]="true">Cancelar</button>
+    </mat-dialog-actions>
+  </form>
+</section>

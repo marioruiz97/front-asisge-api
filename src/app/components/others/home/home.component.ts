@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
     },
     {
       avatar: 'people_outline', title: 'Clientes', subtitle: 'Gestiona la información de clientes',
-      img: '/assets/img/home-clientes.jpeg', content: '', button: 'Ir a clientes', urlTo: '/'
+      img: '/assets/img/home-clientes.jpeg', content: '', button: 'Ir a clientes', urlTo: '/clientes'
     },
     {
       avatar: 'assignment_ind', title: 'Usuarios', subtitle: 'Gestiona a los diferentes usuarios',

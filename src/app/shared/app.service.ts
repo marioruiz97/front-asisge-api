@@ -20,7 +20,7 @@ export class AppService {
       Authorization: 'Basic ' + btoa('AsisgeApp:clave123')
     })
   };
-  private httpOptionsImage = {
+  private httpOptionsImage = { //terminar esto
     headers: new HttpHeaders({ enctype: 'multipart/form-data', Authorization: 'Basic ' + btoa('user:clave123') })
   };
   private API_ENDPOINT = 'http://localhost:8080/api/v1';

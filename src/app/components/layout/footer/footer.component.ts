@@ -22,7 +22,7 @@ export class FooterComponent implements OnInit {
     this.proyectos = [
       { name: 'Proyectos', url: '/' },
       { name: 'Informes', url: '/' },
-      { name: 'Clientes', url: '/' },
+      { name: 'Clientes', url: '/clientes' },
     ];
     this.modulos = [
       { name: 'Maestros', url: '/' },
