@@ -15,7 +15,7 @@ import { ConfirmDialogComponent } from '../components/layout/confirm-dialog/conf
 
 @NgModule({
   declarations: [
-    ToolbarComponent, SidenavComponent, FooterComponent, ConfirmDialogComponent
+    ToolbarComponent, SidenavComponent, FooterComponent, ConfirmDialogComponent,
   ],
   imports: [
     CommonModule,

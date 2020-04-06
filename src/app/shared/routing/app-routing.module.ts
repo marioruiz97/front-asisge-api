@@ -10,6 +10,8 @@ import { ClienteListComponent } from 'src/app/components/terceros/clientes/clien
 import { ClienteFormComponent } from 'src/app/components/terceros/clientes/cliente-form/cliente-form.component';
 import { UsuarioFormComponent } from 'src/app/components/terceros/usuarios/usuario-form/usuario-form.component';
 import { UsuarioListComponent } from 'src/app/components/terceros/usuarios/usuario-list/usuario-list.component';
+import { AboutComponent } from 'src/app/components/others/about/about.component';
+import { ContactComponent } from 'src/app/components/others/contact/contact.component';
 
 
 const routes: Routes = [
@@ -21,6 +23,9 @@ const routes: Routes = [
   { path: 'clientes/:id', component: ClienteFormComponent, canActivate: [AuthGuard] },
   { path: 'usuarios', component: UsuarioListComponent, canActivate: [AuthGuard] },
   { path: 'usuarios/:id', component: UsuarioFormComponent, canActivate: [AuthGuard] },
+
+  { path: 'acerca', component: AboutComponent, canActivate: [AuthGuard] },
+  { path: 'contacto', component: ContactComponent, canActivate: [AuthGuard] },
 
   { path: 'login', component: LoginComponent },
   { path: 'recovery', component: RecoveryComponent },

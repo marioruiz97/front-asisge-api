@@ -9,11 +9,12 @@ import { UiService } from './shared/ui.service';
 import { TercerosModule } from './components/terceros/terceros.module';
 import { MaestrosModule } from './components/maestros/maestros.module';
 import { AppService } from './shared/app.service';
+import { AboutComponent } from './components/others/about/about.component';
+import { ContactComponent } from './components/others/contact/contact.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
+    AppComponent, HomeComponent, AboutComponent, ContactComponent
   ],
   imports: [
     BrowserModule,

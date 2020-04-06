@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 export interface Response {
   status: string | number;
@@ -17,13 +18,13 @@ export class AppService {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      Authorization: 'Basic ' + btoa('AsisgeApp:clave123')
+      Authorization: environment.authorization
     })
   };
   private httpOptionsImage = { //terminar esto
-    headers: new HttpHeaders({ enctype: 'multipart/form-data', Authorization: 'Basic ' + btoa('user:clave123') })
+    headers: new HttpHeaders({ enctype: 'multipart/form-data', Authorization: environment.authorization })
   };
-  private API_ENDPOINT = 'http://localhost:8080/api/v1';
+  private API_ENDPOINT = environment.api_endpoint;
 
   constructor(private httpClient: HttpClient) { }
 

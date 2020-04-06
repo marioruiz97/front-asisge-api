@@ -3,7 +3,7 @@ import { AppMenu, NavItem } from './routing/app-menu';
 import { Response } from './app.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../components/layout/confirm-dialog/confirm-dialog.component';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 export interface ConfirmDialogData {
   title: string;
@@ -16,6 +16,7 @@ export interface ConfirmDialogData {
 export class UiService {
 
   private appMenu = new AppMenu();
+  loadingState = new Subject<boolean>();
 
   constructor(private snackBar: MatSnackBar, private dialog: MatDialog) { }
 
