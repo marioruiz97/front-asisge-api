@@ -1,0 +1,18 @@
+@import '../../../../../assets/css/header-styles.css';
+
+header {
+  min-height: 45vh;
+  background-image: url("/assets/img/lists-background.jpg");
+  background-position: 25% 100%;
+}
+
+.list-button mat-form-field,
+.list-button button {
+  min-width: 30%;
+}
+
+@media (min-width: 1440px) {
+  header {
+    background-position: 25% 70%;
+  }
+}

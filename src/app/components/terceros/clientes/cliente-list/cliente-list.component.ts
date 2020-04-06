@@ -13,7 +13,7 @@ import { UiService } from 'src/app/shared/ui.service';
 export class ClienteListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private listSub: Subscription[] = [];
-  displayedColumns = ['idCliente', 'identificacion', 'nombreComercial', 'contactos', 'acciones'];
+  displayedColumns = ['idCliente', 'identificacion', 'razonSocial', 'nombreComercial', 'contactos', 'acciones'];
   datasource = new MatTableDataSource<Cliente>();
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;

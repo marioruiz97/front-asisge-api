@@ -1,0 +1,133 @@
+<div gdAreas="header | content" gdGap="1em" gdRows="auto auto auto">
+
+  <header class="pt-4 m-2" gdArea="header" fxLayoutAlign="center center">
+    <h1 fxFlex="50">{{ isUpdate? 'Actualizar' : 'Crear'}} Usuario</h1>
+  </header>
+
+  <section gdArea="content">
+    <form autocomplete="off" [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" fxLayoutAlign="center">
+      <mat-accordion displayMode="default" [multi]="true" fxFlex="90">
+
+        <!-- expansion info personal-->
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Información Personal</mat-panel-title>
+            <mat-panel-description fxShow.gt-sm>Ingresa tu nombre y datos personales </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <!-- CÓDIGO Y NOMBRE-->
+          <div fxLayout.lt-sm="column">
+            <mat-form-field appearance="outline" class="form-input" fxFlex.gt-sm="30">
+              <mat-label>Código Asignado</mat-label>
+              <input matInput formControlName="idUsuario">
+              <mat-hint>El código es autoasignado por el sistema</mat-hint>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-input" fxFlex.gt-sm="70">
+              <mat-label>Nombre Completo</mat-label>
+              <input matInput placeholder="Ej. Mario Andres" formControlName="nombre">
+              <mat-hint>Ingrese un nombre hasta 80 caracteres ({{usuarioForm.value.nombre.length}} caracteres/80 max) </mat-hint>
+              <mat-error>El nombre es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+          <!-- APELLIDOS 1 Y 2-->
+          <div fxLayout.lt-sm="column">
+            <mat-form-field appearance="outline" class="form-input">
+              <mat-label>Primer Apellido</mat-label>
+              <input matInput placeholder="Ej. Ruiz" formControlName="apellido1">
+              <mat-hint>Ingrese un apellido hasta 40 caracteres</mat-hint>
+              <mat-error>El nombre es obligatorio</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-input">
+              <mat-label>Segundo Apellido</mat-label>
+              <input matInput placeholder="Ej. Bedoya" formControlName="apellido2">
+              <mat-hint>Ingrese un apellido hasta 40 caracteres</mat-hint>
+            </mat-form-field>
+          </div>
+          <!-- TIPO DOC Y NUMERO DOCUMENTO-->
+          <div fxLayout.lt-sm="column">
+            <mat-form-field appearance="outline" class="form-input">
+              <mat-label>Tipo de Documento</mat-label>
+              <mat-select formControlName="tipoDocumento">
+                <mat-option [value]="item.id" *ngFor="let item of tiposDoc">{{item.nombreTipoDocumento}}</mat-option>
+              </mat-select>
+              <mat-hint>Seleccione un tipo de documento</mat-hint>
+              <mat-error>El tipo de documento es obligatorio</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-input">
+              <mat-label>Número de identificación</mat-label>
+              <input matInput type="number" placeholder="Ej. 1017251545" formControlName="identificacion">
+              <mat-hint>Ingrese el número de identificación sin puntos</mat-hint>
+              <mat-error>El número de identificación debe tener entre 6 y 20 caracteres (Actual: {{usuarioForm.value.identificacion.length}}) </mat-error>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+
+        <!-- fin primer panel -->
+
+        <!-- expansion info usuario-->
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Información del Usuario</mat-panel-title>
+            <mat-panel-description fxShow.gt-sm>Ingresa la información para usar el sistema </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div fxLayout.lt-sm="column">
+            <!-- telefono contacto -->
+            <mat-form-field appearance="outline" class="form-input">
+              <mat-label>Teléfono de contacto</mat-label>
+              <input matInput type="number" placeholder="Ej. 3015465076" formControlName="telefono">
+              <mat-hint>Ingrese preferiblemente teléfono celular</mat-hint>
+              <mat-error>Ingrese un teléfono válido de hasta 11 caracteres</mat-error>
+            </mat-form-field>
+            <!-- correo electronico -->
+            <mat-form-field appearance="outline" class="form-input">
+              <mat-label>Correo electrónico</mat-label>
+              <input matInput type="email" placeholder="Ej. MarioRuiz@gmail.com" formControlName="correo">
+              <mat-hint>Ingrese su correo para recuperación de contraseña</mat-hint>
+            </mat-form-field>
+          </div>
+          <!-- contraseña -->
+          <div fxLayout.lt-sm="column">
+            <mat-form-field appearance="outline" class="form-input">
+              <mat-label>Contraseña</mat-label>
+              <input matInput type="password" formControlName="contrasena">
+              <mat-hint>Ingrese su contraseña</mat-hint>
+            </mat-form-field>
+            <!-- confirmar contraseña -->
+            <mat-form-field appearance="outline" class="form-input">
+              <mat-label>Confirmar Contraseña</mat-label>
+              <input matInput type="password" (paste)="false" formControlName="matchContrasena">
+              <mat-hint>Repita su contraseña</mat-hint>
+            </mat-form-field>
+          </div>
+          <!-- perfil y estado -->
+          <div fxLayout.lt-sm="column" >
+            <mat-form-field appearance="outline" class="form-input">
+              <mat-label>Tipo de Usuario</mat-label>
+              <mat-select formControlName="perfil">
+                <mat-option value="admin">Administrador</mat-option>
+                <mat-option value="asesor">Asesor</mat-option>
+                <mat-option value="cliente">Cliente</mat-option>
+              </mat-select>
+              <mat-hint>Seleccione un tipo de usuario (perfil de acceso)</mat-hint>
+            </mat-form-field>
+            <!-- activar contraseña -->
+            <mat-slide-toggle class="pl-sm-4" color="primary" formControlName="estado">
+              <span>Pulse para {{usuarioForm.value.estado? 'Inactivar':'Activar'}} Usuario</span>
+            </mat-slide-toggle>
+          </div>
+
+          <!-- BOTONERA -->
+          <mat-action-row class="form-action" fxLayoutAlign.gt-sm="center center" fxLayout.lt-sm="column">
+            <button class="m-2" type="button" mat-raised-button (click)="goBack()" color="warn">
+              <mat-icon>arrow_back</mat-icon>Regresar <span fxHide.lt-sm> a Usuarios</span>
+            </button>
+            <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!usuarioForm.valid">
+              <mat-icon>save</mat-icon> Registrar Usuario
+            </button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </form>
+  </section>
+</div>

@@ -1,4 +1,4 @@
-import { User } from '../terceros/user.model';
+import { Usuario } from '../terceros/usuario.model';
 import { Cliente } from '../terceros/cliente.model';
 
 export interface Proyecto {
@@ -19,7 +19,7 @@ export interface EstadoProyecto {
 
 export interface Miembros {
   idMiembro?: number;
-  usuario: number | User;
+  usuario: number | Usuario;
   proyecto: number | Proyecto;
   rolProyecto: string;
 }

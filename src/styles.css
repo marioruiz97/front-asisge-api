@@ -34,3 +34,7 @@ app-toolbar {
   width: 100%;
   z-index: 2;
 }
+
+tr.mat-row:hover {
+  background-color: #EEE;
+}

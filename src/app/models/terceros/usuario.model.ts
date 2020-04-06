@@ -2,21 +2,23 @@ import { ProfileData } from './profile.model';
 import { TipoDocumento } from './tipo-documento.model';
 import { Cliente } from './cliente.model';
 
-export interface User {
+export interface Usuario {
   idUsuario?: string;
   identificacion: string;
   tipoDocumento: string | TipoDocumento;
   nombre: string;
   apellido1: string;
-  apellido2: string;
+  apellido2?: string;
   telefono: string;
-  email: string;
-  password: string;
+  correo: string;
+  contrasena: string;
+  matchContrasena?: string;
+  estado: boolean;
   perfil: string;
 }
 
 export interface Asesor {
   idAsesor?: string;
-  usuario: number | User;
+  usuario: number | Usuario;
   cliente: number | Cliente;
 }

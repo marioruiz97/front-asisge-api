@@ -8,6 +8,8 @@ import { TipoDocumentoListComponent } from 'src/app/components/maestros/tipo-doc
 import { TipoDocumentoFormComponent } from 'src/app/components/maestros/tipo-documento/tipo-documento-form/tipo-documento-form.component';
 import { ClienteListComponent } from 'src/app/components/terceros/clientes/cliente-list/cliente-list.component';
 import { ClienteFormComponent } from 'src/app/components/terceros/clientes/cliente-form/cliente-form.component';
+import { UsuarioFormComponent } from 'src/app/components/terceros/usuarios/usuario-form/usuario-form.component';
+import { UsuarioListComponent } from 'src/app/components/terceros/usuarios/usuario-list/usuario-list.component';
 
 
 const routes: Routes = [
@@ -17,6 +19,8 @@ const routes: Routes = [
   { path: 'tipo-documento/:id', component: TipoDocumentoFormComponent, canActivate: [AuthGuard] },
   { path: 'clientes', component: ClienteListComponent, canActivate: [AuthGuard] },
   { path: 'clientes/:id', component: ClienteFormComponent, canActivate: [AuthGuard] },
+  { path: 'usuarios', component: UsuarioListComponent, canActivate: [AuthGuard] },
+  { path: 'usuarios/:id', component: UsuarioFormComponent, canActivate: [AuthGuard] },
 
   { path: 'login', component: LoginComponent },
   { path: 'recovery', component: RecoveryComponent },

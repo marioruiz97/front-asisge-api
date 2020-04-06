@@ -1,0 +1,19 @@
+@import "../../../../../assets/css/header-styles.css";
+
+.form-input {
+  padding: 10px 5px;
+}
+
+mat-form-field {
+  min-width: 47%;
+}
+
+.form-action button {
+  min-width: 30%;
+}
+
+@media (max-width: 600px) {
+  mat-form-field {
+    width: 100%;
+  }
+}
