@@ -19,7 +19,7 @@ export class UsuarioFormComponent implements OnInit, OnDestroy {
   isUpdate = false;
 
   private subscriptions: Subscription[] = [];
-  private curId: string;
+  private curId: number;
   private curPassword: string;
 
   constructor(
@@ -120,7 +120,7 @@ export class UsuarioFormComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (this.curId && this.curId !== '0') {
+    if (this.curId && this.curId !== 0) {
       const form = this.usuarioForm.value;
       form.contrasena = this.usuarioForm.value.contrasena ? form.contrasena : this.curPassword;
       this.service.update(this.curId, form);

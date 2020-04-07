@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/material';
 import { Cliente } from 'src/app/models/terceros/cliente.model';
 import { ClienteService } from '../cliente.service';
 import { UiService } from 'src/app/shared/ui.service';
+import { AsesorClienteComponent } from '../asesor-cliente/asesor-cliente.component';
 
 @Component({
   selector: 'app-cliente-list',
@@ -19,7 +20,7 @@ export class ClienteListComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private service: ClienteService, private uiService: UiService) { }
+  constructor(private service: ClienteService, private uiService: UiService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.fetch();
@@ -39,6 +40,10 @@ export class ClienteListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   doFilter(filterString: string) {
     this.datasource.filter = filterString.trim().toLocaleLowerCase();
+  }
+
+  showUsuario(cliente: Cliente) {
+    this.dialog.open(AsesorClienteComponent, { data: cliente });
   }
 
   delete(id: string) {

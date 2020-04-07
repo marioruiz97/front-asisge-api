@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
 export class ClienteService {
 
   private clientePath = Constant.PATH_CLIENTE;
+  private asesorPath = Constant.PATH_ASESOR;
+  private clienteAsesorAth = Constant.PATH_CLIENTE_ASESOR;
+
   contactosChanged = new Subject<Contacto[]>();
 
   constructor(
@@ -26,6 +29,14 @@ export class ClienteService {
 
   fetchTiposDoc(): Observable<Response> {
     return this.docService.fetchAll();
+  }
+
+  fetchUsuarios(idCliente: number) {
+    return this.appService.getRequest(this.asesorPath + `?cliente=${idCliente}`);
+  }
+
+  saveUsuarios(idCliente: number, list: any[]) {
+    return this.uiService.putSnackBar(this.appService.patchRequest(`${this.clienteAsesorAth}/${idCliente}`, list));
   }
 
   create(data: Cliente) {

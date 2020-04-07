@@ -10,6 +10,7 @@ import { UsuarioFormComponent } from './usuarios/usuario-form/usuario-form.compo
 import { UsuarioService } from './usuarios/usuario.service';
 import { UsuarioDetailsComponent } from './usuarios/usuario-details/usuario-details.component';
 import { UsuarioClientesComponent } from './usuarios/usuario-clientes/usuario-clientes.component';
+import { AsesorClienteComponent } from './clientes/asesor-cliente/asesor-cliente.component';
 
 
 
@@ -18,12 +19,12 @@ import { UsuarioClientesComponent } from './usuarios/usuario-clientes/usuario-cl
     ClienteListComponent, ClienteFormComponent,
     ContactoFormComponent, ContactoListComponent,
     UsuarioListComponent, UsuarioFormComponent,
-    UsuarioDetailsComponent, UsuarioClientesComponent
+    UsuarioDetailsComponent, UsuarioClientesComponent, AsesorClienteComponent
   ],
   imports: [
     SharedModule
   ],
   providers: [ClienteService, UsuarioService],
-  entryComponents: [ContactoFormComponent, UsuarioDetailsComponent, UsuarioClientesComponent]
+  entryComponents: [ContactoFormComponent, UsuarioDetailsComponent, UsuarioClientesComponent, AsesorClienteComponent]
 })
 export class TercerosModule { }

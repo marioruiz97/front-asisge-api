@@ -49,13 +49,26 @@
         <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef> Acciones </th>
           <td mat-cell *matCellDef="let doc">
-            <div>
-              <button mat-icon-button color="primary" [routerLink]="['/clientes/'+doc.idCliente]">
+            <div fxHide.lt-sm fxHide.sm>
+              <button mat-icon-button color="primary" [routerLink]="['/clientes/'+doc.idCliente]" matTooltip="Editar">
                 <mat-icon class="mat-18">edit</mat-icon>
               </button>
-              <button mat-icon-button color="warn" (click)="delete(doc.idCliente)">
+              <button mat-icon-button color="warn" (click)="delete(doc.idCliente)" matTooltip="Eliminar">
                 <mat-icon class="mat-18">delete</mat-icon>
               </button>
+              <button mat-icon-button (click)="showUsuario(doc)" matTooltip="Ver Usuarios Asociados">
+                <mat-icon class="mat-18">person_add</mat-icon>
+              </button>
+            </div>
+            <div fxHide.gt-sm>
+              <button mat-icon-button color="primary" [matMenuTriggerFor]="actions">
+                <mat-icon class="mat-18">more_horiz</mat-icon>
+              </button>
+              <mat-menu #actions="matMenu">
+                <button mat-menu-item [routerLink]="['/clientes/'+doc.idCliente]">Editar</button>
+                <button mat-menu-item (click)="delete(doc.idCliente)">Eliminar</button>
+                <button mat-menu-item (click)="showUsuario(doc)">Ver Usuarios Asociados</button>
+              </mat-menu>
             </div>
           </td>
         </ng-container>

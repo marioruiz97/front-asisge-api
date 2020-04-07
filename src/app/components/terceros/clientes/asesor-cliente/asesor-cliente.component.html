@@ -1,0 +1,51 @@
+<section class="p-3">
+  <h2 matDialogTitle>Gestionar asesores del cliente</h2>
+
+  <mat-dialog-content>
+    <div mat-subheader>Información del Cliente</div>
+    <mat-list dense>
+      <mat-list-item *ngFor="let i of info">
+        <mat-icon mat-list-icon>info</mat-icon>
+        <div mat-line>
+          <span class="property">{{i.property}}</span> {{i.data}}
+        </div>
+      </mat-list-item>
+    </mat-list>
+
+    <div mat-subheader class="mt-4">Usuarios Asociados</div>
+    <mat-divider></mat-divider>
+
+    <form>
+      <mat-form-field class="mt-3" fxFlex>
+        <input type="text" placeholder="Busca por nombre, apellido o identificacion" aria-label="Agregar Usuario" matInput
+          [matAutocomplete]="auto" [formControl]="userControl">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onSelected($event)">
+          <mat-option *ngFor="let user of filteredUsuarios | async" [value]="user.identificacion">
+            <span [id]="user.idUsuario">{{user.identificacion}} - </span> {{user.nombre + ' ' + user.apellido1}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+
+    <mat-list dense>
+      <mat-list-item *ngFor="let usuario of usuarios">
+        <mat-icon mat-list-icon>label_important</mat-icon>
+        <div mat-line> {{usuario.tipoDocumento.nombreTipoDocumento + ': '+usuario.identificacion}}</div>
+        <div mat-line class="property">
+          Nombre: {{usuario.nombre + ' ' + usuario.apellido1}}
+        </div>
+        <div>
+          <button mat-icon-button (click)="onRemove(usuario.idUsuario)" matTooltip="Quitar usuario de la lista">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="mt-4" fxLayoutAlign="center">
+    <button mat-button [matDialogClose]="false" color="primary" (click)="saveUsuarios()">Guardar Usuarios</button>
+    <button mat-button [matDialogClose]="true" color="warn">Volver</button>
+  </mat-dialog-actions>
+</section>

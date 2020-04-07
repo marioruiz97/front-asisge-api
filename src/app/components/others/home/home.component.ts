@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
     },
     {
       avatar: 'work_outline', title: 'Maestros', subtitle: 'Gestiona los diferentes maestros del aplicativo',
-      img: 'https://material.angular.io/assets/img/examples/shiba2.jpg', content: '', button: 'Ir a maestros', urlTo: '/'
+      img: '/assets/img/home-maestros.jpg', content: '', button: 'Ir a maestros', urlTo: '/maestros'
     },
 
   ];

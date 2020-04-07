@@ -3,7 +3,7 @@ import { TipoDocumento } from './tipo-documento.model';
 import { Cliente } from './cliente.model';
 
 export interface Usuario {
-  idUsuario?: string;
+  idUsuario?: number;
   identificacion: string;
   tipoDocumento: string | TipoDocumento;
   nombre: string;

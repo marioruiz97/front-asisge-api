@@ -26,7 +26,7 @@ export class UsuarioService {
     return this.docService.fetchAll();
   }
 
-  fetchClientes(idUsuario: string) {
+  fetchClientes(idUsuario: string | number) {
     return this.appService.getRequest(this.asesorPath + `?usuario=${idUsuario}`);
   }
 
@@ -42,7 +42,7 @@ export class UsuarioService {
     this.uiService.putSnackBar(this.appService.postRequest(this.userPath, data))
       .subscribe(exito => { if (exito) { this.returnToList(); } });
   }
-  update(id: string, data: Usuario) {
+  update(id: string | number, data: Usuario) {
     this.uiService.putSnackBar(this.appService.patchRequest(`${this.userPath}/${id}`, data))
       .subscribe(exito => { if (exito) { this.returnToList(); } });
   }
