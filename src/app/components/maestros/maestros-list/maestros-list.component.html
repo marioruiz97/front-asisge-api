@@ -1,0 +1,62 @@
+<div gdAreas="header | content" gdGap="1em" gdRows="auto auto auto">
+
+  <header gdArea="header" fxLayoutAlign="center center">
+    <div fxFlex.gt-sm="60" fxLayout="column" fxLayoutAlign="center center" class="p-3">
+      <h1 fxFlex="50">Maestros</h1>
+      <p>
+        En este módulo puedes ver y gestionar los diferentes maestros del aplicativo.
+        <br />
+        Si das click en crear registros o editar serás redireccionado al formulario correspondiente para realizar los
+        cambios.
+      </p>
+    </div>
+  </header>
+
+  <section gdArea="content" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="3em">
+
+    <mat-card class="p-4 mat-elevation-z3">
+      <mat-card-title-group>
+        <mat-card-title>Tipos de Documentos</mat-card-title>
+        <mat-card-subtitle>Gestiona los tipos de documentos usados para Clientes y Usuarios</mat-card-subtitle>
+      </mat-card-title-group>
+      <mat-divider></mat-divider>
+      <mat-card-content class="pt-4">
+        <app-tipo-documento-list fxLayout="column"></app-tipo-documento-list>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button routerLink="/tipo-documento">Ir al módulo</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="p-4 mat-elevation-z3">
+      <mat-card-title-group>
+        <mat-card-title>Estados de Proyecto</mat-card-title>
+        <mat-card-subtitle>
+          Gestiona los posibles estados que puede tener un proyecto.
+          Estos son usados por todos los proyectos
+        </mat-card-subtitle>
+      </mat-card-title-group>
+      <mat-divider></mat-divider>
+      <mat-card-content class="pt-4">
+        <app-estado-proyecto-list fxLayout="column"></app-estado-proyecto-list>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button routerLink="/estado-proyecto">Ir al módulo</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="p-4 mat-elevation-z3">
+      <mat-card-title-group>
+        <mat-card-title>Auditorias</mat-card-title>
+        <mat-card-subtitle>Acciones realizadas en el sistema</mat-card-subtitle>
+      </mat-card-title-group>
+      <mat-divider></mat-divider>
+      <mat-card-content class="pt-4">
+        <app-audit-list fxLayout="column"></app-audit-list>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button routerLink="/audit">Ir al módulo</button>
+      </mat-card-actions>
+    </mat-card>
+  </section>
+</div>

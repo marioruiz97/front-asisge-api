@@ -22,7 +22,8 @@ import {
   MatSnackBarModule,
   MatProgressSpinnerModule,
   MatTabsModule,
-  MatDialogModule
+  MatDialogModule,
+  MatAutocompleteModule
 } from '@angular/material';
 
 
@@ -50,7 +51,8 @@ import {
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatTabsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatAutocompleteModule
   ],
   exports: [
     FlexLayoutModule,
@@ -74,7 +76,8 @@ import {
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatTabsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatAutocompleteModule
   ]
 })
 export class MaterialModule { }

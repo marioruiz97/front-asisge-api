@@ -11,7 +11,7 @@ export interface Proyecto {
 }
 
 export interface EstadoProyecto {
-  idEstado?: number;
+  id?: number;
   nombreEstado: string;
   descripcion?: string;
   idEstadoAnterior?: number | null;

@@ -22,3 +22,8 @@ export interface Asesor {
   usuario: number | Usuario;
   cliente: number | Cliente;
 }
+
+export interface UserInfo {
+  property: string;
+  data: any;
+}

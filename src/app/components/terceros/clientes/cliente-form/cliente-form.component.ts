@@ -129,7 +129,7 @@ export class ClienteFormComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ContactoFormComponent, { disableClose: true, data: contacto });
     this.subscriptions.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.deleteContacto(result.id);
+        this.contactos = this.contactos.filter(c => c.id !== result.id);
         this.contactos.push(result);
         this.refrescarContactos();
       }

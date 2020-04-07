@@ -5,6 +5,7 @@ import { Usuario } from 'src/app/models/terceros/usuario.model';
 import { UsuarioService } from '../usuario.service';
 import { UsuarioDetailsComponent } from '../usuario-details/usuario-details.component';
 import { UiService } from 'src/app/shared/ui.service';
+import { UsuarioClientesComponent } from '../usuario-clientes/usuario-clientes.component';
 
 @Component({
   selector: 'app-usuario-list',
@@ -50,7 +51,8 @@ export class UsuarioListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   showClientes(usuario: Usuario) {
-
+    if (usuario.apellido2 && usuario.apellido2 === '') { usuario.apellido2 = ''; }
+    this.dialog.open(UsuarioClientesComponent, { data: usuario });
   }
 
   delete(id: string) {

@@ -41,7 +41,7 @@ export class UiService {
     });
   }
 
-  putSnackBar(promise: Promise<any>) {
+  putSnackBar(promise: Promise<any>): Observable<boolean> {
     return new Observable(exito => {
       promise.then((res: Response) => {
         this.showSnackBar(res.message, 4);

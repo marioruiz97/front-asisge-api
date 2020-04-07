@@ -9,7 +9,7 @@ import { UiService } from 'src/app/shared/ui.service';
 @Component({
   selector: 'app-tipo-documento-list',
   templateUrl: './tipo-documento-list.component.html',
-  styleUrls: ['./tipo-documento-list.component.css']
+  styleUrls: ['../../maestros.css']
 })
 export class TipoDocumentoListComponent implements OnInit, OnDestroy, AfterViewInit {
 

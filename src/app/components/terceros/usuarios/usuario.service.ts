@@ -34,6 +34,10 @@ export class UsuarioService {
     return this.appService.getRequest(`${this.userPath}/${id}`).toPromise();
   }
 
+  saveClientes(idUsuario, list: any[]) {
+    return this.uiService.putSnackBar(this.appService.patchRequest(`${this.asesorPath}/${idUsuario}`, list));
+  }
+
   create(data: Usuario) {
     this.uiService.putSnackBar(this.appService.postRequest(this.userPath, data))
       .subscribe(exito => { if (exito) { this.returnToList(); } });

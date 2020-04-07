@@ -1,15 +1,10 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { Usuario } from 'src/app/models/terceros/usuario.model';
+import { Usuario, UserInfo } from 'src/app/models/terceros/usuario.model';
 import { TipoDocumento } from 'src/app/models/terceros/tipo-documento.model';
 import { Cliente } from 'src/app/models/terceros/cliente.model';
 import { Subscription } from 'rxjs';
 import { UsuarioService } from '../usuario.service';
-
-export interface UserInfo {
-  property: string;
-  data: any;
-}
 
 @Component({
   selector: 'app-usuario-details',

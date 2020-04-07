@@ -12,17 +12,17 @@ export class AppMenu {
    * TODO agregar boolean isDisabled?
    */
   private $menu = [{
-    name: 'Maestros', url: '/maestros', icon: 'work_outline',
+    name: 'Administración', url: '/', icon: 'work_outline',
     children: [
       { name: 'Gestionar Maestros', url: '/maestros', icon: 'work_outline' },
-      { name: 'Gestión de Estados', url: '/estados', icon: 'supervisor_account' },
+      { name: 'Estados de Proyecto', url: '/estado-proyecto', icon: 'emoji_events' },
       { name: 'Tipos de Documento', url: '/tipo-documento', icon: 'featured_video' },
-      { name: 'Tipos de Servicio', url: '/tipo-servicio', icon: 'room_service' },
-      { name: 'Tipos de Cierre', url: '/tipo-cierre', icon: 'emoji_events' },
+      { name: 'Auditoría', url: '/audit', icon: 'supervisor_account' },
+      /* { name: 'Tipos de Cierre', url: '/tipo-cierre', icon: 'room_service' }, */
     ]
   },
   {
-    name: 'Usuarios', url: '/usuarios', icon: 'assignment_ind',
+    name: 'Usuarios', url: '/', icon: 'assignment_ind',
     children: [
       { name: 'Gestionar Usuarios', url: '/usuarios', icon: 'assignment_ind' },
       { name: 'Perfiles', url: '/perfiles', icon: 'supervisor_account' },
@@ -30,7 +30,7 @@ export class AppMenu {
     ]
   },
   {
-    name: 'Clientes', url: '/clientes', icon: 'people_outline',
+    name: 'Clientes', url: '/', icon: 'people_outline',
     children: [
       { name: 'Gestionar Clientes', url: '/clientes', icon: 'people_outline' },
       { name: 'Representantes Legales', url: '/', icon: 'person' },
@@ -38,10 +38,10 @@ export class AppMenu {
     ]
   },
   {
-    name: 'Proyectos', url: '/proyectos', icon: 'dashboard',
+    name: 'Proyectos', url: '/', icon: 'dashboard',
     children: [
-      { name: 'Gestionar Plan de Trabajo', url: '', icon: 'dashboard' },
-      { name: 'Tablero del Proyecto', url: '', icon: 'next_week' },
+      { name: 'Ver Planes de Trabajo', url: '', icon: 'dashboard' },
+      { name: 'Tablero de Proyectos', url: '', icon: 'next_week' },
       { name: 'Vista de Avances', url: '', icon: 'assessment' },
       { name: 'Próximas Actividades', url: '', icon: 'schedule' }
     ]

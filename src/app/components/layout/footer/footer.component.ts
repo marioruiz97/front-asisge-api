@@ -25,14 +25,14 @@ export class FooterComponent implements OnInit {
       { name: 'Clientes', url: '/clientes' },
     ];
     this.modulos = [
-      { name: 'Maestros', url: '/' },
-      { name: 'Usuarios', url: '/' },
+      { name: 'Maestros', url: '/maestros' },
+      { name: 'Usuarios', url: '/usuarios' },
       { name: 'Mi Perfil', url: '/' },
     ];
     this.contacto = [
-      { name: 'Contacto', url: '/' },
+      { name: 'Contacto', url: '/contacto' },
       { name: 'Manual de Usuario', url: '/' },
-      { name: 'Acerca del Equipo', url: '/' },
+      { name: 'Acerca del Equipo', url: '/acerca' },
     ];
   }
 
