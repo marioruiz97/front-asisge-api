@@ -51,8 +51,8 @@ export class UsuarioFormComponent implements OnInit, OnDestroy {
       apellido2: new FormControl('', [Validators.maxLength(40)]),
       telefono: new FormControl('', [Validators.required, Validators.maxLength(11), Validators.pattern('(^$|[0-9]*)')]),
       correo: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(64)]),
-      contrasena: new FormControl('', [Validators.maxLength(14)]),
-      matchContrasena: new FormControl('', [Validators.maxLength(14)]),
+      contrasena: new FormControl('', [Validators.minLength(6), Validators.maxLength(14)]),
+      matchContrasena: new FormControl('', [Validators.minLength(6), Validators.maxLength(14)]),
       estado: new FormControl(false, []),
       perfil: new FormControl('', [Validators.required])
     });
