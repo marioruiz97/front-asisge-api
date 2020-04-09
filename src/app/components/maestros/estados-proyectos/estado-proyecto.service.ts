@@ -23,7 +23,6 @@ export class EstadoProyectoService {
     return this.appService.getRequest(`${this.estadoPath}/${id}`).toPromise();
   }
 
-
   create(data: EstadoProyecto) {
     this.uiService.putSnackBar(this.appService.postRequest(this.estadoPath, data))
       .subscribe(exito => { if (exito) { this.returnToList(); } });

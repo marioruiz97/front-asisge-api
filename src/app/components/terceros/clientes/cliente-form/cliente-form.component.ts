@@ -56,10 +56,8 @@ export class ClienteFormComponent implements OnInit, OnDestroy {
   getCliente(id: number | string) {
     this.service.getById(id)
       .then(res => this.setForm(res.body))
-      .catch(err => {
+      .catch(_ => {
         this.service.returnToList();
-        const message = err.error ? err.error.message : 'Ha ocurrido un error. Intenta nuevamente';
-        this.uiService.showConfirm({ title: 'Error', message, confirm: 'Ok' });
       });
   }
   setForm(cliente: Cliente) {

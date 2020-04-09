@@ -106,11 +106,10 @@ export class AuthService {
   }
 
 
-
-
-
-
-
+  sessionHasExpired() {
+    this.uiService.showConfirm({ title: 'La sesión ha expirado!', message: 'Ingresa al sistema nuevamente', confirm: 'Ok' });
+    this.logout();
+  }
 
 
 

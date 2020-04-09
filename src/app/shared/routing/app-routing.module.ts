@@ -56,6 +56,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
   exports: [RouterModule],
-  providers: [AuthGuard]
+  providers: [AuthGuard, RoleGuard]
 })
 export class AppRoutingModule { }

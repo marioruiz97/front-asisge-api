@@ -15,24 +15,15 @@ export interface Response {
 @Injectable()
 export class AppService {
 
-  /*  private httpOptions = {
-     headers: new HttpHeaders({
-       'Content-Type': 'application/json',
-       'Access-Control-Allow-Origin': '*',
-       Authorization: environment.authorization
-     })
-   };
+  /*
    private httpOptionsImage = { //terminar esto
-     headers: new HttpHeaders({ enctype: 'multipart/form-data', Authorization: environment.authorization })
+     headers: new HttpHeaders({ enctype: 'multipart/form-data'})
    }; */
-
   private loginHeaders = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded', Authorization: environment.authorization
   });
-
   private API_ENDPOINT = environment.api_endpoint;
   private LOGIN_PATH = environment.token_path;
-
   constructor(private httpClient: HttpClient) { }
 
 

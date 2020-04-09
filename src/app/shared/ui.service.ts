@@ -4,7 +4,6 @@ import { Response } from './app.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../components/layout/confirm-dialog/confirm-dialog.component';
 import { Observable, Subject } from 'rxjs';
-import { Router } from '@angular/router';
 
 export interface ConfirmDialogData {
   title: string;
@@ -19,7 +18,7 @@ export class UiService {
   private appMenu = new AppMenu();
   loadingState = new Subject<boolean>();
 
-  constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) { }
+  constructor(private snackBar: MatSnackBar, private dialog: MatDialog) { }
 
   get menu(): NavItem[] {
     return this.appMenu.menu;
@@ -49,16 +48,6 @@ export class UiService {
         exito.next(true);
       }).catch(err => {
         exito.next(false);
-        if (err.status === 401) {
-          this.showSnackBar('La sesión ha expirado, ingresa al sistema', 3);
-          this.router.navigate(['/login']);
-          return;
-        }
-        if (err.status === 403) {
-          this.showConfirm({ title: 'Acceso Denegado', message: 'No tienes acceso a este recurso', confirm: 'Ok' });
-          this.router.navigate(['/home']);
-          return;
-        }
         if (err.error) {
           const errors: string[] = err.error.errors;
           this.showConfirm({ title: 'Error', message: err.error.message, errors, confirm: 'Ok' });

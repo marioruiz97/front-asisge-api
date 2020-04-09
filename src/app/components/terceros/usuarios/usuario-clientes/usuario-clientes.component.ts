@@ -23,7 +23,6 @@ export class UsuarioClientesComponent implements OnInit, OnDestroy {
   filteredClientes: Observable<Cliente[]>;
   private subs: Subscription[] = [];
 
-
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Usuario,
     public dialogRef: MatDialogRef<UsuarioClientesComponent>,
@@ -50,7 +49,6 @@ export class UsuarioClientesComponent implements OnInit, OnDestroy {
       this.clientes = res.body as Cliente[];
       this.clientes.forEach(c => c.tipoDocumento = c.tipoDocumento as TipoDocumento);
     }));
-
     this.subs.push(this.clienteService.fetchAll().subscribe(res => this.allClientes = res.body as Cliente[]));
   }
 
@@ -61,15 +59,12 @@ export class UsuarioClientesComponent implements OnInit, OnDestroy {
       .map(item => item.idCliente)
       .filter(id => !oldIs.includes(id));
     return all.filter(c => allIds.includes(c.idCliente)).slice();
-
-
     /* return all.filter(c => this.clientes.map(old => c.idCliente !== old.idCliente ? c.idCliente : 0).includes(c.idCliente)
     ).slice(); */
   }
 
   private _filter(value: string): Cliente[] {
     const filterValue = value.trim().toLowerCase();
-
     const result = this.allClientes.filter(c =>
       c.razonSocial.toLowerCase().includes(filterValue) || c.nombreComercial.toLowerCase().includes(filterValue)
     );

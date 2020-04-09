@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AppService, Response } from 'src/app/shared/app.service';
 import { TipoDocumentoService } from '../../maestros/tipo-documento/tipo-documento.service';
-import { UiService, ConfirmDialogData } from 'src/app/shared/ui.service';
+import { UiService } from 'src/app/shared/ui.service';
 import { Router } from '@angular/router';
 import { AppConstants as Constant } from 'src/app/shared/routing/app.constants';
 import { Observable } from 'rxjs';
@@ -14,8 +14,8 @@ export class UsuarioService {
   private asesorPath = Constant.PATH_ASESOR;
 
   constructor(
-    private appService: AppService, private docService: TipoDocumentoService, private uiService: UiService,
-    private router: Router
+    private appService: AppService, private docService: TipoDocumentoService,
+    private uiService: UiService, private router: Router
   ) { }
 
   fetchAll(): Observable<Response> {
@@ -42,6 +42,7 @@ export class UsuarioService {
     this.uiService.putSnackBar(this.appService.postRequest(this.userPath, data))
       .subscribe(exito => { if (exito) { this.returnToList(); } });
   }
+
   update(id: string | number, data: Usuario) {
     this.uiService.putSnackBar(this.appService.patchRequest(`${this.userPath}/${id}`, data))
       .subscribe(exito => { if (exito) { this.returnToList(); } });
