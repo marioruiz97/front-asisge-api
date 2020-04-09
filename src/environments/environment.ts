@@ -6,6 +6,9 @@ export const environment = {
   production: false,
   authorization: 'Basic ' + btoa('AsisgeApp:clave123'),
   api_endpoint: 'http://localhost:8080/api/v1',
+  token_path: 'oauth/token',
+  grant_type: 'password',
+
   firebase: {
     apiKey: 'AIzaSyCleMrpWObWEo7hOnhyouOWGmfAna8rsXg',
     authDomain: 'elenchos-software.firebaseapp.com',

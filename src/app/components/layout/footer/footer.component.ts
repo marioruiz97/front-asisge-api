@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AuthService } from 'src/app/auth/auth.service';
+import { Subscription } from 'rxjs';
 
 export interface Item {
   name: string;
@@ -10,15 +12,16 @@ export interface Item {
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css']
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent implements OnInit, OnDestroy {
 
-  isLogged = true;
+  isLogged = false;
+  authSubscription: Subscription;
 
   proyectos: Item[];
   modulos: Item[];
   contacto: Item[];
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.proyectos = [
       { name: 'Proyectos', url: '/' },
       { name: 'Informes', url: '/' },
@@ -37,6 +40,12 @@ export class FooterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authSubscription = this.authService.authState.subscribe(state => this.isLogged = state);
+    this.authService.isAuthenticated();
+  }
+
+  ngOnDestroy() {
+    if (this.authSubscription) { this.authSubscription.unsubscribe(); }
   }
 
 }
