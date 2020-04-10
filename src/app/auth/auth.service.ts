@@ -44,7 +44,7 @@ export class AuthService {
         this.goToHome();
       }
     }).catch(err => {
-      console.log(err);
+      console.log('error', err);
       this.authState.next(false);
       this.$isAuthenticated = false;
       this.goToLogin();

@@ -25,7 +25,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(authReq).pipe(
       catchError(err => {
-        console.log(err);
         if (err.status === 401 && this.authService.isAuthenticated()) {
           this.authService.sessionHasExpired();
         }

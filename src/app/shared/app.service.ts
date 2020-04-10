@@ -54,7 +54,7 @@ export class AppService {
   }
 
   deleteRequest(path: string): Promise<Response> {
-    return this.httpClient.delete(`${this.API_ENDPOINT}/${path}?email=marioarb97@gmail.com`).pipe(
+    return this.httpClient.delete(`${this.API_ENDPOINT}/${path}`).pipe(
       map(result => result as Response)
     ).toPromise();
   }

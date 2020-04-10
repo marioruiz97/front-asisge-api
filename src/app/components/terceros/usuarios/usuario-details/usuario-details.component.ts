@@ -26,6 +26,7 @@ export class UsuarioDetailsComponent implements OnInit, OnDestroy {
     this.info.push({ property: 'Teléfono:', data: data.telefono ? data.telefono : 'No hay teléfono asociado' });
     this.info.push({ property: 'Correo:', data: data.correo });
     this.info.push({ property: 'Estado:', data: data.estado ? 'Activo' : 'Inactivo' });
+    this.info.push({ property: 'Rol(es):', data: data.roles.map(rol => rol.nombreRole.replace('ROLE_', ' ')) });
   }
 
   ngOnInit() {

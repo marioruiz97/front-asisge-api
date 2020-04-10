@@ -20,19 +20,21 @@ import { EstadoProyectoFormComponent } from 'src/app/components/maestros/estados
 import { MaestrosListComponent } from 'src/app/components/maestros/maestros-list/maestros-list.component';
 import { AuditPageComponent } from 'src/app/components/maestros/audit/audit-page/audit-page.component';
 import { RoleGuard } from 'src/app/auth/role.guard';
+import { MiCuentaComponent } from 'src/app/auth/mi-cuenta/mi-cuenta.component';
 
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'micuenta', component: MiCuentaComponent, canActivate: [AuthGuard] },
 
   {
-    path: 'maestros', component: MaestrosListComponent,
-    canActivate: [AuthGuard, RoleGuard], data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
+    path: 'maestros', component: MaestrosListComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
   },
-  { path: 'audit', component: AuditPageComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: 'ROLE_ADMIN' } },
+  { path: 'audit', component: AuditPageComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['ROLE_ADMIN'] } },
 
-  { path: 'tipo-documento', component: TipoDocumentoPageComponent, canActivate: [AuthGuard] },
+  { path: 'tipo-documento', component: TipoDocumentoPageComponent, canActivate: [AuthGuard, RoleGuard] },
   { path: 'tipo-documento/:id', component: TipoDocumentoFormComponent, canActivate: [AuthGuard] },
   { path: 'estado-proyecto', component: EstadoProyectoPageComponent, canActivate: [AuthGuard] },
   { path: 'estado-proyecto/:id', component: EstadoProyectoFormComponent, canActivate: [AuthGuard] },
