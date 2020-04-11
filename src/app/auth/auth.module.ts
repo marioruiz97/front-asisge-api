@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './views/login/login.component';
 import { AuthService } from './auth.service';
-import { RecoveryComponent } from './recovery/recovery.component';
-import { MiCuentaComponent } from './mi-cuenta/mi-cuenta.component';
-import { CuentaService } from './mi-cuenta/cuenta.service';
-import { ChangePasswordComponent } from './change-password/change-password.component';
+import { RecoveryComponent } from './views/recovery/recovery.component';
+import { MiCuentaComponent } from './views/mi-cuenta/mi-cuenta.component';
+import { CuentaService } from './views/mi-cuenta/cuenta.service';
+import { ChangePasswordComponent } from './views/change-password/change-password.component';
 
 
 

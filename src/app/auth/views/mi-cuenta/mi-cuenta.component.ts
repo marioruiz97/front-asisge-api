@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Usuario } from 'src/app/models/terceros/usuario.model';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../auth.service';
 import { MatDialog } from '@angular/material';
 import { CuentaService } from './cuenta.service';
 import { TipoDocumento } from 'src/app/models/terceros/tipo-documento.model';

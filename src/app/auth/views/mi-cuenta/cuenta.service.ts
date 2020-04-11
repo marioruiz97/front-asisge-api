@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../auth.service';
 import { AppService, Response } from 'src/app/shared/app.service';
 import { AppConstants as Cons } from 'src/app/shared/routing/app.constants';
 import { Observable } from 'rxjs';
