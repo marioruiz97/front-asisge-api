@@ -6,8 +6,18 @@ export interface Proyecto {
   nombreProyecto: string;
   descripcionGeneral: string;
   fechaCierreProyecto?: Date;
-  estadoProyecto: number | EstadoProyecto;
-  clienteProyecto: number | Cliente;
+  estadoProyecto: EstadoProyecto;
+  cliente: Cliente;
+  lastModifiedDate?: Date;
+}
+
+export interface ProyectoDto {
+  idProyecto?: number;
+  nombreProyecto: string;
+  descripcionGeneral: string;
+  fechaCierreProyecto?: Date;
+  estadoProyecto: number;
+  cliente: number;
 }
 
 export interface EstadoProyecto {

@@ -45,4 +45,19 @@ export class CuentaService {
     const path = Cons.PATH_AUTH + '/cambio-contrasena/' + idUsuario;
     this.uiService.putSnackBar(this.appService.postRequest(path, data));
   }
+
+  fetchMisClientes(idUsuario: number) {
+    const path = Cons.PATH_ASESOR + '?usuario=' + idUsuario;
+    return this.appService.getRequest(path);
+  }
+
+  fetchMisProyectos(idUsuario: number) {
+    const path = Cons.PATH_MIS_PROYECTOS.replace('{id}', idUsuario.toString());
+    return this.appService.getRequest(path);
+  }
+
+  quitarCliente(idCliente: number, idUsuario: number) {
+    const path = Cons.PATH_ASESOR + `?usuario=${idUsuario}&cliente=${idCliente}`;
+    return this.uiService.putSnackBar(this.appService.deleteRequest(path));
+  }
 }

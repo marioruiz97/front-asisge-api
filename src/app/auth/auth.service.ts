@@ -89,10 +89,21 @@ export class AuthService {
   }
 
   hasRole(role: string) {
-    if (this.currentAuthInfo && this.currentAuthInfo.roles.includes(role)) {
+    if (this.currentAuthInfo.roles && this.currentAuthInfo.roles.includes(role)) {
       return true;
     }
     return false;
+  }
+
+  hasRoles(roles: string[]) {
+    let result = false;
+    for (const rol of roles) {
+      if (this.hasRole(rol)) {
+        result = true;
+        break;
+      }
+    }
+    return result;
   }
 
   logout() {

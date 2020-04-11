@@ -75,10 +75,10 @@
 
   <mat-tab-group mat-stretch-tabs class="mat-elevation-z4">
     <mat-tab label="Mis proyectos">
-      lista de proyectos
+      <app-mis-proyectos *ngIf="_idUsuario" [idUsuario]="_idUsuario"></app-mis-proyectos>
     </mat-tab>
     <mat-tab label="Mis clientes">
-      lista de clientes
+      <app-mis-clientes *ngIf="_idUsuario" [idUsuario]="_idUsuario"></app-mis-clientes>
     </mat-tab>
   </mat-tab-group>
 </div>

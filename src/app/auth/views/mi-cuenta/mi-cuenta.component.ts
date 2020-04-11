@@ -27,6 +27,10 @@ export class MiCuentaComponent implements OnInit, OnDestroy {
     private matDialog: MatDialog
   ) { }
 
+  get _idUsuario() {
+    return this.idUsuario;
+  }
+
   ngOnInit() {
     if (this.authService.isAuthenticated()) {
       this.initForm();

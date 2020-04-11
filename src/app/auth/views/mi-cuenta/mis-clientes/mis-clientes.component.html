@@ -1,0 +1,53 @@
+<div class="pt-4" fxLayoutAlign="center" *ngIf="hasRoles(['ROLE_ADMIN', 'ROLE_ASESOR'])">
+  <button mat-fab routerLink="/clientes/0" color="primary" matTooltip="Crear cliente">
+      <mat-icon class="mat-18">add</mat-icon>
+  </button>
+</div>
+<section class="py-5 px-4" fxLayout="row wrap" fxLayoutAlign="space-evenly" fxLayoutGap="15px">
+  <mat-card class="p-3 mb-3 mat-elevation-z3" fxFlex.lt-sm fxFlex.sm="30" fxFlex.gt-sm="31" *ngFor="let cliente of misClientes">
+    <mat-card-header>
+      <div mat-card-avatar mat-icon-button>
+        <mat-icon>account_circle</mat-icon>
+      </div>
+      <mat-card-title>Cliente {{cliente.idCliente + ' - ' + cliente.nombreComercial}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list dense>
+        <mat-list-item>
+          <div mat-line>
+            {{cliente.tipoDocumento.nombreTipoDocumento + ': ' + cliente.identificacion}}
+          </div>
+          <div mat-line>
+            Identificación del cliente
+          </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <div mat-line>
+            {{cliente.razonSocial + ' - ' + cliente.nombreComercial}}
+          </div>
+          <div mat-line>
+            Razón social - Nombre comercial
+          </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <div mat-line>
+            Contactos
+          </div>
+          <div mat-line *ngFor="let c of cliente.contactos">
+            nombre: {{c.nombre + ' correo: ' + c.correo}}
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-icon-button color="primary" [routerLink]="['/clientes/'+cliente.idCliente]" matTooltip="Ir a editar">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="quitarCliente(cliente.idCliente)" matTooltip="Quitar de mi lista" *ngIf="hasRoles(['ROLE_ADMIN', 'ROLE_ASESOR'])">
+        <mat-icon>delete_forever</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</section>
