@@ -4,6 +4,10 @@ export class AppConstants {
   public static PATH_ESTADO_PROYECTO = 'estado-proyecto';
   public static PATH_AUDIT = 'audit';
 
+  public static PATH_AUTH = 'auth';
+
+  public static PATH_MIS_PROYECTOS = 'usuarios/{id}/mis-proyectos';
+
   public static PATH_USUARIO = 'usuarios';
   public static PATH_ASESOR = 'usuarios/clientes';
   public static PATH_CLIENTE_ASESOR = 'clientes/usuarios';

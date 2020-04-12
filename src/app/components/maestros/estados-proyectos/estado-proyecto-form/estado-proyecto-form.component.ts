@@ -51,9 +51,7 @@ export class EstadoProyectoFormComponent implements OnInit, OnDestroy {
   getEstado(id: number) {
     this.service.fetchById(id)
       .then(res => this.setForm(res.body))
-      .catch(err => {
-        const message = err.error ? err.error.message : 'Ha ocurrido un error. Intenta nuevamente';
-        this.uiService.showConfirm({ title: 'Error', message, confirm: 'Ok' });
+      .catch(_ => {
         this.service.returnToList();
       });
   }

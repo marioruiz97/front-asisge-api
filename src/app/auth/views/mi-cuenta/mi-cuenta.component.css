@@ -1,0 +1,26 @@
+mat-card-title {
+  font-size: 2em;
+  text-align: center;
+}
+
+mat-card-content aside,
+mat-card-content form {
+  min-width: 50%;
+}
+
+aside div {
+  width: 100%;
+}
+
+.options {
+  height: 350px;
+  width: 350px;
+  background-image: url("https://cdn.pixabay.com/photo/2015/03/17/14/05/sparkler-677774_960_720.jpg");
+  background-position: top;
+  background-size: cover;
+}
+
+
+mat-list-item {
+  height: 38px !important;
+}

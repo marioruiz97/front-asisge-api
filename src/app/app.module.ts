@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './auth/auth.module';
 import { HomeComponent } from './components/others/home/home.component';
-import { UiService } from './shared/ui.service';
 import { TercerosModule } from './components/terceros/terceros.module';
 import { MaestrosModule } from './components/maestros/maestros.module';
 import { AppService } from './shared/app.service';
@@ -23,7 +22,7 @@ import { ContactComponent } from './components/others/contact/contact.component'
     TercerosModule,
     MaestrosModule
   ],
-  providers: [UiService, AppService],
+  providers: [ AppService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

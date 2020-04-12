@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular
 import { Subscription } from 'rxjs';
 import { EstadoProyecto } from 'src/app/models/proyectos/proyecto.model';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { UiService } from 'src/app/shared/ui.service';
 import { EstadoProyectoService } from '../estado-proyecto.service';
 
 @Component({
@@ -19,7 +18,7 @@ export class EstadoProyectoListComponent implements OnInit, AfterViewInit, OnDes
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private service: EstadoProyectoService, private uiService: UiService) { }
+  constructor(private service: EstadoProyectoService) { }
 
   ngOnInit() {
     this.fetch();
@@ -32,9 +31,7 @@ export class EstadoProyectoListComponent implements OnInit, AfterViewInit, OnDes
 
   fetch() {
     this.listSub.push(
-      this.service.fetchAll().subscribe(list => this.datasource.data = list.body as EstadoProyecto[],
-        _ => this.uiService.showConfirm({ title: 'Error', message: 'No se encontraron registros', confirm: 'Ok' }))
-    );
+      this.service.fetchAll().subscribe(list => this.datasource.data = list.body as EstadoProyecto[]));
   }
 
   doFilter(filterString: string) {

@@ -3,7 +3,6 @@ import { TipoDocumentoService } from '../tipo-documento.service';
 import { TipoDocumento } from 'src/app/models/terceros/tipo-documento.model';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { UiService } from 'src/app/shared/ui.service';
 
 
 @Component({
@@ -20,7 +19,7 @@ export class TipoDocumentoListComponent implements OnInit, OnDestroy, AfterViewI
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private service: TipoDocumentoService, private uiService: UiService) { }
+  constructor(private service: TipoDocumentoService) { }
 
   ngOnInit() {
     this.fetch();
@@ -32,9 +31,7 @@ export class TipoDocumentoListComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   fetch() {
-    this.listSub.push(this.service.fetchAll().subscribe(list => this.datasource.data = list.body as TipoDocumento[],
-      _ => this.uiService.showConfirm({ title: 'Error', message: 'No se encontraron registros', confirm: 'Ok' })
-    ));
+    this.listSub.push(this.service.fetchAll().subscribe(list => this.datasource.data = list.body as TipoDocumento[]));
   }
 
   doFilter(filterString: string) {

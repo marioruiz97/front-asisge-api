@@ -4,7 +4,6 @@ import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/m
 import { Usuario } from 'src/app/models/terceros/usuario.model';
 import { UsuarioService } from '../usuario.service';
 import { UsuarioDetailsComponent } from '../usuario-details/usuario-details.component';
-import { UiService } from 'src/app/shared/ui.service';
 import { UsuarioClientesComponent } from '../usuario-clientes/usuario-clientes.component';
 
 @Component({
@@ -23,7 +22,7 @@ export class UsuarioListComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
-    private service: UsuarioService, private dialog: MatDialog, private uiService: UiService
+    private service: UsuarioService, private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -36,9 +35,7 @@ export class UsuarioListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   fetch() {
-    this.listSub.push(this.service.fetchAll().subscribe(list => this.datasource.data = list.body as Usuario[],
-      _ => this.uiService.showConfirm({ title: 'Error', message: 'No se encontraron registros', confirm: 'Ok' })
-    ));
+    this.listSub.push(this.service.fetchAll().subscribe(list => this.datasource.data = list.body as Usuario[]));
   }
 
   doFilter(filterString: string) {

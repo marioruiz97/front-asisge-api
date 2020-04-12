@@ -1,0 +1,69 @@
+<div class="pt-4" fxLayoutAlign="center" *ngIf="hasRole(['ROLE_ADMIN'])">
+  <button mat-fab routerLink="/proyectos/0" color="primary" matTooltip="Crear proyecto">
+      <mat-icon class="mat-18">add</mat-icon>
+  </button>
+</div>
+<section class="py-5 px-4" fxLayout="row wrap" fxLayoutAlign="space-evenly" fxLayoutGap="15px">
+
+  <mat-card class="p-3 mb-3 mat-elevation-z3" fxFlex.lt-sm fxFlex.gt-xs="48" *ngFor="let project of misProyectos">
+    <mat-card-header>
+      <div mat-card-avatar mat-icon-button>
+        <mat-icon>vertical_split</mat-icon>
+      </div>
+      <mat-card-title>Proyecto {{project.idProyecto + ' - ' + project.nombreProyecto}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list dense>
+        <div mat-subheader>Información del Cliente</div>
+        <mat-list-item>
+          <div class="title" mat-line>
+            {{project.cliente.tipoDocumento.nombreTipoDocumento + ': ' + project.cliente.identificacion}}
+          </div>
+          <div>
+            Identificación
+          </div>
+        </mat-list-item>
+        <mat-list-item>
+          <div class="title" mat-line>
+            {{project.cliente.nombreComercial}}
+          </div>
+          <div>
+            Nombre
+          </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <div mat-subheader>Información del proyecto</div>
+        <mat-list-item>
+          <div class="title" mat-line>
+            {{project.descripcionGeneral}}
+          </div>
+          <div>
+            Descripción
+          </div>
+        </mat-list-item>
+        <mat-list-item>
+          <div class="title" mat-line>
+            {{project.estadoProyecto.nombreEstado}}
+          </div>
+          <div>
+            Estado
+          </div>
+        </mat-list-item>
+        <mat-list-item *ngIf="project.lastModifiedDate">
+          <div class="title" mat-line>
+            {{project.lastModifiedDate | date: 'medium'}}
+          </div>
+          <div>
+            Última modificación
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-button color="primary" [routerLink]="['/proyectos/' + project.idProyecto]">
+        <mat-icon>dashboard</mat-icon> Ir al Dashboard
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</section>

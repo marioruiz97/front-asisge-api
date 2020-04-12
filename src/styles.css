@@ -22,7 +22,7 @@ mat-sidenav {
 }
 
 mat-sidenav.gt-sm {
-  width: 25vw;
+  width: 50vw;
 }
 mat-sidenav.lt-sm {
   width: 75vw;

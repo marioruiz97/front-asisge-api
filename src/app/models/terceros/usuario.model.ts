@@ -1,4 +1,4 @@
-import { ProfileData } from './profile.model';
+import { Role } from './role.model';
 import { TipoDocumento } from './tipo-documento.model';
 import { Cliente } from './cliente.model';
 
@@ -14,7 +14,7 @@ export interface Usuario {
   contrasena: string;
   matchContrasena?: string;
   estado: boolean;
-  perfil: string;
+  roles: Role[];
 }
 
 export interface Asesor {

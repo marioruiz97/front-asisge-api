@@ -54,22 +54,19 @@ export class UsuarioFormComponent implements OnInit, OnDestroy {
       contrasena: new FormControl('', [Validators.minLength(6), Validators.maxLength(14)]),
       matchContrasena: new FormControl('', [Validators.minLength(6), Validators.maxLength(14)]),
       estado: new FormControl(false, []),
-      perfil: new FormControl('', [Validators.required])
+      perfil: new FormControl(3, [Validators.required])
     });
   }
 
   getUsuario(id: number) {
     this.service.fetchById(id)
       .then(res => this.setForm(res.body))
-      .catch(err => {
-        const message = err.error ? err.error.message : 'Ha ocurrido un error. Intenta nuevamente';
-        this.uiService.showConfirm({ title: 'Error', message, confirm: 'Ok' });
-        this.service.returnToList();
-      });
+      .catch(_ => this.service.returnToList());
   }
 
   setForm(usuario: Usuario) {
     const tipoDoc = usuario.tipoDocumento as TipoDocumento;
+    const rol = usuario.roles && usuario.roles.length > 0 ? usuario.roles[0].id : 3;
     this.curId = usuario.idUsuario;
     this.curPassword = usuario.contrasena;
     this.isUpdate = true;
@@ -83,7 +80,8 @@ export class UsuarioFormComponent implements OnInit, OnDestroy {
       telefono: usuario.telefono ? usuario.telefono : '',
       correo: usuario.correo,
       estado: usuario.estado,
-      contrasena: '', matchContrasena: '', perfil: ''
+      perfil: rol,
+      contrasena: '', matchContrasena: ''
     });
   }
 
@@ -119,14 +117,14 @@ export class UsuarioFormComponent implements OnInit, OnDestroy {
         return this.uiService.showSnackBar('Las contraseñas no coinciden', 2, 'Ok');
       }
     }
-
+    const form = this.usuarioForm.value;
+    form.roles = [{ id: parseInt(form.perfil, 10) }];
     if (this.curId && this.curId !== 0) {
-      const form = this.usuarioForm.value;
       form.contrasena = this.usuarioForm.value.contrasena ? form.contrasena : this.curPassword;
       this.service.update(this.curId, form);
     } else {
       if (!this.usuarioForm.value.contrasena) { return this.uiService.showSnackBar('La contraseña es obligatoria', 2, 'Ok'); }
-      this.service.create(this.usuarioForm.value);
+      this.service.create(form);
     }
   }
 

@@ -17,7 +17,8 @@ export class ClienteService {
   contactosChanged = new Subject<Contacto[]>();
 
   constructor(
-    private appService: AppService, private uiService: UiService, private docService: TipoDocumentoService, private router: Router
+    private appService: AppService, private uiService: UiService,
+    private docService: TipoDocumentoService, private router: Router
   ) { }
 
   fetchAll(): Observable<Response> {
