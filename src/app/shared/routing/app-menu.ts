@@ -40,8 +40,8 @@ export class AppMenu {
   {
     name: 'Proyectos', url: '/', icon: 'dashboard',
     children: [
-      { name: 'Ver Planes de Trabajo', url: '', icon: 'dashboard' },
-      { name: 'Tablero de Proyectos', url: '', icon: 'next_week' },
+      { name: 'Ver Planes de Trabajo', url: '', icon: 'next_week' },
+      { name: 'Tablero de Proyectos', url: '/proyectos', icon: 'dashboard' },
       { name: 'Vista de Avances', url: '', icon: 'assessment' },
       { name: 'Próximas Actividades', url: '', icon: 'schedule' }
     ]

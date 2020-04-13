@@ -8,11 +8,12 @@ import { UiService } from '../shared/ui.service';
 export interface TokenInfo {
   userid: number;
   email: string;
+  nombre?: string;
   roles?: string[];
   token?: string;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthService {
 
   private $isAuthenticated = false;
@@ -27,7 +28,8 @@ export class AuthService {
       this.authState.next(true);
       this.$isAuthenticated = true;
       this.currentAuthInfo = {
-        userid: payload.usuario_id, email: payload.usuario_email, roles: payload.authorities
+        userid: payload.usuario_id, email: payload.usuario_email, roles: payload.authorities,
+        nombre: payload.usuario_name
       };
     }
   }

@@ -1,0 +1,27 @@
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="onFilter()" fxFlex fxLayoutGap="7px" fxLayout.lt-sm="column">
+  <mat-form-field fxFlex="25">
+    <mat-label>Estado del Proyecto</mat-label>
+    <mat-select formControlName="estado">
+      <mat-option [value]="item.id" *ngFor="let item of estados">{{item.id + ' - ' + item.nombreEstado}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field fxFlex="25">
+    <mat-label>Cliente</mat-label>
+    <input type="text" placeholder="Busca por razón social o nombre comercial" matInput [matAutocomplete]="auto"
+      formControlName="cliente">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let cliente of filteredClientes | async" [value]="cliente.razonSocial">
+        <span [id]="cliente.idCliente">{{cliente.idCliente}} - </span>
+        {{cliente.razonSocial + ' - ' + cliente.nombreComercial}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field fxFlex="25">
+    <mat-label>Iniciado Desde</mat-label>
+    <input matInput [max]="maxDate" [matDatepicker]="myDatepicker" formControlName="desde">
+    <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+    <mat-datepicker #myDatepicker></mat-datepicker>
+  </mat-form-field>
+  <div fxFlex></div>
+  <button type="submit" mat-button color="primary">Aplicar Filtros</button>
+</form>

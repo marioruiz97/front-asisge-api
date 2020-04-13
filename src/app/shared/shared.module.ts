@@ -44,7 +44,7 @@ import { AuthInterceptor } from '../auth/interceptors/auth.interceptor';
   ],
   providers: [
     UiService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   entryComponents: [ConfirmDialogComponent]
 })

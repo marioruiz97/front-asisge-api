@@ -9,6 +9,7 @@ export interface Proyecto {
   estadoProyecto: EstadoProyecto;
   cliente: Cliente;
   lastModifiedDate?: Date;
+  createdDate?: Date;
 }
 
 export interface ProyectoDto {

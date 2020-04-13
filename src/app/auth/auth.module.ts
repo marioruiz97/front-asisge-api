@@ -12,7 +12,9 @@ import { MisProyectosComponent } from './views/mi-cuenta/mis-proyectos/mis-proye
 
 
 @NgModule({
-  declarations: [LoginComponent, RecoveryComponent, MiCuentaComponent, ChangePasswordComponent, MisClientesComponent, MisProyectosComponent],
+  declarations: [
+    LoginComponent, RecoveryComponent, MiCuentaComponent, ChangePasswordComponent, MisClientesComponent, MisProyectosComponent
+  ],
   imports: [
     SharedModule,
   ],

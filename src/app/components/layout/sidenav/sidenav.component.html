@@ -1,15 +1,15 @@
 <section fxLayout="column" *ngIf="isLogged">
 
-  <div class="primary mb-1 px-3 py-5" fxFlex fxLayoutAlign="start">
-    <button mat-fab color="primary" class="mat-elevation-z5 photo-button" matTooltip="Ir a Mi perfil" routerLink="/"
+  <div class="primary mb-1 px-3 py-5" fxFlex fxLayoutAlign="start center">
+    <button mat-fab color="primary" class="mat-elevation-z5 photo-button" matTooltip="Ir a Mi perfil" routerLink="/micuenta"
       (click)="onToggle()"></button>
-    <mat-list>
+    <mat-list class="mt-0">
       <mat-list-item>
-        <span matLine class="person-info"> Mario Andres Ruiz</span>
+        <span matLine class="person-info"> {{user.nombre}} </span>
         <span matLine>nombre</span>
       </mat-list-item>
       <mat-list-item>
-        <span matLine class="person-info"> Marioarb.97@gmail.com</span>
+        <span matLine class="person-info"> {{user.email}} </span>
         <span matLine>correo electrónico</span>
       </mat-list-item>
     </mat-list>

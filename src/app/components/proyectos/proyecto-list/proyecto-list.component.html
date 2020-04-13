@@ -1,0 +1,100 @@
+<div gdAreas="content | footer">
+  <section class="mb-5" gdArea="content">
+
+    <h2>Proyectos</h2>
+
+    <mat-toolbar class="my-2 mb-5 mat-elevation-z2">
+      <mat-toolbar-row fxLayoutAlign="end">
+        <button mat-button color="accent" *ngIf="!showFilters" (click)="showFilters = true">
+          <mat-icon>visibility</mat-icon> Mostrar Filtros
+        </button>
+        <button mat-button color="accent" *ngIf="showFilters" (click)="showFilters = false">
+          <mat-icon>visibility_off</mat-icon> Ocultar Filtros
+        </button>
+      </mat-toolbar-row>
+      <mat-toolbar-row *ngIf="showFilters">
+        <app-filter (filtrar)="filtrar($event)" fxFlex></app-filter>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <button mat-icon-button class="quitar-filtros mb-4" color="warn" matTooltip="Quitar filtros" (click)="eliminarFiltros()" *ngIf="quitarFiltros">
+      <mat-icon>clear</mat-icon>
+    </button>
+
+    <div class="cards" fxLayout="row wrap" fxLayoutAlign="space-evenly start">
+      <mat-card class="mat-elevation-z2 add-card mb-4" fxFlex.gt-xs="20" fxLayout="column" fxLayoutAlign="center center">
+        <button mat-fab color="primary" routerLink="/proyectos/nuevo">
+          <mat-icon class="mat-18">add</mat-icon>
+        </button>
+        <h3 class="mt-2 add-project">Crear Proyecto</h3>
+      </mat-card>
+
+      <mat-card fxFlex.gt-xs="32" class="mb-4 mat-elevation-z2" *ngFor="let pro of proyectos | async">
+        <mat-card-title>Proyecto {{pro.idProyecto + ' - ' + pro.nombreProyecto}}</mat-card-title>
+        <mat-card-subtitle>Estado: {{pro.estadoProyecto.nombreEstado}}</mat-card-subtitle>
+        <mat-divider></mat-divider>
+        <mat-card-content class="pt-3">
+          <h4>Descripción</h4>
+          <p>{{pro.descripcionGeneral}}</p>
+
+          <mat-list dense>
+            <div mat-subheader>Información del proyecto</div>
+            <mat-list-item>
+              <div mat-line>
+                <span class="list-title">Fecha de Inicio:</span>
+                <span>{{ pro.createdDate | date: 'medium'}}</span>
+              </div>
+              <div mat-line>
+                <span class="list-title">Cierre Esperado:</span>
+                <span> {{ pro.fechaCierreProyecto | date: 'medium'}}</span>
+              </div>
+              <div mat-line>
+                <span class="list-title">Etapa Actual:</span>
+                <span> Definición plan de trabajo</span>
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <div mat-subheader>Información del cliente</div>
+            <mat-list-item>
+              <div mat-line>
+                <span class="list-title">Identificación:</span>
+                <span> {{pro.cliente.tipoDocumento.nombreTipoDocumento + ': ' + pro.cliente.identificacion}}</span>
+              </div>
+              <div mat-line>
+                <span class="list-title">Nombre:</span>
+                <span>{{pro.cliente.nombreComercial}}</span>
+              </div>
+              <div mat-line>
+                <span class="list-title">Razón social:</span>
+                <span>{{pro.cliente.razonSocial}}</span>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+          <button mat-icon-button matTooltip="Ir al dashboard" [routerLink]="['/proyectos/'+pro.idProyecto]">
+            <mat-icon>dashboard</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" matTooltip="Eliminar proyecto">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </section>
+
+  <div class="footer mt-5" gdArea="footer">
+    <h3 class="redes-header">Visita nuestras redes sociales</h3>
+    <div class="redes m-auto" fxFlexFill fxLayout="row" fxLayoutAlign="center" fxFlexAlign="center">
+      <div class="red-social fb mat-elevation-z5" fxFlex.lt-sm="22" fxFlex.gt-sm="10" (click)="redirect('fb')"
+        matTooltip="Asisge en Facebook">Facebook</div>
+      <div class="red-social twitter mat-elevation-z5" fxFlex.lt-sm="22" fxFlex.gt-sm="10" (click)="redirect('twitter')"
+        matTooltip="Asisge en Twitter">Twitter</div>
+      <div class="red-social email mat-elevation-z5" fxFlex.lt-sm="22" fxFlex.gt-sm="10" (click)="redirect('email')"
+        matTooltip="Envía un correo">Email</div>
+      <div class="red-social web mat-elevation-z5" fxFlex.lt-sm="22" fxFlex.gt-sm="10" (click)="redirect('web')"
+        matTooltip="Ir a la página">Página Web</div>
+    </div>
+  </div>
+</div>

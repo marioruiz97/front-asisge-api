@@ -7,6 +7,7 @@ export class AppConstants {
   public static PATH_AUTH = 'auth';
 
   public static PATH_MIS_PROYECTOS = 'usuarios/{id}/mis-proyectos';
+  public static PATH_PROYECTOS = 'proyectos';
 
   public static PATH_USUARIO = 'usuarios';
   public static PATH_ASESOR = 'usuarios/clientes';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cliente, Contacto } from 'src/app/models/terceros/cliente.model';
+import { Cliente, Contacto, ClienteDto } from 'src/app/models/terceros/cliente.model';
 import { Observable, Subject } from 'rxjs';
 import { AppConstants as Constant } from 'src/app/shared/routing/app.constants';
 import { AppService, Response } from 'src/app/shared/app.service';
@@ -40,11 +40,11 @@ export class ClienteService {
     return this.uiService.putSnackBar(this.appService.patchRequest(`${this.clienteAsesorAth}/${idCliente}`, list));
   }
 
-  create(data: Cliente) {
+  create(data: ClienteDto) {
     this.uiService.putSnackBar(this.appService.postRequest(this.clientePath, data))
       .subscribe(exito => { if (exito) { this.returnToList(); } });
   }
-  update(id: number, data: Cliente) {
+  update(id: number, data: ClienteDto) {
     this.uiService.putSnackBar(this.appService.patchRequest(`${this.clientePath}/${id}`, data))
       .subscribe(exito => { if (exito) { this.returnToList(); } });
   }

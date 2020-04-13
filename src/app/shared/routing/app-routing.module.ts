@@ -25,10 +25,19 @@ import { EstadoProyectoPageComponent } from 'src/app/components/maestros/estados
 // tslint:disable-next-line: max-line-length
 import { EstadoProyectoFormComponent } from 'src/app/components/maestros/estados-proyectos/estado-proyecto-form/estado-proyecto-form.component';
 
+import { ProyectoListComponent } from 'src/app/components/proyectos/proyecto-list/proyecto-list.component';
+
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
+
+
+  { path: 'login', component: LoginComponent },
+  { path: 'recovery', component: RecoveryComponent },
+
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'micuenta', component: MiCuentaComponent, canActivate: [AuthGuard] },
+  { path: 'acerca', component: AboutComponent, canActivate: [AuthGuard] },
+  { path: 'contacto', component: ContactComponent, canActivate: [AuthGuard] },
 
   {
     path: 'maestros', component: MaestrosListComponent, canActivate: [AuthGuard, RoleGuard],
@@ -46,12 +55,7 @@ const routes: Routes = [
   { path: 'usuarios', component: UsuarioListComponent, canActivate: [AuthGuard] },
   { path: 'usuarios/:id', component: UsuarioFormComponent, canActivate: [AuthGuard] },
 
-  { path: 'acerca', component: AboutComponent, canActivate: [AuthGuard] },
-  { path: 'contacto', component: ContactComponent, canActivate: [AuthGuard] },
-
-  { path: 'login', component: LoginComponent },
-  { path: 'recovery', component: RecoveryComponent },
-
+  { path: 'proyectos', component: ProyectoListComponent, canActivate: [AuthGuard]},
 
   // usar rutas que no estan mapeadas, cambiar el redirect por un componente error
   { path: '**', redirectTo: 'home' }

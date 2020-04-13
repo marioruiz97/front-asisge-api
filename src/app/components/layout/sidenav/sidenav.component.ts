@@ -3,7 +3,7 @@ import { NavItem } from 'src/app/shared/routing/app-menu';
 import { UiService } from 'src/app/shared/ui.service';
 import { MatAccordion } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService, TokenInfo } from 'src/app/auth/auth.service';
 
 
 @Component({
@@ -16,6 +16,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   @Output() closeSidenav = new EventEmitter();
   @ViewChild('accordion', { static: false }) accordion: MatAccordion;
 
+  user: TokenInfo;
   isLogged = false;
   authSubscription: Subscription;
 
@@ -32,6 +33,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.authSubscription = this.authService.authState.subscribe(state => this.isLogged = state);
     this.authService.isAuthenticated();
+    this.user = this.authService.currentUser;
   }
 
   onToggle() {
