@@ -15,7 +15,7 @@ export interface Item {
 export class FooterComponent implements OnInit, OnDestroy {
 
   isLogged = false;
-  authSubscription: Subscription;
+  private authSubscription: Subscription;
 
   proyectos: Item[];
   modulos: Item[];
@@ -23,7 +23,7 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService) {
     this.proyectos = [
-      { name: 'Proyectos', url: '/' },
+      { name: 'Proyectos', url: '/proyectos' },
       { name: 'Informes', url: '/' },
       { name: 'Clientes', url: '/clientes' },
     ];
@@ -41,7 +41,7 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.authSubscription = this.authService.authState.subscribe(state => this.isLogged = state);
-    this.authService.isAuthenticated();
+    this.authService.isAuthenticated(true);
   }
 
   ngOnDestroy() {

@@ -3,7 +3,7 @@
   <div class="primary mb-1 px-3 py-5" fxFlex fxLayoutAlign="start center">
     <button mat-fab color="primary" class="mat-elevation-z5 photo-button" matTooltip="Ir a Mi perfil" routerLink="/micuenta"
       (click)="onToggle()"></button>
-    <mat-list class="mt-0">
+    <mat-list class="mt-0" *ngIf="user">
       <mat-list-item>
         <span matLine class="person-info"> {{user.nombre}} </span>
         <span matLine>nombre</span>

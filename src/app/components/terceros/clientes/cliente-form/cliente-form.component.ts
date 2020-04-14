@@ -56,10 +56,9 @@ export class ClienteFormComponent implements OnInit, OnDestroy {
   getCliente(id: number | string) {
     this.service.getById(id)
       .then(res => this.setForm(res.body))
-      .catch(_ => {
-        this.service.returnToList();
-      });
+      .catch(err => this.service.showNotFound(err));
   }
+
   setForm(cliente: Cliente) {
     const tipoDoc = cliente.tipoDocumento as TipoDocumento;
     this.contactos = cliente.contactos;

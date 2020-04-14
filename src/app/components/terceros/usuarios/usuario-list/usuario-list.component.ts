@@ -35,7 +35,9 @@ export class UsuarioListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   fetch() {
-    this.listSub.push(this.service.fetchAll().subscribe(list => this.datasource.data = list.body as Usuario[]));
+    this.listSub.push(this.service.fetchAll().subscribe(list => this.datasource.data = list.body as Usuario[],
+      err => this.service.showNotFound(err)
+    ));
   }
 
   doFilter(filterString: string) {

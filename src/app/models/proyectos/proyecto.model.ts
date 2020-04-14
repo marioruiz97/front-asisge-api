@@ -30,7 +30,14 @@ export interface EstadoProyecto {
 
 export interface Miembros {
   idMiembro?: number;
-  usuario: number | Usuario;
-  proyecto: number | Proyecto;
+  usuario: Usuario;
+  proyecto: Proyecto;
+  rolProyecto: string;
+}
+
+export interface MiembroDto {
+  idMiembro?: number;
+  usuario: number;
+  proyecto: number;
   rolProyecto: string;
 }

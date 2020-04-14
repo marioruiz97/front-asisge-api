@@ -61,5 +61,11 @@ export class EstadoProyectoService {
     this.router.navigate(['/estado-proyecto']);
   }
 
+  showNotFound(err: any) {
+    const message = err.error ? err.error.message : 'No se han podido obtener datos';
+    this.uiService.showConfirm({ title: 'Error', message, confirm: 'Ok' });
+    this.returnToList();
+  }
+
 
 }

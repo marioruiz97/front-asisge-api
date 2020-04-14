@@ -31,7 +31,9 @@ export class TipoDocumentoListComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   fetch() {
-    this.listSub.push(this.service.fetchAll().subscribe(list => this.datasource.data = list.body as TipoDocumento[]));
+    this.listSub.push(this.service.fetchAll().subscribe(list => this.datasource.data = list.body as TipoDocumento[],
+      err => this.service.showNotFound(err)
+    ));
   }
 
   doFilter(filterString: string) {

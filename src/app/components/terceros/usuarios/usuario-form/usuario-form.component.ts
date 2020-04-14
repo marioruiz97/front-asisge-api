@@ -53,7 +53,7 @@ export class UsuarioFormComponent implements OnInit, OnDestroy {
       correo: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(64)]),
       contrasena: new FormControl('', [Validators.minLength(6), Validators.maxLength(14)]),
       matchContrasena: new FormControl('', [Validators.minLength(6), Validators.maxLength(14)]),
-      estado: new FormControl(false, []),
+      estado: new FormControl(false),
       perfil: new FormControl(3, [Validators.required])
     });
   }
@@ -61,7 +61,7 @@ export class UsuarioFormComponent implements OnInit, OnDestroy {
   getUsuario(id: number) {
     this.service.fetchById(id)
       .then(res => this.setForm(res.body))
-      .catch(_ => this.service.returnToList());
+      .catch(err => this.service.showNotFound(err));
   }
 
   setForm(usuario: Usuario) {
@@ -81,7 +81,7 @@ export class UsuarioFormComponent implements OnInit, OnDestroy {
       correo: usuario.correo,
       estado: usuario.estado,
       perfil: rol,
-      contrasena: '', matchContrasena: ''
+      contrasena: '....', matchContrasena: '....'
     });
   }
 

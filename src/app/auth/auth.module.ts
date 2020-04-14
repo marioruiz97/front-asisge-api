@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { LoginComponent } from './views/login/login.component';
-import { AuthService } from './auth.service';
 import { RecoveryComponent } from './views/recovery/recovery.component';
 import { MiCuentaComponent } from './views/mi-cuenta/mi-cuenta.component';
 import { CuentaService } from './views/mi-cuenta/cuenta.service';
@@ -18,7 +17,7 @@ import { MisProyectosComponent } from './views/mi-cuenta/mis-proyectos/mis-proye
   imports: [
     SharedModule,
   ],
-  providers: [AuthService, CuentaService],
+  providers: [CuentaService],
   entryComponents: [ChangePasswordComponent]
 })
 export class AuthModule { }

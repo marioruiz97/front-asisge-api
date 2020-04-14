@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild, OnDestroy } from '@angular/core';
 import { NavItem } from 'src/app/shared/routing/app-menu';
-import { UiService } from 'src/app/shared/ui.service';
 import { MatAccordion } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { AuthService, TokenInfo } from 'src/app/auth/auth.service';
+import { MenuService } from 'src/app/shared/menu.service';
 
 
 @Component({
@@ -18,22 +18,23 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   user: TokenInfo;
   isLogged = false;
-  authSubscription: Subscription;
+  private subs: Subscription[] = [];
 
   collapsible: NavItem[];
-  menu: NavItem[];
-  settings: NavItem[];
+  menu: NavItem[] = [];
+  settings: NavItem[] = [];
 
-  constructor(private uiService: UiService, private authService: AuthService) {
-    this.menu = uiService.noChild;
-    this.collapsible = uiService.children;
-    this.settings = uiService.settings.filter(nav => nav.url.search('micuenta') === -1);
-  }
+  constructor(private menuService: MenuService, private authService: AuthService) { }
 
   ngOnInit() {
-    this.authSubscription = this.authService.authState.subscribe(state => this.isLogged = state);
-    this.authService.isAuthenticated();
-    this.user = this.authService.currentUser;
+    this.subs.push(this.authService.authState.subscribe(state => this.isLogged = state));
+    this.subs.push(this.authService.currentUser.subscribe(u => this.user = u));
+    this.subs.push(this.menuService.menu.subscribe(menu => {
+      this.menu = this.menuService.getNoChild(menu);
+      this.collapsible = this.menuService.getChildren(menu);
+    }));
+    this.authService.initAuth();
+    this.settings = this.menuService.settings.filter(nav => nav.url.search('micuenta') === -1);
   }
 
   onToggle() {
@@ -47,8 +48,8 @@ export class SidenavComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.authSubscription) {
-      this.authSubscription.unsubscribe();
+    if (this.subs) {
+      this.subs.forEach(sub => sub.unsubscribe());
     }
   }
 

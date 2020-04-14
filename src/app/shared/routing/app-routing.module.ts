@@ -30,32 +30,63 @@ import { ProyectoListComponent } from 'src/app/components/proyectos/proyecto-lis
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
 
-
+  /**
+   * PAGINAS SIN ROLES O SOLO CON ESTAR AUTENTICADO
+   */
   { path: 'login', component: LoginComponent },
   { path: 'recovery', component: RecoveryComponent },
-
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'micuenta', component: MiCuentaComponent, canActivate: [AuthGuard] },
   { path: 'acerca', component: AboutComponent, canActivate: [AuthGuard] },
   { path: 'contacto', component: ContactComponent, canActivate: [AuthGuard] },
 
+  /**
+   * ADMINISTRACIÓN Y MAESTROS, SOLO PARA ADMIN
+   */
   {
     path: 'maestros', component: MaestrosListComponent, canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
+    data: { roles: ['ROLE_ADMIN'] }
   },
-  { path: 'audit', component: AuditPageComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['ROLE_ADMIN'] } },
+  {
+    path: 'audit', component: AuditPageComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
+  {
+    path: 'tipo-documento', component: TipoDocumentoPageComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
+  {
+    path: 'tipo-documento/:id', component: TipoDocumentoFormComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
+  {
+    path: 'estado-proyecto', component: EstadoProyectoPageComponent, canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
+  {
+    path: 'estado-proyecto/:id', component: EstadoProyectoFormComponent, canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
 
-  { path: 'tipo-documento', component: TipoDocumentoPageComponent, canActivate: [AuthGuard, RoleGuard] },
-  { path: 'tipo-documento/:id', component: TipoDocumentoFormComponent, canActivate: [AuthGuard] },
-  { path: 'estado-proyecto', component: EstadoProyectoPageComponent, canActivate: [AuthGuard] },
-  { path: 'estado-proyecto/:id', component: EstadoProyectoFormComponent, canActivate: [AuthGuard] },
 
+  /**
+   * MODULOS DE TERCEROS
+   */
   { path: 'clientes', component: ClienteListComponent, canActivate: [AuthGuard] },
   { path: 'clientes/:id', component: ClienteFormComponent, canActivate: [AuthGuard] },
-  { path: 'usuarios', component: UsuarioListComponent, canActivate: [AuthGuard] },
-  { path: 'usuarios/:id', component: UsuarioFormComponent, canActivate: [AuthGuard] },
+  {
+    path: 'usuarios', component: UsuarioListComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
+  },
+  {
+    path: 'usuarios/:id', component: UsuarioFormComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
+  },
 
-  { path: 'proyectos', component: ProyectoListComponent, canActivate: [AuthGuard]},
+  /**
+   * MODULOS DE PROYECTOS
+   */
+  { path: 'proyectos', component: ProyectoListComponent, canActivate: [AuthGuard] },
 
   // usar rutas que no estan mapeadas, cambiar el redirect por un componente error
   { path: '**', redirectTo: 'home' }

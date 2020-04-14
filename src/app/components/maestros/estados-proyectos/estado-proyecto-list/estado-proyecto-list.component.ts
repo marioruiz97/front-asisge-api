@@ -31,7 +31,9 @@ export class EstadoProyectoListComponent implements OnInit, AfterViewInit, OnDes
 
   fetch() {
     this.listSub.push(
-      this.service.fetchAll().subscribe(list => this.datasource.data = list.body as EstadoProyecto[]));
+      this.service.fetchAll().subscribe(list => this.datasource.data = list.body as EstadoProyecto[],
+        err => this.service.showNotFound(err)
+      ));
   }
 
   doFilter(filterString: string) {

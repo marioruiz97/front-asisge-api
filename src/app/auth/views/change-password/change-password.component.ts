@@ -36,8 +36,9 @@ export class ChangePasswordComponent implements OnInit {
   onSubmit() {
     const form = this.changePassForm.value;
     if (form.password === form.confirm) {
-      this.cuentaService.changePassword(form, this.idUsuario);
-      this.onCloseModal();
+      this.cuentaService.changePassword(form, this.idUsuario).subscribe(exito => {
+        if (exito) { this.onCloseModal(); }
+      });
     } else {
       this.uiService.showSnackBar('Las contraseñas no coinciden', 2, 'bottom');
     }

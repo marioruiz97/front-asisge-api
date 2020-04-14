@@ -78,4 +78,10 @@ export class UsuarioService {
     this.router.navigate(['/usuarios']);
   }
 
+  showNotFound(err) {
+    const message = err.error ? err.error.message : 'No se han podido obtener datos';
+    this.uiService.showConfirm({ title: 'Error', message, confirm: 'Ok' });
+    this.returnToList();
+  }
+
 }

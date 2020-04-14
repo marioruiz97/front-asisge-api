@@ -90,4 +90,10 @@ export class ClienteService {
     return this.uiService.showConfirm(dialog);
   }
 
+  showNotFound(err) {
+    this.returnToList();
+    const message = err.error ? err.error.message : 'No se han podido obtener datos';
+    this.showError({ title: 'Error', message, confirm: 'Ok' });
+  }
+
 }
