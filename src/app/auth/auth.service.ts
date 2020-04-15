@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { UiService } from '../shared/ui.service';
 import { isUndefined } from 'util';
 import { MenuService } from '../shared/menu.service';
+import { AppConstants as Constant } from '../shared/routing/app.constants';
 
 export interface TokenInfo {
   userid: number;
@@ -62,6 +63,13 @@ export class AuthService {
       }
       this.uiService.showSnackBar(message, 3);
     });
+  }
+
+  resetPassword(correo: string) {
+    const data = { correo };
+    this.appService.postRequest(Constant.PATH_RECUPERAR, data)
+      .then(res => this.uiService.showSnackBar(res.message, 3))
+      .catch(err => this.uiService.showSnackBar(err.error.message, 3));
   }
 
   private saveToken(token: string) {

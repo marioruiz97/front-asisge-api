@@ -20,7 +20,8 @@ export class RecoveryComponent implements OnInit {
   }
 
   onSubmit() {
-    alert('genial');
+    this.authService.resetPassword(this.resetForm.value.username);
+    this.authService.goToLogin();
   }
 
   redirect(to: string) {

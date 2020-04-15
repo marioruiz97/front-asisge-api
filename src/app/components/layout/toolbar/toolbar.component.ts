@@ -22,12 +22,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subs.push(this.authService.authState.subscribe(state => this.isLogged = state));
-    this.authService.isAuthenticated(true);
-    if (this.isLogged) {
-      this.subs.push(this.menuService.menu.subscribe(menu => this.menu = menu));
-      this.settings = this.menuService.settings;
-      this.menuService.selectMenu();
-    }
+    this.subs.push(this.menuService.menu.subscribe(menu => this.menu = menu));
+    this.settings = this.menuService.settings;
+    this.authService.initAuth();
   }
 
   onLogout() {

@@ -48,6 +48,11 @@ export class UsuarioService {
       .subscribe(exito => { if (exito) { this.returnToList(); } });
   }
 
+  changeEstado(id: number, estado: boolean): Observable<boolean> {
+    const path = Constant.PATH_ESTADO_USUARIO;
+    return this.uiService.putSnackBar(this.appService.getRequest(`${path}/${id}?estado=${!estado}`).toPromise());
+  }
+
   delete(id: string): Observable<boolean> {
     return new Observable(observer => {
       const data = {

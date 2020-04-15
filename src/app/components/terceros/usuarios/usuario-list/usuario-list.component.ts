@@ -46,7 +46,8 @@ export class UsuarioListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   showDetails(usuario: Usuario) {
     if (usuario.apellido2 && usuario.apellido2 === '') { usuario.apellido2 = ''; }
-    this.dialog.open(UsuarioDetailsComponent, { data: usuario });
+    const ref = this.dialog.open(UsuarioDetailsComponent, { data: usuario });
+    this.listSub.push(ref.afterClosed().subscribe(res => { if (res) { this.fetch(); } }));
   }
 
   showClientes(usuario: Usuario) {
