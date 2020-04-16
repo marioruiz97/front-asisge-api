@@ -15,7 +15,7 @@ export interface Response {
 @Injectable()
 export class AppService {
 
-  /*
+  /* TODO: terminar implementación de imagen.
    private httpOptionsImage = { //terminar esto
      headers: new HttpHeaders({ enctype: 'multipart/form-data'})
    }; */

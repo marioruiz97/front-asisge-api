@@ -51,8 +51,8 @@ export class EstadoProyectoFormComponent implements OnInit, OnDestroy {
   getEstado(id: number) {
     this.service.fetchById(id)
       .then(res => this.setForm(res.body))
-      .catch(_ => {
-        this.service.returnToList();
+      .catch(err => {
+        this.service.showNotFound(err);
       });
   }
 

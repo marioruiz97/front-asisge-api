@@ -32,7 +32,9 @@ export class ClienteListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   fetch() {
     this.listSub.push(
-      this.service.fetchAll().subscribe(list => this.datasource.data = list.body as Cliente[]));
+      this.service.fetchAll().subscribe(list => this.datasource.data = list.body as Cliente[],
+        err => this.service.showNotFound(err)
+      ));
   }
 
   doFilter(filterString: string) {

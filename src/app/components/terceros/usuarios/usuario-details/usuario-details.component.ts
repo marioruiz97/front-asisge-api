@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Usuario, UserInfo } from 'src/app/models/terceros/usuario.model';
 import { TipoDocumento } from 'src/app/models/terceros/tipo-documento.model';
 import { Cliente } from 'src/app/models/terceros/cliente.model';
@@ -13,10 +13,14 @@ import { UsuarioService } from '../usuario.service';
 export class UsuarioDetailsComponent implements OnInit, OnDestroy {
 
   info: UserInfo[] = [];
-  clienteSub: Subscription;
+  private subs: Subscription[] = [];
   clientes: Cliente[];
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Usuario, private service: UsuarioService) {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: Usuario,
+    private service: UsuarioService,
+    private dialogRef: MatDialogRef<UsuarioDetailsComponent>
+  ) {
     const doc = data.tipoDocumento as TipoDocumento;
     this.info.push({ property: 'Id usuario:', data: data.idUsuario });
     this.info.push({ property: 'Tipo de documento:', data: doc.nombreTipoDocumento });
@@ -30,10 +34,24 @@ export class UsuarioDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.clienteSub = this.service.fetchClientes(this.data.idUsuario).subscribe(res => this.clientes = res.body as Cliente[]);
+    this.subs.push(this.service.fetchClientes(this.data.idUsuario).subscribe(res => this.clientes = res.body as Cliente[]));
+  }
+
+  cambiarEstado() {
+    this.subs.push(this.service.changeEstado(this.data.idUsuario, this.data.estado).subscribe(res => {
+      if (res) { this.closeModal(true); }
+    }));
+  }
+
+  closeModal(res: boolean = false) {
+    if (res) {
+      this.dialogRef.close(true);
+    } else {
+      this.dialogRef.close();
+    }
   }
 
   ngOnDestroy() {
-    if (this.clienteSub) { this.clienteSub.unsubscribe(); }
+    if (this.subs) { this.subs.forEach(sub => sub.unsubscribe()); }
   }
 }

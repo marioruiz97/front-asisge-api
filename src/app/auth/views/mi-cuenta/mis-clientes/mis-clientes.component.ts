@@ -13,6 +13,7 @@ export class MisClientesComponent implements OnInit, OnDestroy {
 
   misClientes: Cliente[] = [];
   private subs: Subscription[] = [];
+  private hadRole = false;
   @Input() private idUsuario: number;
 
   constructor(private service: CuentaService, private authService: AuthService) { }
@@ -26,7 +27,10 @@ export class MisClientesComponent implements OnInit, OnDestroy {
   }
 
   hasRoles(roles: string[]) {
-    return this.authService.hasRoles(roles);
+    if (!this.hadRole) {
+      this.hadRole = this.authService.hasRoles(roles);
+    }
+    return this.hadRole;
   }
 
   quitarCliente(idCliente: number) {

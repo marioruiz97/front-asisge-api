@@ -9,7 +9,9 @@ export class RoleGuard implements CanActivate {
 
   private ROLE = 'roles';
 
-  constructor(private router: Router, private authService: AuthService, private uiService: UiService) { }
+  constructor(
+    private router: Router, private authService: AuthService, private uiService: UiService
+  ) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
@@ -17,17 +19,11 @@ export class RoleGuard implements CanActivate {
       this.router.navigate(['/login']);
       return false;
     }
-
     const roles = next.data[this.ROLE] as string[];
     if (isUndefined(roles)) {
       return true;
     }
-    let hasRole = false;
-    roles.forEach(rol => {
-      if (this.authService.hasRole(rol)) {
-        hasRole = true;
-      }
-    });
+    const hasRole = this.authService.hasRoles(roles);
     if (hasRole) {
       return true;
     }

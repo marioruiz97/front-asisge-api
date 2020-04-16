@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material';
 import { CuentaService } from './cuenta.service';
 import { TipoDocumento } from 'src/app/models/terceros/tipo-documento.model';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
+import { UiService } from 'src/app/shared/ui.service';
 
 @Component({
   selector: 'app-mi-cuenta',
@@ -24,6 +25,7 @@ export class MiCuentaComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private cuentaService: CuentaService,
+    private uiService: UiService,
     private matDialog: MatDialog
   ) { }
 
@@ -35,7 +37,6 @@ export class MiCuentaComponent implements OnInit, OnDestroy {
     if (this.authService.isAuthenticated()) {
       this.initForm();
       this.getMyInfo();
-      this.getMyProjects();
     } else {
       this.authService.goToHome();
     }
@@ -93,6 +94,14 @@ export class MiCuentaComponent implements OnInit, OnDestroy {
       this.currentUser = res.body as Usuario;
       this.idUsuario = this.currentUser.idUsuario;
       this.setForm(this.currentUser);
+    }, _ => {
+      this.uiService.showConfirm({ title: 'Error', message: 'No se pudo obtener la información. Intenta nuevamente' })
+        .afterClosed().subscribe(res => {
+          if (res) {
+            return this.cuentaService.myInfo;
+          }
+          this.authService.goToHome();
+        });
     }));
   }
 
@@ -108,10 +117,6 @@ export class MiCuentaComponent implements OnInit, OnDestroy {
     };
     this.toggleEdit();
     this.cuentaService.saveMyInfo(user).finally(() => this.getMyInfo());
-  }
-
-  getMyProjects() {
-
   }
 
   onChangePass() {

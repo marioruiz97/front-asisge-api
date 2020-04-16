@@ -82,7 +82,7 @@
             <!-- correo electronico -->
             <mat-form-field appearance="outline" class="form-input">
               <mat-label>Correo electrónico</mat-label>
-              <input matInput type="email" placeholder="Ej. MarioRuiz@gmail.com" formControlName="correo">
+              <input matInput type="email" placeholder="Ej. MarioRuiz@gmail.com" formControlName="correo" autocomplete="off">
               <mat-hint>Ingrese su correo para recuperación de contraseña</mat-hint>
             </mat-form-field>
           </div>
@@ -90,13 +90,13 @@
           <div fxLayout.lt-sm="column">
             <mat-form-field appearance="outline" class="form-input">
               <mat-label>Contraseña</mat-label>
-              <input matInput type="password" formControlName="contrasena">
+              <input matInput type="password" formControlName="contrasena" autocomplete="off">
               <mat-hint>Ingrese su contraseña</mat-hint>
             </mat-form-field>
             <!-- confirmar contraseña -->
             <mat-form-field appearance="outline" class="form-input">
               <mat-label>Confirmar Contraseña</mat-label>
-              <input matInput type="password" (paste)="false" formControlName="matchContrasena">
+              <input matInput type="password" (paste)="false" formControlName="matchContrasena" autocomplete="off">
               <mat-hint>Repita su contraseña</mat-hint>
             </mat-form-field>
           </div>
@@ -105,9 +105,9 @@
             <mat-form-field appearance="outline" class="form-input">
               <mat-label>Tipo de Usuario</mat-label>
               <mat-select formControlName="perfil">
-                <mat-option value=1>Administrador</mat-option>
-                <mat-option value=2>Asesor</mat-option>
-                <mat-option value=3>Cliente</mat-option>
+                <mat-option [value]="1">Administrador</mat-option>
+                <mat-option [value]="2">Asesor</mat-option>
+                <mat-option [value]="3">Cliente</mat-option>
               </mat-select>
               <mat-hint>Seleccione un tipo de usuario (perfil de acceso)</mat-hint>
             </mat-form-field>

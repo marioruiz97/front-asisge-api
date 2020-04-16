@@ -13,6 +13,7 @@ export class MisProyectosComponent implements OnInit, OnDestroy {
 
   misProyectos: Proyecto[] = [];
   private subs: Subscription[] = [];
+  private hadRole = false;
   @Input() private idUsuario: number;
 
   constructor(private service: CuentaService, private authService: AuthService) { }
@@ -22,8 +23,10 @@ export class MisProyectosComponent implements OnInit, OnDestroy {
   }
 
   hasRole(roles: string[]): boolean {
-    const result = this.authService.hasRoles(roles);
-    return result;
+    if (!this.hadRole) {
+      this.hadRole = this.authService.hasRoles(roles);
+    }
+    return this.hadRole;
   }
 
 

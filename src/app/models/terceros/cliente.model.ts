@@ -5,7 +5,16 @@ export interface Cliente {
   identificacion: string;
   nombreComercial: string;
   razonSocial: string;
-  tipoDocumento: number | TipoDocumento;
+  tipoDocumento: TipoDocumento;
+  contactos?: Contacto[];
+}
+
+export interface ClienteDto {
+  idCliente?: number;
+  identificacion: string;
+  nombreComercial: string;
+  razonSocial: string;
+  tipoDocumento: number;
   contactos?: Contacto[];
 }
 

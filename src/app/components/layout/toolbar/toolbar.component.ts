@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { UiService } from 'src/app/shared/ui.service';
 import { NavItem } from 'src/app/shared/routing/app-menu';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/shared/menu.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -12,20 +12,19 @@ import { Subscription } from 'rxjs';
 export class ToolbarComponent implements OnInit, OnDestroy {
 
   @Output() openMenu = new EventEmitter();
-  menu: NavItem[];
-  settings: NavItem[];
+  menu: NavItem[] = [];
+  settings: NavItem[] = [];
 
   isLogged = false;
-  authSubscription: Subscription;
+  private subs: Subscription[] = [];
 
-  constructor(private uiService: UiService, private authService: AuthService) {
-    this.menu = uiService.menu;
-    this.settings = uiService.settings;
-  }
+  constructor(private menuService: MenuService, private authService: AuthService) { }
 
   ngOnInit() {
-    this.authSubscription = this.authService.authState.subscribe(state => this.isLogged = state);
-    this.authService.isAuthenticated();
+    this.subs.push(this.authService.authState.subscribe(state => this.isLogged = state));
+    this.subs.push(this.menuService.menu.subscribe(menu => this.menu = menu));
+    this.settings = this.menuService.settings;
+    this.authService.initAuth();
   }
 
   onLogout() {
@@ -33,7 +32,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.authSubscription) { this.authSubscription.unsubscribe(); }
+    if (this.subs) { this.subs.forEach(sub => sub.unsubscribe()); }
   }
 
 }

@@ -10,7 +10,7 @@ export class HomeComponent implements OnInit {
   cards = [
     {
       avatar: 'next_week', title: 'Proyectos', subtitle: 'Gestiona los proyectos de los diferentes clientes',
-      img: '/assets/img/home-proyectos.png', content: '', button: 'Ir a proyectos', urlTo: '/'
+      img: '/assets/img/home-proyectos.png', content: '', button: 'Ir a proyectos', urlTo: '/proyectos'
     },
     {
       avatar: 'assessment', title: 'Informes', subtitle: 'Genera informes de estado de proyecto y demás',

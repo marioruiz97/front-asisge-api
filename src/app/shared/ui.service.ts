@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AppMenu, NavItem } from './routing/app-menu';
 import { Response } from './app.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../components/layout/confirm-dialog/confirm-dialog.component';
@@ -15,23 +14,9 @@ export interface ConfirmDialogData {
 @Injectable()
 export class UiService {
 
-  private appMenu = new AppMenu();
   loadingState = new Subject<boolean>();
 
   constructor(private snackBar: MatSnackBar, private dialog: MatDialog) { }
-
-  get menu(): NavItem[] {
-    return this.appMenu.menu;
-  }
-  get settings(): NavItem[] {
-    return this.appMenu.settings;
-  }
-  get children() {
-    return this.appMenu.menu.filter(menu => menu.children && menu.children.length > 0);
-  }
-  get noChild() {
-    return this.appMenu.menu.filter(menu => !(menu.children));
-  }
 
   showSnackBar(message: string, durationInSec: number, action?: string) {
     return this.snackBar.open(message, action ? action : 'Ok', {
@@ -48,10 +33,10 @@ export class UiService {
         exito.next(true);
       }).catch(err => {
         exito.next(false);
-        if (err.error) {
+        if (err.error && err.status !== 403) {
           const errors: string[] = err.error.errors;
           this.showConfirm({ title: 'Error', message: err.error.message, errors, confirm: 'Ok' });
-        } else {
+        } else if (err.status !== 403) {
           this.showConfirm({ title: 'Error', message: 'Ha ocurrido un error interno', confirm: 'Ok' });
         }
       });

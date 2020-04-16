@@ -38,7 +38,7 @@ export class ContactComponent implements OnInit, OnDestroy {
     this.onBuildForm();
     this.subs.push(this.uiService.loadingState.subscribe(state => this.isLoading = state));
 
-    /* // subscription para info de la empresa
+    /* // TODO: subscription para info de la empresa
     this.subs.push(this.firestore.doc('empresa-asisge/info-empresa').valueChanges()
       .subscribe((infoArray: any) => this.empresa = infoArray.info));
     // subscription para equipo de la empresa
@@ -72,7 +72,6 @@ export class ContactComponent implements OnInit, OnDestroy {
           this.uiService.loadingState.next(false);
           this.onBuildForm();
         }, error => {
-          console.log('error', error);
           this.uiService.showSnackBar('hubo un error enviando el correo, intenta más tarde', 3);
           this.uiService.loadingState.next(false);
         }));

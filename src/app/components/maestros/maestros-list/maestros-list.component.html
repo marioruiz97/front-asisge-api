@@ -58,5 +58,16 @@
         <button mat-button routerLink="/audit">Ir al módulo</button>
       </mat-card-actions>
     </mat-card>
+
+    <mat-card class="p-4 mat-elevation-z3">
+      <mat-card-title-group>
+        <mat-card-title>Eliminar Tokens</mat-card-title>
+        <mat-card-subtitle>Eliminar los tokens de verificación y recuperación de cuentas</mat-card-subtitle>
+      </mat-card-title-group>
+      <mat-divider></mat-divider>
+      <mat-card-content class="pt-4">
+        <button mat-button (click)="eliminarTokens()" color="warn">Eliminar Tokens</button>
+      </mat-card-content>
+    </mat-card>
   </section>
 </div>

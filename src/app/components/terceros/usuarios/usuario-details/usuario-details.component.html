@@ -17,6 +17,11 @@
           <mat-divider></mat-divider>
         </mat-list-item>
       </mat-list>
+      <div class="mt-2" fxLayoutAlign="center">
+        <button mat-button color="warn" (click)="cambiarEstado()">
+          {{data.estado ? 'Inactivar' : 'Activar'}} Usuario
+        </button>
+      </div>
     </div>
 
     <!-- <mat-divider></mat-divider> -->
@@ -36,6 +41,6 @@
 
   </mat-dialog-content>
   <mat-dialog-actions class="mt-4" fxLayoutAlign="center">
-    <button mat-button [matDialogClose]="true" color="primary">Volver</button>
+    <button mat-button (click)="closeModal()" color="primary">Volver</button>
   </mat-dialog-actions>
 </section>

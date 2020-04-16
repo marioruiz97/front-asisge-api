@@ -72,4 +72,9 @@ export class TipoDocumentoService {
     this.uiService.showConfirm(dialog);
   }
 
+  showNotFound(err) {
+    const message = err.error ? err.error.message : 'No se han podido obtener datos';
+    this.showPopUp({ title: 'Error', message, confirm: 'Ok' });
+  }
+
 }

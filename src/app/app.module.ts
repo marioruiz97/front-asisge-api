@@ -10,6 +10,7 @@ import { MaestrosModule } from './components/maestros/maestros.module';
 import { AppService } from './shared/app.service';
 import { AboutComponent } from './components/others/about/about.component';
 import { ContactComponent } from './components/others/contact/contact.component';
+import { ProyectosModule } from './components/proyectos/proyectos.module';
 
 @NgModule({
   declarations: [
@@ -20,9 +21,10 @@ import { ContactComponent } from './components/others/contact/contact.component'
     SharedModule,
     AuthModule,
     TercerosModule,
-    MaestrosModule
+    MaestrosModule,
+    ProyectosModule
   ],
-  providers: [ AppService],
+  providers: [AppService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

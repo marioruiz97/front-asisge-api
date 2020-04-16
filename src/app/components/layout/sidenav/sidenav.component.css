@@ -10,10 +10,10 @@
 .photo-button {
   background-image: url("/assets/img/brand-logo.png");
   background-size: cover;
-  height: 150px;
-  width: 150px;
+  height: 24vw;
+  width: 24vw;
 }
-span.person-info{
+span.person-info {
   border-bottom: 1px solid #fff;
 }
 
@@ -27,7 +27,8 @@ mat-expansion-panel-header {
   z-index: 0 !important;
   padding: 0px 16px !important;
 }
-mat-nav-list>a.mat-list-item, mat-expansion-panel {
+mat-nav-list > a.mat-list-item,
+mat-expansion-panel {
   padding-bottom: 1px !important;
   border-bottom: 1px solid var(--light-gray) !important;
 }
