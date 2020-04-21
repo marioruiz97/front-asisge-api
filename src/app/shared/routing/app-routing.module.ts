@@ -27,6 +27,7 @@ import { EstadoProyectoFormComponent } from 'src/app/components/maestros/estados
 
 import { ProyectoListComponent } from 'src/app/components/proyectos/proyecto-list/proyecto-list.component';
 import { ProyectoFormComponent } from 'src/app/components/proyectos/proyecto-form/proyecto-form.component';
+import { DashboardComponent } from 'src/app/components/proyectos/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
@@ -91,6 +92,9 @@ const routes: Routes = [
   {
     path: 'proyectos/nuevo', component: ProyectoFormComponent, canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
+  },
+  {
+    path: 'proyectos/:id', component: DashboardComponent
   },
 
   // usar rutas que no estan mapeadas, cambiar el redirect por un componente error

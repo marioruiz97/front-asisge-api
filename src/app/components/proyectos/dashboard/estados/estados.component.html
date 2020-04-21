@@ -1,0 +1,39 @@
+<div fxFlex.gt-sm="70">
+  <mat-card class="progress mat-elevation-z2 mb-3">
+    <mat-card-header>
+      <mat-card-title class="pt-1">Estado del proyecto</mat-card-title>
+    </mat-card-header>
+    <mat-horizontal-stepper [linear]="true" [selectedIndex]="1" labelPosition="bottom">
+      <mat-step [editable]="false" [completed]="true" label="Creado">
+      </mat-step>
+      <mat-step [editable]="false" label="En curso">
+      </mat-step>
+      <mat-step [editable]="false" label="Completado">
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-card>
+  <mat-card class="progress mat-elevation-z2 mb-3">
+    <mat-card-header>
+      <mat-card-title class="pt-1">Avance del Proyecto</mat-card-title>
+    </mat-card-header>
+    <mat-progress-bar class="pb-2 mb-3" mode="determinate" value="40"></mat-progress-bar>
+  </mat-card>
+</div>
+<aside class="mb-3" fxFlex fxLayout="column">
+  <mat-card fxFlex>
+    <mat-card-header>
+      <mat-card-title>En Curso</mat-card-title>
+      <mat-card-subtitle>Estado Actual</mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <p class="p-2">
+        Estado del proyecto
+        en Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam maiores illo velit asperiores
+        saepe!
+        Alias ab consequatur velit hic, quae dolor aperiam odio necessitatibus, incidunt cum a dolorem iure
+        nostrum.
+      </p>
+    </mat-card-content>
+  </mat-card>
+</aside>

@@ -1,0 +1,70 @@
+<div gdAreas="info | dashboards" gdRows="auto auto">
+
+  <header gdArea="info" class="mb-3" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-evenly">
+    <mat-card fxFlex fxFlex.gt-sm="32">
+      <div class="mat-elevation-z5" style="background-color: green;">
+        <h3>Cliente</h3>
+      </div>
+      <mat-card-content>
+        <button mat-fab color="primary">
+          <mat-icon class="mat-18">ligature</mat-icon>
+        </button>
+        Cliente
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card fxFlex fxFlex.gt-sm="32">
+      <div class="mat-elevation-z5" style="background-color: blueviolet;">
+        <h3>Proyecto</h3>
+      </div>
+      <mat-card-content>
+        <button mat-fab color="primary">
+          <mat-icon class="mat-18">ligature</mat-icon>
+        </button>
+        Cliente
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card fxFlex fxFlex.gt-sm="32">
+      <div class="mat-elevation-z5" style="background-color: green;">
+        <h3>Plan de Trabajo</h3>
+      </div>
+      <mat-card-content>
+        <button mat-fab color="primary">
+          <mat-icon class="mat-18">ligature</mat-icon>
+        </button>
+        Cliente
+      </mat-card-content>
+    </mat-card>
+  </header>
+
+  <mat-tab-group gdArea="dashboards" mat-stretch-tabs>
+    <mat-tab label="General">
+      <!-- widgets del dashboard -->
+
+      <section class="my-4" fxLayout="column">
+        <h3 class="mat-h1">Dashboard</h3>
+        <app-estados fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px">
+        </app-estados>
+
+        <div class="row my-5" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" fxLayoutAlign.gt-sm="space-evenly">
+          <app-miembros fxFlex.gt-sm="49"></app-miembros>
+          <app-ultimas-actividades fxFlex.gt-sm="49"></app-ultimas-actividades>
+        </div>
+
+        <div class="row">
+          content
+        </div>
+
+
+      </section>
+    </mat-tab>
+
+    <!-- fin widgets - otros componentes -->
+    <mat-tab label="Plan de Trabajo">
+      <app-plan-trabajo></app-plan-trabajo>
+    </mat-tab>
+    <mat-tab label="Tiempos"> Content 3 </mat-tab>
+  </mat-tab-group>
+
+</div>

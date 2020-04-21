@@ -25,7 +25,10 @@ import {
   MatDialogModule,
   MatAutocompleteModule,
   MatDatepickerModule,
-  MAT_DATE_LOCALE
+  MAT_DATE_LOCALE,
+  MatTreeModule,
+  MatStepperModule,
+  MatProgressBarModule
 } from '@angular/material';
 
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -58,7 +61,10 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatDialogModule,
     MatAutocompleteModule,
     MatDatepickerModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatTreeModule,
+    MatStepperModule,
+    MatProgressBarModule
   ],
   exports: [
     FlexLayoutModule,
@@ -85,7 +91,10 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatDialogModule,
     MatAutocompleteModule,
     MatDatepickerModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatTreeModule,
+    MatStepperModule,
+    MatProgressBarModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es' }

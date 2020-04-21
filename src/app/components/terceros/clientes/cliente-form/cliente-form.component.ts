@@ -69,6 +69,7 @@ export class ClienteFormComponent implements OnInit, OnDestroy {
       nombreComercial: cliente.nombreComercial, razonSocial: cliente.razonSocial,
       tipoDocumento: tipoDoc.id
     });
+    this.clienteForm.get('identificacion').disable();
     this.$isUpdate = true;
     this.curId = cliente.idCliente;
   }
