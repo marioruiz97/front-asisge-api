@@ -88,14 +88,12 @@ const routes: Routes = [
   /**
    * MODULOS DE PROYECTOS
    */
-  { path: 'proyectos', component: ProyectoListComponent, canActivate: [AuthGuard] },
   {
-    path: 'proyectos/nuevo', component: ProyectoFormComponent, canActivate: [AuthGuard, RoleGuard],
+    path: 'proyectos/nuevo', pathMatch: 'full', component: ProyectoFormComponent, canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
   },
-  {
-    path: 'proyectos/:id', component: DashboardComponent
-  },
+  { path: 'proyectos', component: ProyectoListComponent, canActivate: [AuthGuard] },
+  { path: 'proyectos/:id', component: DashboardComponent, canActivate: [AuthGuard] },
 
   // usar rutas que no estan mapeadas, cambiar el redirect por un componente error
   { path: '**', redirectTo: 'home' }

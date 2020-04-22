@@ -1,10 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-ultimas-actividades',
   templateUrl: './ultimas-actividades.component.html',
-  styleUrls: ['./ultimas-actividades.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./ultimas-actividades.component.css']
 })
 export class UltimasActividadesComponent implements OnInit {
 

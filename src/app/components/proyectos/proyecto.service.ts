@@ -23,11 +23,14 @@ export class ProyectoService {
   }
 
   crearProyecto(data: Proyecto) {
+    this.uiService.loadingState.next(true);
     const proyecto = { ...data, estadoProyecto: 1 };
     this.appService.postRequest(this.proyectoPath, proyecto).then((res: Response) => {
       this.gotoDashboard(res.body.idProyecto);
+      this.uiService.loadingState.next(false);
       this.uiService.showSnackBar(res.message, 4);
     }).catch(err => {
+      this.uiService.loadingState.next(false);
       if (err.error && err.status !== 403) {
         const errors: string[] = err.error.errors;
         this.uiService.showConfirm({ title: 'Error', message: err.error.message, errors, confirm: 'Ok' });

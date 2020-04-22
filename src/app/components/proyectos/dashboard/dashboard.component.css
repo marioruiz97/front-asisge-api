@@ -18,3 +18,9 @@ mat-card.info-card p, mat-card.info-card h3 {
 .card-title {
   border-radius: 5px;
 }
+
+span.info-title {
+  margin-top: 12px;
+  font-weight: 500;
+  font-size: 1.2em;
+}

@@ -10,6 +10,7 @@ import { EstadosComponent } from './dashboard/estados/estados.component';
 import { MiembrosComponent } from './dashboard/miembros/miembros.component';
 import { UltimasActividadesComponent } from './dashboard/ultimas-actividades/ultimas-actividades.component';
 import { ProximasActividadesComponent } from './dashboard/proximas-actividades/proximas-actividades.component';
+import { DashboardService } from './dashboard/dashboard.service';
 
 
 
@@ -28,6 +29,6 @@ import { ProximasActividadesComponent } from './dashboard/proximas-actividades/p
   imports: [
     SharedModule
   ],
-  providers: [ProyectoService]
+  providers: [ProyectoService, DashboardService]
 })
 export class ProyectosModule { }

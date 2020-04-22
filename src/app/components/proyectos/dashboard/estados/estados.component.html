@@ -22,18 +22,15 @@
 <aside class="mb-3" fxFlex fxLayout="column">
   <mat-card fxFlex>
     <mat-card-header>
-      <mat-card-title>En Curso</mat-card-title>
+      <mat-card-title>{{estado.nombreEstado}}</mat-card-title>
       <mat-card-subtitle>Estado Actual</mat-card-subtitle>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
-      <p class="p-2">
-        Estado del proyecto
-        en Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam maiores illo velit asperiores
-        saepe!
-        Alias ab consequatur velit hic, quae dolor aperiam odio necessitatibus, incidunt cum a dolorem iure
-        nostrum.
-      </p>
+      <div class="p-2">
+        <p class="bold">Descripción Estado del proyecto:</p>
+        <p>{{estado.descripcion}}</p>
+      </div>
     </mat-card-content>
   </mat-card>
 </aside>

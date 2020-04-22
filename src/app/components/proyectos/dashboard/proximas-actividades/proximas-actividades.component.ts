@@ -1,12 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-proximas-actividades',
   templateUrl: './proximas-actividades.component.html',
-  styleUrls: ['./proximas-actividades.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./proximas-actividades.component.css']
 })
 export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDestroy {
 

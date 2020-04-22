@@ -18,4 +18,6 @@ export class AppConstants {
   public static PATH_CLIENTE = 'clientes';
   public static PATH_CONTACTO = 'contactos';
 
+  public static PATH_DASHBOARD = 'dashboard';
+
 }

@@ -4,33 +4,34 @@
   </mat-card-header>
   <mat-card-content>
     <mat-list>
-      <mat-list-item>
+      <mat-list-item *ngIf="miUsuario">
         <img matListAvatar src="/assets/img/avatar.png" alt="">
-        <h3 mat-line>Mario Andres Ruiz Bedoya</h3>
-        <p mat-line>Lider de proyecto</p>
-        <p mat-line>MArioarb.97@gmail.com</p>
+        <h3 mat-line>{{getNombre()}}</h3>
+        <p mat-line>{{miRol}}</p>
+        <p mat-line>{{miUsuario.correo}}</p>
         <span style="color: rgba(0,0,0,0.54);">Tú</span>
       </mat-list-item>
-      <mat-list-item class="pl-md-5">
-        <ngx-avatar name="Mario Andres" matListAvatar></ngx-avatar>
-        <h3 mat-line>Mario Andres Ruiz Bedoya</h3>
-        <p mat-line>Lider de proyecto</p>
-        <p mat-line>MArioarb.97@gmail.com</p>
-      </mat-list-item>
-      <mat-list-item class="pl-md-5">
+
+
+      <mat-list-item class="pl-md-5" *ngFor="let miembro of miembros">
         <!-- <img matListAvatar src="/assets/img/avatar.png" alt=""> -->
+        <ngx-avatar [name]="getMiembroName(miembro)" matListAvatar></ngx-avatar>
+        <h3 mat-line>{{getMiembroName(miembro)}}</h3>
+        <p mat-line>{{miembro.rolProyecto}}</p>
+        <p mat-line>{{miembro.usuario.correo}}</p>
+      </mat-list-item>
+      <!-- <mat-list-item class="pl-md-5">
         <ngx-avatar name="Mario Ruiz" matListAvatar></ngx-avatar>
         <h3 mat-line>Mario Andres Ruiz Bedoya</h3>
         <p mat-line>Lider de proyecto</p>
         <p mat-line>MArioarb.97@gmail.com</p>
       </mat-list-item>
       <mat-list-item class="pl-md-5">
-        <!-- <img matListAvatar src="/assets/img/avatar.png" alt=""> -->
         <ngx-avatar name="Mario And ruiz" matListAvatar></ngx-avatar>
         <h3 mat-line>Mario Andres Ruiz Bedoya</h3>
         <p mat-line>Lider de proyecto</p>
         <p mat-line>MArioarb.97@gmail.com</p>
-      </mat-list-item>
+      </mat-list-item> -->
     </mat-list>
   </mat-card-content>
 </mat-card>
