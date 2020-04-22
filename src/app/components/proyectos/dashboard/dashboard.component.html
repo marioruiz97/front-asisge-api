@@ -1,35 +1,37 @@
 <div gdAreas="info | dashboards" gdRows="auto auto">
 
-  <header gdArea="info" class="mb-3" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-evenly">
-    <mat-card fxFlex fxFlex.gt-sm="32">
-      <div class="mat-elevation-z5" style="background-color: green;">
+  <header gdArea="info" class="pt-5" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-evenly">
+    <mat-card fxFlex fxFlex.gt-sm="32" class="mb-5 info-card mat-elevation-z4">
+      <div class="p-1 mat-elevation-z5 card-title" style="background-color: #3b5998;">
         <h3>Cliente</h3>
       </div>
-      <mat-card-content>
-        <button mat-fab color="primary">
-          <mat-icon class="mat-18">ligature</mat-icon>
-        </button>
-        Cliente
+      <mat-card-content class="my-3">
+        <p>
+          <ngx-avatar src="/assets/img/customer-avatar.png" size="70"></ngx-avatar>
+        </p>
+        <h3>Cliente SAS</h3>
+        <p>{{returnIdentificacion()}}</p>
       </mat-card-content>
     </mat-card>
 
-    <mat-card fxFlex fxFlex.gt-sm="32">
-      <div class="mat-elevation-z5" style="background-color: blueviolet;">
+    <mat-card fxFlex fxFlex.gt-sm="32" class="mb-5 info-card mat-elevation-z4">
+      <div class="p-1 mat-elevation-z5 card-title" style="background-color: var(--darken-orange);">
         <h3>Proyecto</h3>
       </div>
-      <mat-card-content>
-        <button mat-fab color="primary">
-          <mat-icon class="mat-18">ligature</mat-icon>
-        </button>
-        Cliente
+      <mat-card-content class="my-3">
+        <span>{{' 1 - test project ' }}</span>
+        <h4>Descripción</h4>
+        <p>{{'pro.descripcionGeneral'}}</p>
+        <span class="list-title">Fecha de Inicio:</span>
+        <span>{{ 'pro.createdDate | date: medium'}}</span>
       </mat-card-content>
     </mat-card>
 
-    <mat-card fxFlex fxFlex.gt-sm="32">
-      <div class="mat-elevation-z5" style="background-color: green;">
+    <mat-card fxFlex fxFlex.gt-sm="32" class="mb-5 info-card mat-elevation-z4">
+      <div class="p-1 mat-elevation-z5 card-title" style="background-color: green;">
         <h3>Plan de Trabajo</h3>
       </div>
-      <mat-card-content>
+      <mat-card-content class="my-3">
         <button mat-fab color="primary">
           <mat-icon class="mat-18">ligature</mat-icon>
         </button>
@@ -47,13 +49,14 @@
         <app-estados fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px">
         </app-estados>
 
-        <div class="row my-5" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" fxLayoutAlign.gt-sm="space-evenly">
+        <div class="row my-5" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px"
+          fxLayoutAlign.gt-sm="space-evenly">
           <app-miembros fxFlex.gt-sm="49"></app-miembros>
           <app-ultimas-actividades fxFlex.gt-sm="49"></app-ultimas-actividades>
         </div>
 
-        <div class="row">
-          content
+        <div class="row mb-3">
+          <app-proximas-actividades></app-proximas-actividades>
         </div>
 
 

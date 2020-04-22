@@ -1,3 +1,20 @@
 section mat-card {
   padding: 7px;
 }
+
+mat-card.info-card>:first-child {
+  margin-top: -40px;
+  color: #fff;
+}
+
+mat-card.info-card h3 {
+  font-weight: 500;
+}
+
+mat-card.info-card p, mat-card.info-card h3 {
+  text-align: center;
+}
+
+.card-title {
+  border-radius: 5px;
+}

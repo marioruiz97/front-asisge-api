@@ -17,7 +17,7 @@ export class ProyectoFormComponent implements OnInit, OnDestroy {
   proyectoForm: FormGroup;
   clientes: Cliente[] = [];
   filteredClientes: Observable<Cliente[]>;
-
+  isWaiting = false;
   minDate = new Date();
 
   private subs: Subscription[] = [];
@@ -37,6 +37,7 @@ export class ProyectoFormComponent implements OnInit, OnDestroy {
       startWith(''),
       map(value => value ? this._filter(value) : this.clientes.slice())
     );
+    this.subs.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
   }
 
   private initForm() {

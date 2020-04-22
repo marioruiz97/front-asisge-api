@@ -9,6 +9,7 @@ import { PlanTrabajoComponent } from './plan-trabajo/plan-trabajo.component';
 import { EstadosComponent } from './dashboard/estados/estados.component';
 import { MiembrosComponent } from './dashboard/miembros/miembros.component';
 import { UltimasActividadesComponent } from './dashboard/ultimas-actividades/ultimas-actividades.component';
+import { ProximasActividadesComponent } from './dashboard/proximas-actividades/proximas-actividades.component';
 
 
 
@@ -21,7 +22,8 @@ import { UltimasActividadesComponent } from './dashboard/ultimas-actividades/ult
     PlanTrabajoComponent,
     EstadosComponent,
     MiembrosComponent,
-    UltimasActividadesComponent
+    UltimasActividadesComponent,
+    ProximasActividadesComponent
   ],
   imports: [
     SharedModule

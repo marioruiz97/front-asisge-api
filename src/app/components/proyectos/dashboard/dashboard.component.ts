@@ -12,4 +12,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
 
+  returnIdentificacion() {
+    return 'NIT: 900.876.543-8';
+  }
+
 }

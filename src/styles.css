@@ -38,3 +38,8 @@ app-toolbar {
 tr.mat-row:hover {
   background-color: #EEE;
 }
+
+ngx-avatar {
+  display: inline-block;
+  font-weight: 500;
+}
