@@ -19,6 +19,7 @@ export class ClienteFormComponent implements OnInit, OnDestroy {
   clienteForm: FormGroup;
   tiposDoc: TipoDocumento[] = [];
   contactos: Contacto[] = [];
+  isWaiting = false;
   private subscriptions: Subscription[] = [];
   private $isUpdate = false;
   private curId: number;
@@ -37,6 +38,7 @@ export class ClienteFormComponent implements OnInit, OnDestroy {
         this.getCliente(id);
       }
     }));
+    this.subscriptions.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
   }
 
   fetchDocumentos() {

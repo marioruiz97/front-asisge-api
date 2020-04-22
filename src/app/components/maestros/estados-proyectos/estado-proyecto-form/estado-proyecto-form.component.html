@@ -40,12 +40,13 @@
         </mat-card-content>
 
         <mat-card-actions class="form-action mt-4" fxLayoutAlign="center" fxLayout.lt-sm="column">
-          <button class="m-2" type="button" mat-raised-button (click)="goBack()" color="warn">
+          <button class="m-2" type="button" mat-raised-button (click)="goBack()" color="warn" *ngIf="!isWaiting">
             <mat-icon>arrow_back</mat-icon>Regresar al listado
           </button>
-          <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!estadoForm.valid">
+          <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!estadoForm.valid" *ngIf="!isWaiting">
             <mat-icon>save</mat-icon> Guardar Estado
           </button>
+          <mat-spinner *ngIf="isWaiting"></mat-spinner>
         </mat-card-actions>
       </mat-card>
     </form>

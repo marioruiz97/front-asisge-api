@@ -16,6 +16,7 @@ export class EstadoProyectoFormComponent implements OnInit, OnDestroy {
   estadoForm: FormGroup;
   allEstados: EstadoProyecto[] = [];
   isUpdate = false;
+  isWaiting = false;
 
   private subscriptions: Subscription[] = [];
   private curId: number;
@@ -33,6 +34,7 @@ export class EstadoProyectoFormComponent implements OnInit, OnDestroy {
         this.getEstado(id);
       }
     }));
+    this.subscriptions.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
   }
 
   initForm() {

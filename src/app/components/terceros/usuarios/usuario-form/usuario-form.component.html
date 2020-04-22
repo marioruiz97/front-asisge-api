@@ -119,12 +119,13 @@
 
           <!-- BOTONERA -->
           <mat-action-row class="form-action" fxLayoutAlign.gt-sm="center center" fxLayout.lt-sm="column">
-            <button class="m-2" type="button" mat-raised-button (click)="goBack()" color="warn">
+            <button class="m-2" type="button" mat-raised-button (click)="goBack()" color="warn" *ngIf="!isWaiting">
               <mat-icon>arrow_back</mat-icon>Regresar <span fxHide.lt-sm> a Usuarios</span>
             </button>
-            <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!usuarioForm.valid">
+            <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!usuarioForm.valid" *ngIf="!isWaiting">
               <mat-icon>save</mat-icon> Registrar Usuario
             </button>
+            <mat-spinner *ngIf="isWaiting"></mat-spinner>
           </mat-action-row>
         </mat-expansion-panel>
       </mat-accordion>

@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TipoDocumentoService } from '../tipo-documento.service';
 import { Subscription } from 'rxjs';
+import { UiService } from 'src/app/shared/ui.service';
 
 @Component({
   selector: 'app-tipo-documento-form',
@@ -14,17 +15,21 @@ export class TipoDocumentoFormComponent implements OnInit, OnDestroy {
 
   currentId: string;
   tipoForm: FormGroup;
+  isWaiting = false;
   private subs: Subscription[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute, private service: TipoDocumentoService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute, private service: TipoDocumentoService, private uiService: UiService
+  ) { }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(params => {
+    this.subs.push(this.activatedRoute.paramMap.subscribe(params => {
       const id = +params.get('id');
       if (id && id !== 0) {
         this.getTipo(id);
       }
-    });
+    }));
+    this.subs.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
     this.initForm();
   }
 

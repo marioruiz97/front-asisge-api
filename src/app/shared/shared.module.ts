@@ -12,7 +12,7 @@ import { SidenavComponent } from '../components/layout/sidenav/sidenav.component
 import { FooterComponent } from '../components/layout/footer/footer.component';
 import { ConfirmDialogComponent } from '../components/layout/confirm-dialog/confirm-dialog.component';
 import { AuthInterceptor } from '../auth/interceptors/auth.interceptor';
-
+import { AvatarModule } from 'ngx-avatar';
 
 @NgModule({
   declarations: [
@@ -27,6 +27,7 @@ import { AuthInterceptor } from '../auth/interceptors/auth.interceptor';
     ReactiveFormsModule,
     LayoutModule,
     MaterialModule,
+    AvatarModule
   ],
   exports: [
     CommonModule,
@@ -37,6 +38,7 @@ import { AuthInterceptor } from '../auth/interceptors/auth.interceptor';
     ReactiveFormsModule,
     LayoutModule,
     MaterialModule,
+    AvatarModule,
     ToolbarComponent,
     SidenavComponent,
     FooterComponent,
