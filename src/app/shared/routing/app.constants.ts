@@ -19,5 +19,6 @@ export class AppConstants {
   public static PATH_CONTACTO = 'contactos';
 
   public static PATH_DASHBOARD = 'dashboard';
+  public static PATH_ESTADOS_LINE = 'dashboard/estados-line/';
 
 }

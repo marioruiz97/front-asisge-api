@@ -43,6 +43,7 @@ export class EstadoProyectoFormComponent implements OnInit, OnDestroy {
       nombreEstado: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       descripcion: new FormControl('', [Validators.maxLength(255)]),
       idEstadoAnterior: new FormControl(''),
+      requerido: new FormControl(false)
     });
   }
 
@@ -65,7 +66,8 @@ export class EstadoProyectoFormComponent implements OnInit, OnDestroy {
       id: estado.id,
       nombreEstado: estado.nombreEstado,
       descripcion: estado.descripcion,
-      idEstadoAnterior: estado.idEstadoAnterior
+      idEstadoAnterior: estado.idEstadoAnterior,
+      requerido: estado.requerido
     });
   }
 
@@ -84,6 +86,7 @@ export class EstadoProyectoFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    console.log(this.estadoForm.value)
     if (this.curId && this.curId !== 0) {
       this.service.update(this.curId, this.estadoForm.value);
     } else {

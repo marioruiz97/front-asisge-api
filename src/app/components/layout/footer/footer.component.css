@@ -3,6 +3,7 @@
 */
 
 footer {
+  /* width: 100vw; */
   background-color: #ececef;
 }
 footer section mat-list h3 {
@@ -13,7 +14,7 @@ mat-list {
   min-width: 25%;
 }
 mat-list mat-list-item a, mat-list h3 {
-  min-width: 100% !important;
+  min-width: 100%;
   text-align: center !important;
 }
 

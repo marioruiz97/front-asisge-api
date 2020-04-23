@@ -1,7 +1,7 @@
 <footer class="mt-5" fxLayout="column" *ngIf="isLogged">
   <mat-divider></mat-divider>
 
-  <section fxFlex fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-evenly" fxFlexAlign.lt-md="center">
+  <section fxLayout="column" fxFlexAlign.lt-md="center" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-evenly">
     <mat-list dense>
       <h3 class="m-0 mt-3 pb-1">Proyectos</h3>
       <mat-list-item *ngFor="let item of proyectos">
@@ -10,21 +10,21 @@
     </mat-list>
 
     <mat-list dense>
-      <h3 class="m-0 mt-3">Módulos</h3>
+      <h3 class="m-0 mt-3 pb-1">Módulos</h3>
       <mat-list-item *ngFor="let item of modulos">
         <a [routerLink]="[item.url]">{{item.name}}</a>
       </mat-list-item>
     </mat-list>
 
     <mat-list dense>
-      <h3 class="m-0 mt-3"> Ponte en Contacto</h3>
+      <h3 class="m-0 mt-3 pb-1"> Ponte en Contacto</h3>
       <mat-list-item *ngFor="let item of contacto">
         <a [routerLink]="[item.url]">{{item.name}}</a>
       </mat-list-item>
     </mat-list>
   </section>
 
-  <div class="footer-row credits mt-2" fxFlex fxLayoutAlign="center center">
+  <div class="footer-row credits mt-2" fxLayoutAlign="center center">
     <p>
       &copy; Hecho para <a href="https://www.asisge.com/" target="_blank"> Asisge SAS </a> - 2019
     </p>

@@ -34,14 +34,9 @@
         <h3>Plan de Trabajo</h3>
       </div>
       <mat-card-content class="my-3">
-        <button mat-fab color="primary">
-          <mat-icon class="mat-18">ligature</mat-icon>
-        </button>
-        Cliente
       </mat-card-content>
     </mat-card>
   </header>
-  <!-- FIN HEADER CARDS -->
 
   <mat-tab-group gdArea="dashboards" mat-stretch-tabs>
     <mat-tab label="General">
@@ -50,14 +45,11 @@
         <h3 class="mat-h1">Dashboard</h3>
         <app-estados fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" [estado]="proyecto.estadoProyecto">
         </app-estados>
-        <div class="row my-5" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px"
-          fxLayoutAlign.gt-sm="space-evenly">
+        <div class="row my-5" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" fxLayoutAlign.gt-sm="space-evenly">
           <app-miembros fxFlex.gt-sm="49"></app-miembros>
           <app-ultimas-actividades fxFlex.gt-sm="49"></app-ultimas-actividades>
         </div>
-        <div class="row mb-3">
-          <app-proximas-actividades></app-proximas-actividades>
-        </div>
+        <app-proximas-actividades class="row mb-3"></app-proximas-actividades>
       </section>
     </mat-tab>
 

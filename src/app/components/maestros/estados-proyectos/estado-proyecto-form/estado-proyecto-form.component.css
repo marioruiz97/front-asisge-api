@@ -4,9 +4,13 @@
   width: 100%;
 }
 
-.form-group mat-form-field {
+.form-group mat-form-field, .form-group p {
   padding: 10px 5px;
   min-width: 47%;
+}
+
+.form-group p mat-hint {
+  font-size: 75% !important;
 }
 
 .form-action button {

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Cliente } from 'src/app/models/terceros/cliente.model';
 import { Subject } from 'rxjs';
-import { Miembros, Proyecto } from 'src/app/models/proyectos/proyecto.model';
+import { Miembros, Proyecto, EstadoLineDto } from 'src/app/models/proyectos/proyecto.model';
 import { AppService } from 'src/app/shared/app.service';
-import { Dashboard } from 'src/app/models/proyectos/dashboard.model';
+import { Dashboard, Notificacion } from 'src/app/models/proyectos/dashboard.model';
 import { AppConstants as Cons } from 'src/app/shared/routing/app.constants';
 import { UiService } from 'src/app/shared/ui.service';
 import { Router } from '@angular/router';
@@ -15,6 +15,8 @@ export class DashboardService {
   cliente = new Subject<Cliente>();
   miembros = new Subject<Miembros[]>();
   proyecto = new Subject<Proyecto>();
+  notificaciones = new Subject<Notificacion[]>();
+  estados = new Subject<EstadoLineDto[]>();
 
   private dashboardPath = Cons.PATH_DASHBOARD;
 
@@ -42,6 +44,7 @@ export class DashboardService {
     this.cliente.next(dashboard.cliente);
     this.miembros.next(dashboard.miembros);
     this.proyecto.next(dashboard.proyecto);
+    this.notificaciones.next(dashboard.notificaciones);
     this.uiService.loadingState.next(false);
   }
 
@@ -62,6 +65,18 @@ export class DashboardService {
   fetchMiembros() {
     if (this.dashboard && this.dashboard.miembros) {
       this.miembros.next(this.dashboard.miembros);
+    }
+  }
+
+  fetchNotificaciones() {
+    if (this.dashboard && this.dashboard.notificaciones) {
+      this.notificaciones.next(this.dashboard.notificaciones);
+    }
+  }
+
+  fetchEstadosLine() {
+    if (this.dashboard && this.dashboard.lineaEstados) {
+      this.estados.next(this.dashboard.lineaEstados);
     }
   }
 
