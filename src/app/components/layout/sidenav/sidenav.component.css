@@ -12,6 +12,8 @@
   background-size: cover;
   height: 24vw;
   width: 24vw;
+  max-height: 125px;
+  max-width: 125px;
 }
 span.person-info {
   border-bottom: 1px solid #fff;

@@ -5,7 +5,7 @@ import { Cliente } from './cliente.model';
 export interface Usuario {
   idUsuario?: number;
   identificacion: string;
-  tipoDocumento: string | TipoDocumento;
+  tipoDocumento: TipoDocumento;
   nombre: string;
   apellido1: string;
   apellido2?: string;

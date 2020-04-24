@@ -59,8 +59,6 @@ export class UsuarioClientesComponent implements OnInit, OnDestroy {
       .map(item => item.idCliente)
       .filter(id => !oldIs.includes(id));
     return all.filter(c => allIds.includes(c.idCliente)).slice();
-    /* return all.filter(c => this.clientes.map(old => c.idCliente !== old.idCliente ? c.idCliente : 0).includes(c.idCliente)
-    ).slice(); */
   }
 
   private _filter(value: string): Cliente[] {

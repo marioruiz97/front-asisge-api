@@ -62,11 +62,11 @@ const routes: Routes = [
     data: { roles: ['ROLE_ADMIN'] }
   },
   {
-    path: 'estado-proyecto', component: EstadoProyectoPageComponent, canActivate: [AuthGuard],
+    path: 'estado-proyecto', component: EstadoProyectoPageComponent, canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ROLE_ADMIN'] }
   },
   {
-    path: 'estado-proyecto/:id', component: EstadoProyectoFormComponent, canActivate: [AuthGuard],
+    path: 'estado-proyecto/:id', component: EstadoProyectoFormComponent, canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ROLE_ADMIN'] }
   },
 

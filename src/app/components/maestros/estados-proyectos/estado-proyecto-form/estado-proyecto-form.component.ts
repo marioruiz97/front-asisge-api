@@ -86,7 +86,6 @@ export class EstadoProyectoFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.estadoForm.value)
     if (this.curId && this.curId !== 0) {
       this.service.update(this.curId, this.estadoForm.value);
     } else {

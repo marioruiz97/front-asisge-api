@@ -17,8 +17,12 @@ import { AuditsService } from './audit/audits.service';
 
 @NgModule({
   declarations: [
-    TipoDocumentoListComponent, TipoDocumentoFormComponent, TipoDocumentoPageComponent,
-    EstadoProyectoPageComponent, EstadoProyectoListComponent, EstadoProyectoFormComponent,
+    TipoDocumentoListComponent,
+    TipoDocumentoFormComponent,
+    TipoDocumentoPageComponent,
+    EstadoProyectoPageComponent,
+    EstadoProyectoListComponent,
+    EstadoProyectoFormComponent,
     MaestrosListComponent,
     AuditPageComponent,
     AuditListComponent,
