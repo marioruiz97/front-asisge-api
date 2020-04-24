@@ -3,7 +3,7 @@
   <span matSubheader>Los campos con * son obligatorios</span>
 
   <form (ngSubmit)="onSubmit(form)" #form="ngForm">
-    <mat-dialog-content fxLayout="column" style="min-width: 400px;">
+    <mat-dialog-content fxLayout="column" style="min-width: 400px;"> <!-- TODO: revisar estos estilos en moviles-->
       <input type="hidden" name="idCliente" [value]="data.idCliente ? data.idCliente : 0">
       <input type="hidden" name="id" [value]="data.id ? data.id : 0">
       <mat-form-field>
