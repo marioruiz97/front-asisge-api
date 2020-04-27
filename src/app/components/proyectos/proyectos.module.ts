@@ -11,6 +11,7 @@ import { MiembrosComponent } from './dashboard/miembros/miembros.component';
 import { UltimasActividadesComponent } from './dashboard/ultimas-actividades/ultimas-actividades.component';
 import { ProximasActividadesComponent } from './dashboard/proximas-actividades/proximas-actividades.component';
 import { DashboardService } from './dashboard/dashboard.service';
+import { PlanTrabajoService } from './plan-trabajo/plan-trabajo.service';
 
 
 
@@ -29,6 +30,6 @@ import { DashboardService } from './dashboard/dashboard.service';
   imports: [
     SharedModule
   ],
-  providers: [ProyectoService, DashboardService]
+  providers: [ProyectoService, DashboardService, PlanTrabajoService]
 })
 export class ProyectosModule { }

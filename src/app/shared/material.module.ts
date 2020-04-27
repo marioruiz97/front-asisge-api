@@ -29,7 +29,8 @@ import {
   MatTreeModule,
   MatStepperModule,
   MatProgressBarModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatBottomSheetModule
 } from '@angular/material';
 
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -66,7 +67,8 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatTreeModule,
     MatStepperModule,
     MatProgressBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatBottomSheetModule
   ],
   exports: [
     FlexLayoutModule,
@@ -97,7 +99,8 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatTreeModule,
     MatStepperModule,
     MatProgressBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatBottomSheetModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es' }

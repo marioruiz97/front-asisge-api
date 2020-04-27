@@ -52,14 +52,12 @@ export class DashboardService {
     if (this.dashboard && this.dashboard.cliente) {
       this.cliente.next(this.dashboard.cliente);
     }
-    console.log(idDashboard)
   }
 
   fetchInfoProyecto(idDashboard: number) {
     if (this.dashboard && this.dashboard.proyecto) {
       this.proyecto.next(this.dashboard.proyecto);
     }
-    console.log(idDashboard)
   }
 
   fetchMiembros() {

@@ -23,6 +23,7 @@ export class ClienteFormComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   private $isUpdate = false;
   private curId: number;
+  private curIdentificacion: string;
 
   constructor(
     private service: ClienteService, private activatedRoute: ActivatedRoute,
@@ -74,6 +75,7 @@ export class ClienteFormComponent implements OnInit, OnDestroy {
     this.clienteForm.get('identificacion').disable();
     this.$isUpdate = true;
     this.curId = cliente.idCliente;
+    this.curIdentificacion = cliente.identificacion;
   }
 
   goBack() {
@@ -95,10 +97,12 @@ export class ClienteFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    const cliente = { ...this.clienteForm.value, contactos: this.contactos };
     if (this.$isUpdate && this.curId && this.curId !== 0) {
-      this.service.update(this.curId, { ...this.clienteForm.value, contactos: this.contactos });
+      cliente.identificacion = this.curIdentificacion;
+      this.service.update(this.curId, cliente);
     } else {
-      this.service.create({ ...this.clienteForm.value, contactos: this.contactos });
+      this.service.create(cliente);
     }
   }
 

@@ -1,9 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild, OnDestroy } from '@angular/core';
 import { NavItem } from 'src/app/shared/routing/app-menu';
-import { MatAccordion } from '@angular/material';
+import { MatAccordion, MatBottomSheet } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { AuthService, TokenInfo } from 'src/app/auth/auth.service';
 import { MenuService } from 'src/app/shared/menu.service';
+import { NotificacionSheetComponent } from '../notificacion-sheet/notificacion-sheet.component';
 
 
 @Component({
@@ -24,7 +25,9 @@ export class SidenavComponent implements OnInit, OnDestroy {
   menu: NavItem[] = [];
   settings: NavItem[] = [];
 
-  constructor(private menuService: MenuService, private authService: AuthService) { }
+  constructor(
+    private menuService: MenuService, private authService: AuthService, private notificacionRef: MatBottomSheet
+  ) { }
 
   ngOnInit() {
     this.subs.push(this.authService.authState.subscribe(state => this.isLogged = state));
@@ -35,6 +38,13 @@ export class SidenavComponent implements OnInit, OnDestroy {
     }));
     this.authService.initAuth();
     this.settings = this.menuService.settings.filter(nav => nav.url.search('micuenta') === -1);
+  }
+
+  abrirNotificaciones() {
+    this.onToggle();
+    this.notificacionRef.open(NotificacionSheetComponent, {
+      ariaLabel: 'Notificaciones'
+    });
   }
 
   onToggle() {

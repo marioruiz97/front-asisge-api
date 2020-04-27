@@ -1,3 +1,19 @@
-.mat-list-icon {
+/* .sidenav mat-icon {
   color: rgba(0, 0, 0, 0.54);
+} */
+
+.sidenav mat-list-item * {
+  color: var(--darken-orange);
+  font-weight: 500;
+  text-align: center;
+}
+
+.sidenav mat-list-item mat-icon {
+  font-size: 2em;
+}
+
+.mat-list-base[dense] .mat-list-item,
+.mat-list-base .mat-list-item {
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
 }
