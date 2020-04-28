@@ -4,7 +4,7 @@
 
 .sidenav mat-list-item * {
   color: var(--darken-orange);
-  font-weight: 500;
+  font-weight: 400;
   text-align: center;
 }
 

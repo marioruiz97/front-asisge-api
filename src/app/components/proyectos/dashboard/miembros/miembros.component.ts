@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Miembros } from 'src/app/models/proyectos/proyecto.model';
 import { DashboardService } from '../dashboard.service';
@@ -18,7 +18,9 @@ export class MiembrosComponent implements OnInit, OnDestroy {
   miRol: string;
   private subs: Subscription[] = [];
 
-  constructor(private service: DashboardService, private authService: AuthService) { }
+  constructor(
+    private service: DashboardService, private authService: AuthService, private detector: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
     this.fetchData();
@@ -34,6 +36,7 @@ export class MiembrosComponent implements OnInit, OnDestroy {
           this.miRol = miembro.rolProyecto;
         }
         this.miembros = list.filter(user => user.usuario.idUsuario !== idUsuario);
+        this.detector.markForCheck();
       }));
       this.service.fetchMiembros();
     }));

@@ -19,6 +19,8 @@ export class AppConstants {
   public static PATH_CONTACTO = 'contactos';
 
   public static PATH_DASHBOARD = 'dashboard';
+  public static PATH_POSIBLES_MIEMBROS = 'posibles-miembros';
+  public static PATH_PROYECTO_MIEMBROS = 'proyectos/{idProyecto}/miembros';
   public static PATH_NOTIFICACIONES = 'notificaciones';
 
 }

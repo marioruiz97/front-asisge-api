@@ -12,6 +12,7 @@ import { UltimasActividadesComponent } from './dashboard/ultimas-actividades/ult
 import { ProximasActividadesComponent } from './dashboard/proximas-actividades/proximas-actividades.component';
 import { DashboardService } from './dashboard/dashboard.service';
 import { PlanTrabajoService } from './plan-trabajo/plan-trabajo.service';
+import { AgregarMiembroComponent } from './plan-trabajo/agregar-miembro/agregar-miembro.component';
 
 
 
@@ -25,11 +26,13 @@ import { PlanTrabajoService } from './plan-trabajo/plan-trabajo.service';
     EstadosComponent,
     MiembrosComponent,
     UltimasActividadesComponent,
-    ProximasActividadesComponent
+    ProximasActividadesComponent,
+    AgregarMiembroComponent
   ],
   imports: [
     SharedModule
   ],
+  entryComponents: [AgregarMiembroComponent],
   providers: [ProyectoService, DashboardService, PlanTrabajoService]
 })
 export class ProyectosModule { }

@@ -1,0 +1,25 @@
+.notification-title {
+  font-weight: 500;
+  font-size: 1.3rem;
+}
+
+.PRIMARY {
+  border-left: 3px solid #007bff;
+}
+
+.SUCCESS {
+  border-left: 3px solid #28a745;
+}
+
+.INFO {
+  border-left: 3px solid #ffc107;
+}
+
+.WARN {
+  border-left: 3px solid #dc3545;
+}
+
+.muted {
+  color: rgba(0, 0, 0, 0.54);
+  font-style: italic;
+}

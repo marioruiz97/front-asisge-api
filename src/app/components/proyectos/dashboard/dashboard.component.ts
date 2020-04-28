@@ -40,6 +40,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
+  recargarDashboard() {
+    this.service.recargarDashboard();
+  }
 
   ngOnDestroy() {
     if (this.subs) { this.subs.forEach(sub => sub.unsubscribe()); }

@@ -1,7 +1,7 @@
 <mat-drawer-container class="mt-4 py-4">
   <mat-drawer #aside class="sidenav" role="directory" mode="side">
-    <mat-action-list dense>
-      <mat-list-item>
+    <mat-action-list>
+      <mat-list-item (click)="agregarMiembro()">
         <div mat-line><mat-icon mat-list-icon>person_add</mat-icon></div>
         <div mat-line><span>Agregar Miembro</span></div>
       </mat-list-item>

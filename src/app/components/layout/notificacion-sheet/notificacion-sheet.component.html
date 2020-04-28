@@ -1,26 +1,16 @@
+<h3 class="notification-title">Notificaciones</h3>
+<mat-divider></mat-divider>
 <mat-list>
   <mat-list-item *ngIf="notificaciones.length === 0">
     <mat-icon matListIcon>notifications_off</mat-icon>
     <span>Genial! Estás al día, no hay notificaciones nuevas</span>
   </mat-list-item>
-  <mat-list-item *ngFor="let not of notificaciones">
+  <mat-list-item [ngClass]="not.notificacion.color + ' mb-1'" *ngFor="let not of notificaciones">
     <mat-icon matListIcon>announcement</mat-icon>
     <!-- <img matListAvatar src="/assets/img/avatar.png" alt=""> -->
     <p mat-line>{{not.notificacion.mensaje}}</p>
+    <button mat-button type="button" (click)="eliminarNotificacion(not.idNotificacionUsuario)" matTooltip="Quitar notificación"><mat-icon>clear</mat-icon></button>
+    <p class="muted" mat-line>{{not.notificacion.fechaCreacion | date: 'medium'}}</p>
   </mat-list-item>
 </mat-list>
 
-<!-- <a href="https://keep.google.com/" mat-list-item (click)="eliminarNotificacion($event)">
-    <span mat-line>Google Keep</span>
-    <span mat-line>Add to a note</span>
-  </a>
-
-  <a href="https://plus.google.com/" mat-list-item (click)="eliminarNotificacion($event)">
-    <span mat-line>Google Plus</span>
-    <span mat-line>Share with your friends</span>
-  </a>
-
-  <a href="https://hangouts.google.com/" mat-list-item (click)="eliminarNotificacion($event)">
-    <span mat-line>Google Hangouts</span>
-    <span mat-line>Show to your coworkers</span>
-  </a> -->

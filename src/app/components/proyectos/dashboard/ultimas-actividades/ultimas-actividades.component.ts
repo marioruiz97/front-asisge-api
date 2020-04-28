@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Notificacion } from 'src/app/models/proyectos/dashboard.model';
 import { DashboardService } from '../dashboard.service';
 import { Subscription } from 'rxjs';
@@ -14,10 +14,13 @@ export class UltimasActividadesComponent implements OnInit, OnDestroy {
   notificaciones: Notificacion[] = [];
   private subs: Subscription[] = [];
 
-  constructor(private service: DashboardService) { }
+  constructor(private service: DashboardService, private detector: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.subs.push(this.service.notificaciones.subscribe(list => this.notificaciones = list));
+    this.subs.push(this.service.notificaciones.subscribe(list => {
+      this.notificaciones = list;
+      this.detector.markForCheck();
+    }));
     this.service.fetchNotificaciones();
   }
 

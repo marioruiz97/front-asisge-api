@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Cliente } from 'src/app/models/terceros/cliente.model';
 import { Subject } from 'rxjs';
-import { Miembros, Proyecto, EstadoLineDto } from 'src/app/models/proyectos/proyecto.model';
+import { Miembros, Proyecto, EstadoLineDto, MiembroDto } from 'src/app/models/proyectos/proyecto.model';
 import { AppService } from 'src/app/shared/app.service';
 import { Dashboard, Notificacion } from 'src/app/models/proyectos/dashboard.model';
 import { AppConstants as Cons } from 'src/app/shared/routing/app.constants';
@@ -40,6 +40,17 @@ export class DashboardService {
     }
   }
 
+  recargarDashboard() {
+    if (this.dashboard && this.dashboard.idDashboard) {
+      this.uiService.loadingState.next(true);
+      const idDashboard = this.dashboard.idDashboard;
+      this.appService.getRequest(`${this.dashboardPath}/${idDashboard}`).subscribe(res => {
+        this.dashboard = res.body as Dashboard;
+        this.setDashboardProperties(this.dashboard);
+      });
+    }
+  }
+
   setDashboardProperties(dashboard: Dashboard) {
     this.cliente.next(dashboard.cliente);
     this.miembros.next(dashboard.miembros);
@@ -48,13 +59,13 @@ export class DashboardService {
     this.uiService.loadingState.next(false);
   }
 
-  fetchInfoCliente(idDashboard: number) {
+  fetchInfoCliente() {
     if (this.dashboard && this.dashboard.cliente) {
       this.cliente.next(this.dashboard.cliente);
     }
   }
 
-  fetchInfoProyecto(idDashboard: number) {
+  fetchInfoProyecto() {
     if (this.dashboard && this.dashboard.proyecto) {
       this.proyecto.next(this.dashboard.proyecto);
     }
@@ -77,6 +88,44 @@ export class DashboardService {
       this.estados.next(this.dashboard.lineaEstados);
     }
   }
+
+  /**
+   * FIN DE METODOS DE PROPIEDADES BASICAS DEL DASHBOARD, DE AQUI EN ADELANTE SE ENCUENTRA METODOS ESPECIFICOS DE LA GESTION DE CADA PARTE
+   */
+
+  /**
+   * METODOS USADOS EN LA DESTION DE MIEMBROS
+   */
+  fetchPosiblesMiembros() {
+    const posiblesMiembros = Cons.PATH_POSIBLES_MIEMBROS;
+    if (this.dashboard && this.dashboard.idDashboard) {
+      return this.appService.getRequest(`${posiblesMiembros}/${this.dashboard.idDashboard}`);
+    }
+  }
+
+  crearMiembro(miembro: MiembroDto) {
+    const path = Cons.PATH_PROYECTO_MIEMBROS.replace('{idProyecto}', miembro.proyecto.toString());
+    return this.appService.postRequest(path, miembro);
+  }
+
+  eliminarMiembro(miembro: Miembros) {
+    const path = Cons.PATH_PROYECTO_MIEMBROS.replace('{idProyecto}', miembro.proyecto.idProyecto.toString());
+    this.appService.deleteRequest(path + '?miembro=' + miembro.idMiembroProyecto).then(res => {
+      this.uiService.showSnackBar(res.message, 3);
+      this.dashboard.miembros = this.dashboard.miembros.filter(old => old.idMiembroProyecto !== miembro.idMiembroProyecto);
+      this.fetchMiembros();
+    }).catch(err => this.uiService.showSnackBar(err.error.message, 3));
+  }
+
+  agregarMiembroLista(miembro: Miembros) {
+    this.dashboard.miembros.push(miembro);
+    this.fetchMiembros();
+  }
+  /**
+   *  FIN METODOS DE GESTION DE MIEMBROS
+   */
+
+
 
   returnToList() {
     this.router.navigate(['/proyectos']);

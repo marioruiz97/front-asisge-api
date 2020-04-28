@@ -15,7 +15,7 @@ export class NotificacionSheetComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
 
   constructor(
-    private bottomSheetRef: MatBottomSheetRef<NotificacionSheetComponent>,
+    /* private bottomSheetRef: MatBottomSheetRef<NotificacionSheetComponent>, */
     private appService: AppService,
     private changeDetectorRef: ChangeDetectorRef
   ) { }
@@ -28,9 +28,12 @@ export class NotificacionSheetComponent implements OnInit, OnDestroy {
     }));
   }
 
-  eliminarNotificacion(event: MouseEvent): void {
-    /* this._bottomSheetRef.dismiss(); */
-    event.preventDefault();
+  eliminarNotificacion(idNotificacion): void {
+    const path = AppConstants.PATH_NOTIFICACIONES + '/';
+    this.appService.deleteRequest(path + idNotificacion).then(() => {
+      this.notificaciones = this.notificaciones.filter(not => not.idNotificacionUsuario !== idNotificacion);
+      this.changeDetectorRef.markForCheck();
+    });
   }
 
   ngOnDestroy() {

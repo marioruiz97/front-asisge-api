@@ -36,14 +36,14 @@ export interface EstadoLineDto {
 }
 
 export interface Miembros {
-  idMiembro?: number;
+  idMiembroProyecto?: number;
   usuario: Usuario;
   proyecto: Proyecto;
   rolProyecto: string;
 }
 
 export interface MiembroDto {
-  idMiembro?: number;
+  idMiembroProyecto?: number;
   usuario: number;
   proyecto: number;
   rolProyecto: string;

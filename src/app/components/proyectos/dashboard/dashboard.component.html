@@ -42,7 +42,14 @@
     <mat-tab label="General">
       <!-- widgets del dashboard -->
       <section class="my-4" fxLayout="column">
-        <h3 class="mat-h1">Dashboard</h3>
+        <div class="row mb-4">
+          <h3 class="mat-h1">Dashboard</h3>
+          <div fxFlex></div>
+          <button class="mr-3" mat-icon-button (click)="recargarDashboard()" matTooltip="Recargar Dashboard">
+              <mat-icon class="mat-18">refresh</mat-icon>
+          </button>
+        </div>
+
         <app-estados fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" [estado]="proyecto.estadoProyecto">
         </app-estados>
         <div class="row my-5" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" fxLayoutAlign.gt-sm="space-evenly">
