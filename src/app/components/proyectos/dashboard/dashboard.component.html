@@ -34,6 +34,24 @@
         <h3>Plan de Trabajo</h3>
       </div>
       <mat-card-content class="my-3">
+        <span class="info-title">Selecciona un plan de trabajo o crea uno nuevo</span>
+        <form [formGroup]="" (ngSubmit)="selectPlan()">
+          <mat-form-field appearance="outline">
+            <mat-label>Selecciona plan</mat-label>
+            <mat-select formControlName="planTrabajo" #select>
+              <mat-option>Seleccionar</mat-option>
+              <mat-option [value]="plan.idPlanDeTrabajo" *ngFor="let plan of planes">{{plan.idPlanDeTrabajo + '' + plan.nombrePlan}}</mat-option>
+            </mat-select>
+            <mat-hint>Selecciona un plan existente</mat-hint>
+          </mat-form-field>
+          <button type="submit" mat-button color="accent" [disabled]="planForm.invalid">
+            Seleccionar
+          </button>
+        </form>
+        <p>
+          <button mat-mini-fab routerLink="/planes/nuevo"><mat-icon>add</mat-icon></button>
+          <span>Crear plan de trabajo</span>
+        </p>
       </mat-card-content>
     </mat-card>
   </header>

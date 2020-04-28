@@ -22,5 +22,8 @@ export class AppConstants {
   public static PATH_POSIBLES_MIEMBROS = 'posibles-miembros';
   public static PATH_PROYECTO_MIEMBROS = 'proyectos/{idProyecto}/miembros';
   public static PATH_NOTIFICACIONES = 'notificaciones';
+  public static PATH_PLANES_TRABAJO = 'proyectos/{idProyecto}/planes';
+  public static PATH_PLAN_TRABAJO_ID = 'planes';
+  public static PATH_ETAPA_PLAN = 'planes/{idPlan}/etapas';
 
 }

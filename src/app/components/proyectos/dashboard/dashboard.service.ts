@@ -7,6 +7,7 @@ import { Dashboard, Notificacion } from 'src/app/models/proyectos/dashboard.mode
 import { AppConstants as Cons } from 'src/app/shared/routing/app.constants';
 import { UiService } from 'src/app/shared/ui.service';
 import { Router } from '@angular/router';
+import { PlanTrabajoService } from '../plan-trabajo/plan-trabajo.service';
 
 @Injectable()
 export class DashboardService {
@@ -20,7 +21,12 @@ export class DashboardService {
 
   private dashboardPath = Cons.PATH_DASHBOARD;
 
-  constructor(private appService: AppService, private uiService: UiService, private router: Router) { }
+  constructor(
+    private appService: AppService,
+    private uiService: UiService,
+    private router: Router,
+    private planService: PlanTrabajoService
+  ) { }
 
   fetchDashboard(idDashboard: number) {
     this.uiService.loadingState.next(true);
@@ -56,6 +62,7 @@ export class DashboardService {
     this.miembros.next(dashboard.miembros);
     this.proyecto.next(dashboard.proyecto);
     this.notificaciones.next(dashboard.notificaciones);
+    this.planService.fetchPlanesDeTrabajo(dashboard.idDashboard);
     this.uiService.loadingState.next(false);
   }
 

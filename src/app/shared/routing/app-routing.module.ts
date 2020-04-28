@@ -28,6 +28,7 @@ import { EstadoProyectoFormComponent } from 'src/app/components/maestros/estados
 import { ProyectoListComponent } from 'src/app/components/proyectos/proyecto-list/proyecto-list.component';
 import { ProyectoFormComponent } from 'src/app/components/proyectos/proyecto-form/proyecto-form.component';
 import { DashboardComponent } from 'src/app/components/proyectos/dashboard/dashboard.component';
+import { PlanFormComponent } from 'src/app/components/proyectos/plan-trabajo/plan-form/plan-form.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
@@ -90,6 +91,10 @@ const routes: Routes = [
    */
   {
     path: 'proyectos/nuevo', pathMatch: 'full', component: ProyectoFormComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
+  },
+  {
+    path: '/planes/nuevo', pathMatch: 'full', component: PlanFormComponent, canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
   },
   { path: 'proyectos', component: ProyectoListComponent, canActivate: [AuthGuard] },

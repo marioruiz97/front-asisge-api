@@ -13,6 +13,7 @@ import { ProximasActividadesComponent } from './dashboard/proximas-actividades/p
 import { DashboardService } from './dashboard/dashboard.service';
 import { PlanTrabajoService } from './plan-trabajo/plan-trabajo.service';
 import { AgregarMiembroComponent } from './plan-trabajo/agregar-miembro/agregar-miembro.component';
+import { PlanFormComponent } from './plan-trabajo/plan-form/plan-form.component';
 
 
 
@@ -27,7 +28,8 @@ import { AgregarMiembroComponent } from './plan-trabajo/agregar-miembro/agregar-
     MiembrosComponent,
     UltimasActividadesComponent,
     ProximasActividadesComponent,
-    AgregarMiembroComponent
+    AgregarMiembroComponent,
+    PlanFormComponent
   ],
   imports: [
     SharedModule

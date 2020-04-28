@@ -5,6 +5,9 @@ import { DashboardService } from './dashboard.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { UiService } from 'src/app/shared/ui.service';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { PlanTrabajo } from 'src/app/models/proyectos/plan-trabajo.model';
+import { PlanTrabajoService } from '../plan-trabajo/plan-trabajo.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,22 +19,41 @@ export class DashboardComponent implements OnInit, OnDestroy {
   cliente: Cliente;
   proyecto: Proyecto;
   isWaiting = true;
+
+  planForm: FormGroup;
+  planes: PlanTrabajo[] = [];
+
   private subs: Subscription[] = [];
 
   constructor(
-    private service: DashboardService, private activatedRoute: ActivatedRoute, private uiService: UiService
+    private service: DashboardService,
+    private activatedRoute: ActivatedRoute,
+    private uiService: UiService,
+    private planTrabajoService: PlanTrabajoService
   ) { }
 
   ngOnInit() {
     this.subs.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
     this.subs.push(this.service.cliente.subscribe(cliente => this.cliente = cliente));
     this.subs.push(this.service.proyecto.subscribe(proyecto => this.proyecto = proyecto));
+    this.subs.push(this.planTrabajoService.planesSubject.subscribe(list => this.planes = list));
     this.subs.push(this.activatedRoute.paramMap.subscribe(params => {
       const id = +params.get('id');
       if (id && id !== 0) {
         this.service.fetchDashboard(id);
       }
     }));
+    this.initForm();
+  }
+
+  initForm() {
+    this.planForm = new FormGroup({
+      planTrabajo: new FormControl('', Validators.required)
+    });
+  }
+
+  selectPlan() {
+    this.planTrabajoService.selectActual(this.planForm.value.planTrabajo);
   }
 
   returnIdentificacion() {

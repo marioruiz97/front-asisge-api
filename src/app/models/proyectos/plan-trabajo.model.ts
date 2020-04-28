@@ -2,21 +2,21 @@ import { Proyecto } from './proyecto.model';
 
 // TODO: verificar este model y si es necesario implementar dto
 export interface PlanTrabajo {
-  idPlan?: number;
+  idPlanDeTrabajo?: number;
+  nombrePlan: string;
   fechaInicio: Date;
   fechaFinEstimada: Date;
-  fechaFinReal: Date;
+  fechaFinReal?: Date;
   duracion: number;
   horasMes: number;
   objetivoPlan: string;
-  proyecto: number | Proyecto;
-  etapaActual?: number | EtapaPlan;
+  proyecto: Proyecto;
+  etapaActual?: EtapaPlan | number;
   etapas?: EtapaPlan[];
 }
 
-
 export interface EtapaPlan {
-  idEtapa?: number;
+  idEtapaPDT?: number;
   planDeTrabajo: number;
   nombreEtapa: string;
   fechaInicio: Date;
