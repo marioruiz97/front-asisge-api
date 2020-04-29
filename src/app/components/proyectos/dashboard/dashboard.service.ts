@@ -24,8 +24,7 @@ export class DashboardService {
   constructor(
     private appService: AppService,
     private uiService: UiService,
-    private router: Router,
-    private planService: PlanTrabajoService
+    private router: Router
   ) { }
 
   fetchDashboard(idDashboard: number) {
@@ -62,7 +61,6 @@ export class DashboardService {
     this.miembros.next(dashboard.miembros);
     this.proyecto.next(dashboard.proyecto);
     this.notificaciones.next(dashboard.notificaciones);
-    this.planService.fetchPlanesDeTrabajo(dashboard.idDashboard);
     this.uiService.loadingState.next(false);
   }
 

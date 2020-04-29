@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       const id = +params.get('id');
       if (id && id !== 0) {
         this.service.fetchDashboard(id);
+        this.planTrabajoService.fetchPlanesDeTrabajo(id);
       }
     }));
     this.initForm();

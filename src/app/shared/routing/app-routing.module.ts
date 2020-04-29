@@ -94,7 +94,7 @@ const routes: Routes = [
     data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
   },
   {
-    path: '/planes/nuevo', pathMatch: 'full', component: PlanFormComponent, canActivate: [AuthGuard, RoleGuard],
+    path: 'planes/nuevo', pathMatch: 'full', component: PlanFormComponent, canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
   },
   { path: 'proyectos', component: ProyectoListComponent, canActivate: [AuthGuard] },

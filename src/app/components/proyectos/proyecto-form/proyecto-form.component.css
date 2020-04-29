@@ -12,7 +12,7 @@
   min-width: 30%;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .form-group mat-form-field {
     width: 100%;
   }

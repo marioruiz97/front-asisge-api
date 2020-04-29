@@ -16,6 +16,7 @@ export class PlanTrabajoService {
   planesSubject = new Subject<PlanTrabajo[]>();
 
   private planTrabajoPath = Cons.PATH_PLANES_TRABAJO;
+  private etapasPath = Cons.PATH_ETAPA_PLAN;
 
   constructor(
     private dashboardService: DashboardService, private appService: AppService,
@@ -37,15 +38,39 @@ export class PlanTrabajoService {
     } */);
   }
 
+
   selectActual(id: number) {
     if (this.planActual && this.planActual.idPlanDeTrabajo && this.planActual.idPlanDeTrabajo === id) {
-      this.planActualSubject.next(this.planActual);
+      this.setProperties(this.planActual);
     } else {
       const path = Cons.PATH_PLAN_TRABAJO_ID;
       this.appService.getRequest(`${path}/${id}`).subscribe(res => {
         this.planActual = res.body as PlanTrabajo;
-        this.planActualSubject.next(this.planActual);
+        this.setProperties(this.planActual);
       });
+    }
+  }
+
+  setProperties(plan: PlanTrabajo) {
+    if (plan) {
+      this.uiService.showSnackBar('Se ha seleccionado plan correctamente', 2);
+      this.planActual = plan;
+      this.planActualSubject.next(this.planActual);
+      this.etapasSubject.next(this.planActual.etapas);
+    } else {
+      this.uiService.showSnackBar('No se ha podido seleccionar plan, intenta nuevamente', 3);
+    }
+  }
+
+  fetchPlanActual() {
+    if (this.planActual && this.planActual.idPlanDeTrabajo) {
+      this.planActualSubject.next(this.planActual);
+    }
+  }
+
+  fetchEtapas() {
+    if (this.planActual && this.planActual.etapas) {
+      this.etapasSubject.next(this.planActual.etapas);
     }
   }
 
@@ -56,10 +81,34 @@ export class PlanTrabajoService {
     });
   }
 
+  crearEtapa(data: EtapaPlan, plan: number) {
+    const path = this.etapasPath.replace('{idPlan}', plan.toString());
+    this.uiService.loadingState.next(true);
+    this.appService.postRequest(path, data).then(res => {
+      this.uiService.loadingState.next(false);
+      this.uiService.showSnackBar('Etapa agregada con éxito', 3);
+      if (this.planActual.etapas) {
+        this.planActual.etapas.push(res.body as EtapaPlan);
+      } else {
+        this.planActual.etapas = [res.body as EtapaPlan];
+      }
+    }).catch(err => {
+      this.uiService.loadingState.next(false);
+      if (err.error && err.status !== 403) {
+        const errors: string[] = err.error.errors;
+        this.uiService.showConfirm({ title: 'Error', message: err.error.message, errors, confirm: 'Ok' });
+      } else if (err.status !== 403) {
+        this.uiService.showConfirm({ title: 'Error', message: 'No se ha podido crear etapa', confirm: 'Ok' });
+      }
+    });
+  }
+
   returnToDashboard() {
     if (this.dashboardService && this.dashboardService.dashboard) {
       const id = this.dashboardService.dashboard.idDashboard;
       this.router.navigate(['proyectos/' + id]);
+    } else {
+      this.dashboardService.returnToList();
     }
   }
 

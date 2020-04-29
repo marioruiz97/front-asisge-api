@@ -38,7 +38,7 @@
       <mat-step>
         <ng-template matStepLabel>Confirma</ng-template>
         <p>Estas seguro de que quieres agregar este usuario al proyecto ?</p>
-        <div fxLayoutAlign="space-betwen">
+        <div fxLayoutAlign.gt-sm="space-betwen">
           <button mat-raised-button (click)="cerrarModal()" color="warn">Volver al plan de trabajo</button>
           <button mat-button matStepperPrevious>Agregar otro Usuario</button>
           <button mat-button (click)="guardarMiembro(stepper)" color="primary">Agregar al proyecto</button>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { AgregarMiembroComponent } from './agregar-miembro/agregar-miembro.component';
+import { DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
+import { AgregarEtapasComponent } from './agregar-etapas/agregar-etapas.component';
 
 @Component({
   selector: 'app-plan-trabajo',
@@ -15,13 +17,11 @@ export class PlanTrabajoComponent implements OnInit {
   }
 
   agregarMiembro() {
-    const config: MatDialogConfig = {
-      disableClose: true,
-      position: { right: '0px' },
-      maxWidth: '100vw',
-      minWidth: '50vw',
-    };
-    this.dialog.open(AgregarMiembroComponent, config);
+    this.dialog.open(AgregarMiembroComponent, DIALOG_CONFIG);
+  }
+
+  agregarEtapa() {
+    this.dialog.open(AgregarEtapasComponent, DIALOG_CONFIG);
   }
 
 }

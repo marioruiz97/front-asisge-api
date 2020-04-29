@@ -11,8 +11,9 @@ import { DashboardService } from '../../dashboard/dashboard.service';
 })
 export class PlanFormComponent implements OnInit, OnDestroy {
 
-  proyectoForm: FormGroup;
+  planForm: FormGroup;
   isWaiting = false;
+  minDate = new Date();
 
   private idProyecto: number;
   private subs: Subscription[] = [];
@@ -36,8 +37,8 @@ export class PlanFormComponent implements OnInit, OnDestroy {
   }
 
   initForm() {
-    this.proyectoForm = new FormGroup({
-      nombrePlan: new FormControl('', Validators.required),
+    this.planForm = new FormGroup({
+      nombrePlan: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       fechaInicio: new FormControl('', Validators.required),
       fechaFinEstimada: new FormControl('', Validators.required),
       horasMes: new FormControl(0, [Validators.required, Validators.min(1)]),
@@ -46,7 +47,7 @@ export class PlanFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.service.crearPlan(this.proyectoForm.value, this.idProyecto);
+    this.service.crearPlan(this.planForm.value, this.idProyecto);
   }
 
   goBack() {
