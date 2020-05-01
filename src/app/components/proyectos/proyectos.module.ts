@@ -15,6 +15,7 @@ import { PlanTrabajoService } from './plan-trabajo/plan-trabajo.service';
 import { AgregarMiembroComponent } from './plan-trabajo/agregar-miembro/agregar-miembro.component';
 import { PlanFormComponent } from './plan-trabajo/plan-form/plan-form.component';
 import { AgregarEtapasComponent } from './plan-trabajo/agregar-etapas/agregar-etapas.component';
+import { EtapasPlanComponent } from './plan-trabajo/etapas-plan/etapas-plan.component';
 
 
 
@@ -31,7 +32,8 @@ import { AgregarEtapasComponent } from './plan-trabajo/agregar-etapas/agregar-et
     ProximasActividadesComponent,
     AgregarMiembroComponent,
     PlanFormComponent,
-    AgregarEtapasComponent
+    AgregarEtapasComponent,
+    EtapasPlanComponent
   ],
   imports: [
     SharedModule

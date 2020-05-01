@@ -42,6 +42,29 @@
     </form>
   </mat-tab>
   <mat-tab label="Pasar a otra Etapa">
-
+    <mat-list>
+      <mat-list-item *ngIf="!nombreEtapaActual">
+        <mat-icon matListIcon>sms_failed</mat-icon>
+        <h3 mat-line>No se ha seleccionado la etapa actual</h3>
+      </mat-list-item>
+      <mat-list-item *ngIf="nombreEtapaActual">
+        <mat-icon matListIcon>done_outline</mat-icon>
+        <h3 mat-line>{{nombreEtapaActual}}</h3>
+        <p mat-line>Etapa Actual</p>
+      </mat-list-item>
+    </mat-list>
+    <form class="mt-3 mb-1" [formGroup]="selectEtapaForm" (ngSubmit)="pasarEtapa()">
+      <mat-form-field appearance="outline">
+        <mat-label>Selecciona Etapa actual</mat-label>
+        <mat-select formControlName="etapaActual" #select>
+          <mat-option>Seleccionar</mat-option>
+          <mat-option [value]="etapa.idEtapaPDT" *ngFor="let etapa of etapas"> {{etapa.idEtapaPDT + ' - ' + etapa.nombreEtapa}}</mat-option>
+        </mat-select>
+        <mat-hint>Selecciona una etapa</mat-hint>
+      </mat-form-field>
+      <button type="submit" mat-raised-button color="primary" [disabled]="selectEtapaForm.invalid">
+        Seleccionar Etapa Actual
+      </button>
+    </form>
   </mat-tab>
 </mat-tab-group>

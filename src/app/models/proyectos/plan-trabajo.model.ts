@@ -11,7 +11,7 @@ export interface PlanTrabajo {
   horasMes: number;
   objetivoPlan: string;
   proyecto: Proyecto;
-  etapaActual?: EtapaPlan | number;
+  etapaActual?: EtapaPlan;
   etapas?: EtapaPlan[];
 }
 

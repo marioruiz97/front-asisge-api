@@ -1,19 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { AgregarMiembroComponent } from './agregar-miembro/agregar-miembro.component';
 import { DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
 import { AgregarEtapasComponent } from './agregar-etapas/agregar-etapas.component';
+import { PlanTrabajoService } from './plan-trabajo.service';
+import { Subscription } from 'rxjs';
+import { PlanTrabajo } from 'src/app/models/proyectos/plan-trabajo.model';
 
 @Component({
   selector: 'app-plan-trabajo',
   templateUrl: './plan-trabajo.component.html',
   styleUrls: ['./plan-trabajo.component.css']
 })
-export class PlanTrabajoComponent implements OnInit {
+export class PlanTrabajoComponent implements OnInit, OnDestroy {
 
-  constructor(private dialog: MatDialog) { }
+  private subs: Subscription[] = [];
+  planActual: PlanTrabajo;
+
+  constructor(private dialog: MatDialog, private service: PlanTrabajoService) { }
 
   ngOnInit() {
+    this.subs.push(this.service.planActualSubject.subscribe(plan => this.planActual = plan));
+  }
+
+  recargarPlan() {
+    if (this.planActual) {
+      this.service.recargarPlan(this.planActual.idPlanDeTrabajo);
+    }
   }
 
   agregarMiembro() {
@@ -21,7 +34,22 @@ export class PlanTrabajoComponent implements OnInit {
   }
 
   agregarEtapa() {
-    this.dialog.open(AgregarEtapasComponent, DIALOG_CONFIG);
+    if (this.verificarPlan()) {
+      this.dialog.open(AgregarEtapasComponent, DIALOG_CONFIG);
+    }
+  }
+
+  verificarPlan() {
+    if (!this.service.planActual) {
+      this.service.showSeleccionarEtapaAlert();
+      return false;
+    }
+    return true;
+  }
+
+
+  ngOnDestroy() {
+    if (this.subs) { this.subs.forEach(sub => sub.unsubscribe()); }
   }
 
 }

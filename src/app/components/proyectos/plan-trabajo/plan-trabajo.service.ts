@@ -103,6 +103,14 @@ export class PlanTrabajoService {
     });
   }
 
+  recargarPlan(idPlan: number) {
+    const path = Cons.PATH_PLAN_TRABAJO_ID;
+    this.appService.getRequest(`${path}/${idPlan}`).subscribe(res => {
+      this.planActual = res.body as PlanTrabajo;
+      this.setProperties(this.planActual);
+    });
+  }
+
   returnToDashboard() {
     if (this.dashboardService && this.dashboardService.dashboard) {
       const id = this.dashboardService.dashboard.idDashboard;
@@ -110,6 +118,11 @@ export class PlanTrabajoService {
     } else {
       this.dashboardService.returnToList();
     }
+  }
+
+  showSeleccionarEtapaAlert() {
+    const message = 'Debes seleccionar un plan de trabajo antes de ingresar aquí';
+    this.uiService.showConfirm({ title: 'Selecciona un plan', message, confirm: 'Ok' });
   }
 
 }
