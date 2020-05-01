@@ -16,10 +16,15 @@ import { AsesorClienteComponent } from './clientes/asesor-cliente/asesor-cliente
 
 @NgModule({
   declarations: [
-    ClienteListComponent, ClienteFormComponent,
-    ContactoFormComponent, ContactoListComponent,
-    UsuarioListComponent, UsuarioFormComponent,
-    UsuarioDetailsComponent, UsuarioClientesComponent, AsesorClienteComponent
+    ClienteListComponent,
+    ClienteFormComponent,
+    ContactoFormComponent,
+    ContactoListComponent,
+    UsuarioListComponent,
+    UsuarioFormComponent,
+    UsuarioDetailsComponent,
+    UsuarioClientesComponent,
+    AsesorClienteComponent
   ],
   imports: [
     SharedModule

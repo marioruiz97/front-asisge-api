@@ -1,0 +1,88 @@
+<div class="mt-5 pt-5" *ngIf="isWaiting" fxLayout="column" fxLayoutAlign="center center">
+  <mat-progress-bar class="py-2" mode="query"></mat-progress-bar>
+  <h3>Cargando Datos</h3>
+</div>
+
+<div gdAreas="info | dashboards" gdRows="auto auto" *ngIf="!isWaiting">
+
+  <header gdArea="info" class="pt-5" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-evenly" *ngIf="cliente && proyecto">
+    <mat-card fxFlex fxFlex.gt-sm="32" class="mb-5 info-card mat-elevation-z4">
+      <div class="p-1 mat-elevation-z5 card-title" style="background-color: #3b5998;">
+        <h3>Cliente</h3>
+      </div>
+      <mat-card-content class="my-3">
+        <p><ngx-avatar src="/assets/img/customer-avatar.png" size="70"></ngx-avatar></p>
+        <h3>{{cliente.razonSocial}}</h3>
+        <p>{{returnIdentificacion()}}</p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card fxFlex fxFlex.gt-sm="32" class="mb-5 info-card mat-elevation-z4">
+      <div class="p-1 mat-elevation-z5 card-title" style="background-color: var(--darken-orange);">
+        <h3>Proyecto</h3>
+      </div>
+      <mat-card-content class="mb-3" fxLayout="column" fxLayoutAlign="center center">
+        <span class="info-title">Nombre</span>
+        <span>{{proyecto.idProyecto + ' - ' + proyecto.nombreProyecto }}</span>
+        <span class="info-title">Descripción</span>
+        <p class="m-0">{{proyecto.descripcionGeneral}}</p>
+        <span class="info-title">Fecha de Inicio:</span>
+        <span>{{ proyecto.createdDate | date: 'medium'}}</span>
+      </mat-card-content>
+    </mat-card>
+    <mat-card fxFlex fxFlex.gt-sm="32" class="mb-5 info-card mat-elevation-z4">
+      <div class="p-1 mat-elevation-z5 card-title" style="background-color: green;">
+        <h3>Plan de Trabajo</h3>
+      </div>
+      <mat-card-content class="my-3" fxLayout="column" fxLayoutAlign="center center">
+        <span class="info-title">Selecciona un plan de trabajo o crea uno nuevo</span>
+        <form class="mt-3 mb-1" [formGroup]="planForm" (ngSubmit)="selectPlan()">
+          <mat-form-field appearance="outline">
+            <mat-label>Selecciona plan</mat-label>
+            <mat-select formControlName="planTrabajo" #select>
+              <mat-option>Seleccionar</mat-option>
+              <mat-option [value]="plan.idPlanDeTrabajo" *ngFor="let plan of planes">{{plan.idPlanDeTrabajo + ' - ' + plan.nombrePlan}}</mat-option>
+            </mat-select>
+            <mat-hint>Selecciona un plan existente</mat-hint>
+          </mat-form-field>
+          <button type="submit" mat-button color="accent" [disabled]="planForm.invalid">
+            Seleccionar
+          </button>
+        </form>
+        <p>
+          <button mat-mini-fab routerLink="/planes/nuevo" color="primary" matTooltip="Crear Plan de trabajo"><mat-icon>add</mat-icon></button>
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </header>
+
+  <mat-tab-group gdArea="dashboards" mat-stretch-tabs>
+    <mat-tab label="General">
+      <!-- widgets del dashboard -->
+      <section class="my-4" fxLayout="column">
+        <div class="row mb-4">
+          <h3 class="mat-h1">Dashboard</h3>
+          <div fxFlex></div>
+          <button class="mr-3" mat-icon-button (click)="recargarDashboard()" matTooltip="Recargar Dashboard">
+              <mat-icon class="mat-18">refresh</mat-icon>
+          </button>
+        </div>
+
+        <app-estados fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" [estado]="proyecto.estadoProyecto">
+        </app-estados>
+        <div class="row my-5" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" fxLayoutAlign.gt-sm="space-evenly">
+          <app-miembros fxFlex.gt-sm="49"></app-miembros>
+          <app-ultimas-actividades fxFlex.gt-sm="49"></app-ultimas-actividades>
+        </div>
+        <app-proximas-actividades class="row mb-3"></app-proximas-actividades>
+      </section>
+    </mat-tab>
+
+    <!-- fin widgets - otros componentes -->
+    <mat-tab label="Plan de Trabajo">
+      <app-plan-trabajo></app-plan-trabajo>
+    </mat-tab>
+    <mat-tab label="Tiempos">
+      Content 3
+    </mat-tab>
+  </mat-tab-group>
+</div>

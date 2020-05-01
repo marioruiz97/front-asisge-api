@@ -1,4 +1,4 @@
-<div class="pt-4" fxLayoutAlign="center" *ngIf="hasRole(['ROLE_ADMIN'])">
+<div class="pt-4" fxLayoutAlign="center" *ngIf="hasRole(['ROLE_ADMIN', 'ROLE_ASESOR'])">
   <button mat-fab routerLink="/proyectos/nuevo" color="primary" matTooltip="Crear proyecto">
       <mat-icon class="mat-18">add</mat-icon>
   </button>

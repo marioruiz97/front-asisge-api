@@ -20,6 +20,9 @@
           </a>
         </mat-menu>
       </mat-list-item>
+      <button mat-button (click)="abrirNotificaciones()" matTooltip="Notificaciones">
+        <mat-icon>notifications_active</mat-icon>
+      </button>
       <button mat-button [matMenuTriggerFor]="settingsMenu" matTooltip="Ajustes">
         <mat-icon>widgets</mat-icon>
       </button>

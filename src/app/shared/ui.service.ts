@@ -27,11 +27,14 @@ export class UiService {
   }
 
   putSnackBar(promise: Promise<any>): Observable<boolean> {
+    this.loadingState.next(true);
     return new Observable(exito => {
       promise.then((res: Response) => {
         this.showSnackBar(res.message, 4);
+        this.loadingState.next(false);
         exito.next(true);
       }).catch(err => {
+        this.loadingState.next(false);
         exito.next(false);
         if (err.error && err.status !== 403) {
           const errors: string[] = err.error.errors;

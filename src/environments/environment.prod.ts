@@ -5,7 +5,6 @@ export const environment = {
   token_path: 'oauth/token',
   grant_type: 'password',
 
-
   firebase: {
     apiKey: 'AIzaSyCleMrpWObWEo7hOnhyouOWGmfAna8rsXg',
     authDomain: 'elenchos-software.firebaseapp.com',

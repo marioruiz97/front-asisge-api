@@ -11,10 +11,11 @@ import { AppService } from './shared/app.service';
 import { AboutComponent } from './components/others/about/about.component';
 import { ContactComponent } from './components/others/contact/contact.component';
 import { ProyectosModule } from './components/proyectos/proyectos.module';
+import { NotificacionSheetComponent } from './components/layout/notificacion-sheet/notificacion-sheet.component';
 
 @NgModule({
   declarations: [
-    AppComponent, HomeComponent, AboutComponent, ContactComponent
+    AppComponent, HomeComponent, AboutComponent, ContactComponent, NotificacionSheetComponent
   ],
   imports: [
     BrowserModule,
@@ -24,6 +25,7 @@ import { ProyectosModule } from './components/proyectos/proyectos.module';
     MaestrosModule,
     ProyectosModule
   ],
+  entryComponents: [NotificacionSheetComponent],
   providers: [AppService],
   bootstrap: [AppComponent],
 })

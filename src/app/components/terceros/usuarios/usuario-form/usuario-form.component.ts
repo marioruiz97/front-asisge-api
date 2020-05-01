@@ -17,6 +17,7 @@ export class UsuarioFormComponent implements OnInit, OnDestroy {
   usuarioForm: FormGroup;
   tiposDoc: TipoDocumento[] = [];
   isUpdate = false;
+  isWaiting = false;
 
   private subscriptions: Subscription[] = [];
   private curId: number;
@@ -35,6 +36,7 @@ export class UsuarioFormComponent implements OnInit, OnDestroy {
         this.getUsuario(id);
       }
     }));
+    this.subscriptions.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
   }
 
   fetchDocumentos() {

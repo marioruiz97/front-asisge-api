@@ -17,6 +17,9 @@
   <mat-divider></mat-divider>
 
   <mat-nav-list>
+    <a mat-list-item (click)="abrirNotificaciones()">
+      <mat-icon>notifications</mat-icon> <span class="nav-caption">Notificaciones</span>
+    </a>
     <mat-accordion displayMode="flat" [multi]="true" #accordion="matAccordion">
       <mat-expansion-panel *ngFor="let item of collapsible">
         <mat-expansion-panel-header>

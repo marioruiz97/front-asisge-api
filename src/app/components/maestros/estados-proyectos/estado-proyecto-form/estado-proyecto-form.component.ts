@@ -16,6 +16,7 @@ export class EstadoProyectoFormComponent implements OnInit, OnDestroy {
   estadoForm: FormGroup;
   allEstados: EstadoProyecto[] = [];
   isUpdate = false;
+  isWaiting = false;
 
   private subscriptions: Subscription[] = [];
   private curId: number;
@@ -33,6 +34,7 @@ export class EstadoProyectoFormComponent implements OnInit, OnDestroy {
         this.getEstado(id);
       }
     }));
+    this.subscriptions.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
   }
 
   initForm() {
@@ -41,6 +43,7 @@ export class EstadoProyectoFormComponent implements OnInit, OnDestroy {
       nombreEstado: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       descripcion: new FormControl('', [Validators.maxLength(255)]),
       idEstadoAnterior: new FormControl(''),
+      requerido: new FormControl(false)
     });
   }
 
@@ -63,7 +66,8 @@ export class EstadoProyectoFormComponent implements OnInit, OnDestroy {
       id: estado.id,
       nombreEstado: estado.nombreEstado,
       descripcion: estado.descripcion,
-      idEstadoAnterior: estado.idEstadoAnterior
+      idEstadoAnterior: estado.idEstadoAnterior,
+      requerido: estado.requerido
     });
   }
 

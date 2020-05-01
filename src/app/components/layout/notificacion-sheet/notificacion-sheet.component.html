@@ -1,0 +1,16 @@
+<h3 class="notification-title">Notificaciones</h3>
+<mat-divider></mat-divider>
+<mat-list>
+  <mat-list-item *ngIf="notificaciones.length === 0">
+    <mat-icon matListIcon>notifications_off</mat-icon>
+    <span>Genial! Estás al día, no hay notificaciones nuevas</span>
+  </mat-list-item>
+  <mat-list-item [ngClass]="not.notificacion.color + ' mb-1'" *ngFor="let not of notificaciones">
+    <mat-icon matListIcon>announcement</mat-icon>
+    <!-- <img matListAvatar src="/assets/img/avatar.png" alt=""> -->
+    <p mat-line>{{not.notificacion.mensaje}}</p>
+    <button mat-button type="button" (click)="eliminarNotificacion(not.idNotificacionUsuario)" matTooltip="Quitar notificación"><mat-icon>clear</mat-icon></button>
+    <p class="muted" mat-line>{{not.notificacion.fechaCreacion | date: 'medium'}}</p>
+  </mat-list-item>
+</mat-list>
+

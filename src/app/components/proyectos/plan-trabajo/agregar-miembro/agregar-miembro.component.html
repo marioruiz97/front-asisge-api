@@ -1,0 +1,62 @@
+<div class="row">
+  <h3>Gestionar Miembros</h3>
+  <div fxFlex></div>
+  <button mat-icon-button matTooltip="Cerrar" (click)="cerrarModal()">
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>
+
+
+<mat-tab-group mat-stretch-tabs>
+  <mat-tab label="Agregar Miembro">
+    <mat-vertical-stepper linear #stepper>
+      <mat-step [stepControl]="miembroForm">
+        <form [formGroup]="miembroForm" (ngSubmit)="onSubmit()">
+          <ng-template matStepLabel>Selecciona el usuario</ng-template>
+          <div class="form-group" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between">
+            <mat-form-field class="mb-3" fxFlex.gt-sm="47">
+              <mat-label>Usuario</mat-label>
+              <input type="text" placeholder="Busca por nombre o correo" matInput [matAutocomplete]="auto" formControlName="usuario">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let user of filteredUsuarios | async" [value]="user.correo">
+                  <span>{{user.idUsuario}} - {{user.nombre + ' ' + user.apellido1}} - {{user.correo}}</span>
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error>Campo Obligatorio</mat-error>
+            </mat-form-field>
+            <mat-form-field class="mb-3" fxFlex.gt-sm="47">
+              <mat-label>Rol</mat-label>
+              <input type="text" matInput placeholder="Rol en el proyecto" formControlName="rol">
+              <mat-error>Campo Obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <button mat-button matStepperNext [disabled]="miembroForm.invalid" color="primary">Siguiente</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Confirma</ng-template>
+        <p>Estas seguro de que quieres agregar este usuario al proyecto ?</p>
+        <div fxLayoutAlign.gt-sm="space-betwen">
+          <button mat-raised-button (click)="cerrarModal()" color="warn">Volver al plan de trabajo</button>
+          <button mat-button matStepperPrevious>Agregar otro Usuario</button>
+          <button mat-button (click)="guardarMiembro(stepper)" color="primary">Agregar al proyecto</button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+  </mat-tab>
+  <mat-tab label="Quitar Miembros">
+    <mat-list>
+      <mat-list-item *ngFor="let miembro of miembros">
+        <ngx-avatar [name]="getNombre(miembro.usuario)" matListAvatar></ngx-avatar>
+        <h3 mat-line>{{getNombre(miembro.usuario)}}</h3>
+        <p mat-line>{{miembro.rolProyecto}}</p>
+        <p mat-line>{{miembro.usuario.correo}}</p>
+        <button mat-icon-button (click)="eliminarMiembro(miembro)">
+            <mat-icon class="mat-18">clear</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-tab>
+</mat-tab-group>

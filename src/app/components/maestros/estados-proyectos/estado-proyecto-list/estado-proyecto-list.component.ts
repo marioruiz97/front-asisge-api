@@ -12,7 +12,7 @@ import { EstadoProyectoService } from '../estado-proyecto.service';
 export class EstadoProyectoListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private listSub: Subscription[] = [];
-  displayedColumns = ['id', 'nombreEstado', 'descripcion', 'idEstadoAnterior', 'acciones'];
+  displayedColumns = ['id', 'nombreEstado', 'descripcion', 'idEstadoAnterior', 'requerido', 'acciones'];
   datasource = new MatTableDataSource<EstadoProyecto>();
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;

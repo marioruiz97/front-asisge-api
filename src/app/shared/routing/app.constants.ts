@@ -1,3 +1,5 @@
+import { MatDialogConfig } from '@angular/material';
+
 export class AppConstants {
 
   public static PATH_TIPO_DOCUMENTO = 'tipo-documento';
@@ -18,4 +20,18 @@ export class AppConstants {
   public static PATH_CLIENTE = 'clientes';
   public static PATH_CONTACTO = 'contactos';
 
+  public static PATH_DASHBOARD = 'dashboard';
+  public static PATH_POSIBLES_MIEMBROS = 'posibles-miembros';
+  public static PATH_PROYECTO_MIEMBROS = 'proyectos/{idProyecto}/miembros';
+  public static PATH_NOTIFICACIONES = 'notificaciones';
+  public static PATH_PLANES_TRABAJO = 'proyectos/{idProyecto}/planes';
+  public static PATH_PLAN_TRABAJO_ID = 'planes';
+  public static PATH_ETAPA_PLAN = 'planes/{idPlan}/etapas';
 }
+
+export const DIALOG_CONFIG: MatDialogConfig = {
+  disableClose: true,
+  position: { right: '0px' },
+  maxWidth: '100vw',
+  minWidth: '50vw',
+};

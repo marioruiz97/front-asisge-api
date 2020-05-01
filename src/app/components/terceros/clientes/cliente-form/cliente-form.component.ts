@@ -19,9 +19,11 @@ export class ClienteFormComponent implements OnInit, OnDestroy {
   clienteForm: FormGroup;
   tiposDoc: TipoDocumento[] = [];
   contactos: Contacto[] = [];
+  isWaiting = false;
   private subscriptions: Subscription[] = [];
   private $isUpdate = false;
   private curId: number;
+  private curIdentificacion: string;
 
   constructor(
     private service: ClienteService, private activatedRoute: ActivatedRoute,
@@ -37,6 +39,7 @@ export class ClienteFormComponent implements OnInit, OnDestroy {
         this.getCliente(id);
       }
     }));
+    this.subscriptions.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
   }
 
   fetchDocumentos() {
@@ -69,8 +72,10 @@ export class ClienteFormComponent implements OnInit, OnDestroy {
       nombreComercial: cliente.nombreComercial, razonSocial: cliente.razonSocial,
       tipoDocumento: tipoDoc.id
     });
+    this.clienteForm.get('identificacion').disable();
     this.$isUpdate = true;
     this.curId = cliente.idCliente;
+    this.curIdentificacion = cliente.identificacion;
   }
 
   goBack() {
@@ -92,10 +97,12 @@ export class ClienteFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    const cliente = { ...this.clienteForm.value, contactos: this.contactos };
     if (this.$isUpdate && this.curId && this.curId !== 0) {
-      this.service.update(this.curId, { ...this.clienteForm.value, contactos: this.contactos });
+      cliente.identificacion = this.curIdentificacion;
+      this.service.update(this.curId, cliente);
     } else {
-      this.service.create({ ...this.clienteForm.value, contactos: this.contactos });
+      this.service.create(cliente);
     }
   }
 

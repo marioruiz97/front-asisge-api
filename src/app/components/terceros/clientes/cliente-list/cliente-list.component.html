@@ -36,7 +36,7 @@
         <ng-container matColumnDef="contactos">
           <th mat-header-cell *matHeaderCellDef fxHide.lt-md> Contactos </th>
           <td mat-cell *matCellDef="let doc" fxHide.lt-md matTooltip="para cambiar los contactos registrados del cliente, ingresa a editar">
-            <mat-list>
+            <mat-list dense>
               <mat-list-item *ngFor="let item of doc.contactos">
                 <mat-icon>how_to_reg</mat-icon> {{item.nombre + ': ' + item.correo}}
               </mat-list-item>

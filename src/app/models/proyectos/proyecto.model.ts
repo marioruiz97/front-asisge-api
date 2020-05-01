@@ -26,17 +26,24 @@ export interface EstadoProyecto {
   nombreEstado: string;
   descripcion?: string;
   idEstadoAnterior?: number | null;
+  requerido: boolean;
+}
+
+export interface EstadoLineDto {
+  estado: EstadoProyecto;
+  actual: boolean;
+  completado: boolean;
 }
 
 export interface Miembros {
-  idMiembro?: number;
+  idMiembroProyecto?: number;
   usuario: Usuario;
   proyecto: Proyecto;
   rolProyecto: string;
 }
 
 export interface MiembroDto {
-  idMiembro?: number;
+  idMiembroProyecto?: number;
   usuario: number;
   proyecto: number;
   rolProyecto: string;

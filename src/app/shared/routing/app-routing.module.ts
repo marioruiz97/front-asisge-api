@@ -26,6 +26,9 @@ import { EstadoProyectoPageComponent } from 'src/app/components/maestros/estados
 import { EstadoProyectoFormComponent } from 'src/app/components/maestros/estados-proyectos/estado-proyecto-form/estado-proyecto-form.component';
 
 import { ProyectoListComponent } from 'src/app/components/proyectos/proyecto-list/proyecto-list.component';
+import { ProyectoFormComponent } from 'src/app/components/proyectos/proyecto-form/proyecto-form.component';
+import { DashboardComponent } from 'src/app/components/proyectos/dashboard/dashboard.component';
+import { PlanFormComponent } from 'src/app/components/proyectos/plan-trabajo/plan-form/plan-form.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
@@ -60,11 +63,11 @@ const routes: Routes = [
     data: { roles: ['ROLE_ADMIN'] }
   },
   {
-    path: 'estado-proyecto', component: EstadoProyectoPageComponent, canActivate: [AuthGuard],
+    path: 'estado-proyecto', component: EstadoProyectoPageComponent, canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ROLE_ADMIN'] }
   },
   {
-    path: 'estado-proyecto/:id', component: EstadoProyectoFormComponent, canActivate: [AuthGuard],
+    path: 'estado-proyecto/:id', component: EstadoProyectoFormComponent, canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ROLE_ADMIN'] }
   },
 
@@ -86,7 +89,16 @@ const routes: Routes = [
   /**
    * MODULOS DE PROYECTOS
    */
+  {
+    path: 'proyectos/nuevo', pathMatch: 'full', component: ProyectoFormComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
+  },
+  {
+    path: 'planes/nuevo', pathMatch: 'full', component: PlanFormComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
+  },
   { path: 'proyectos', component: ProyectoListComponent, canActivate: [AuthGuard] },
+  { path: 'proyectos/:id', component: DashboardComponent, canActivate: [AuthGuard] },
 
   // usar rutas que no estan mapeadas, cambiar el redirect por un componente error
   { path: '**', redirectTo: 'home' }
