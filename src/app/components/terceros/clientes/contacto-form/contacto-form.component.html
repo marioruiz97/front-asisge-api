@@ -1,9 +1,16 @@
-<section class="p-4">
-  <h2 matDialogTitle>Gestionar Contacto</h2>
+<section>
+  <div>
+    <h2 matDialogTitle>Gestionar Contacto</h2>
+    <div fxFlex></div>
+    <button mat-icon-button [matDialogClose]="true">
+        <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+
   <span matSubheader>Los campos con * son obligatorios</span>
 
   <form (ngSubmit)="onSubmit(form)" #form="ngForm">
-    <mat-dialog-content class="px-2" fxLayout="column" style="min-width: 400px;"> <!-- TODO: revisar estos estilos en moviles-->
+    <mat-dialog-content fxLayout="column">
       <input type="hidden" name="idCliente" [value]="data.idCliente ? data.idCliente : 0">
       <input type="hidden" name="id" [value]="data.id ? data.id : 0">
       <mat-form-field>
@@ -23,9 +30,9 @@
       </mat-form-field>
     </mat-dialog-content>
 
-    <mat-dialog-actions class="mt-4">
-      <button type="submit" mat-button [matDialogClose]="false" [disabled]="form.invalid" color="primary">Guardar Contacto</button>
-      <button type="button" mat-button [matDialogClose]="true">Cancelar</button>
+    <mat-dialog-actions class="my-4">
+      <button type="submit" mat-button fxFlex [matDialogClose]="false" [disabled]="form.invalid" color="primary">Guardar Contacto</button>
+      <button type="button" mat-button fxFlex [matDialogClose]="true">Cancelar</button>
     </mat-dialog-actions>
   </form>
 </section>

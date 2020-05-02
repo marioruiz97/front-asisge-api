@@ -8,6 +8,7 @@ import { TipoDocumento } from 'src/app/models/terceros/tipo-documento.model';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { ContactoFormComponent } from '../contacto-form/contacto-form.component';
+import { BASIC_DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
 
 @Component({
   selector: 'app-cliente-form',
@@ -119,9 +120,9 @@ export class ClienteFormComponent implements OnInit, OnDestroy {
       id: 0, idCliente: this.clienteForm.value.idCliente,
       correo: '', telefono: '', nombre: ''
     };
-    const dialogRef = this.dialog.open(ContactoFormComponent, { disableClose: true, data });
+    const dialogRef = this.dialog.open(ContactoFormComponent, { ...BASIC_DIALOG_CONFIG, disableClose: true, data });
     this.subscriptions.push(dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (result.id) {
         result.id = result.id !== 0 ? result.id : this.contactos.length;
         this.contactos.push(result);
         this.refrescarContactos();
