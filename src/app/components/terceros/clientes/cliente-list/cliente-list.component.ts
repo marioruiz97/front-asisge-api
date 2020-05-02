@@ -4,6 +4,7 @@ import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/m
 import { Cliente } from 'src/app/models/terceros/cliente.model';
 import { ClienteService } from '../cliente.service';
 import { AsesorClienteComponent } from '../asesor-cliente/asesor-cliente.component';
+import { BASIC_DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
 
 @Component({
   selector: 'app-cliente-list',
@@ -42,7 +43,7 @@ export class ClienteListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   showUsuario(cliente: Cliente) {
-    this.dialog.open(AsesorClienteComponent, { data: cliente });
+    this.dialog.open(AsesorClienteComponent, { ...BASIC_DIALOG_CONFIG, data: cliente });
   }
 
   delete(id: string) {

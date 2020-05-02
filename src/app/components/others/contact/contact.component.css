@@ -2,7 +2,7 @@
 * estilos a los textos
 */
 h3 {
-  font-size: 1.75em;
+  font-size: 1.75rem;
 }
 .contacto-title {
   color: var(--darken-orange);
@@ -15,18 +15,18 @@ h3 {
   color: #fff !important;
 }
 /* .info-empresa mat-list-item {
-  font-size: 1.2em;
+  font-size: 1.2rem;
 } */
 
 /*
 * estilos al formulario
 */
 mat-form-field {
-  min-width: 350px;
+  min-width: 90%;
 }
 
-.form-contacto button {  
+.form-contacto button {
   color: var(--darken-orange);
   font-weight: 500;
-  font-size: 1em;
+  font-size: 1rem;
 }

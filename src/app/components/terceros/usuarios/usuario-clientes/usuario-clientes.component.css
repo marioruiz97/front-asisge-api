@@ -1,11 +1,3 @@
-mat-dialog-content {
-  min-width: 600px;  /* TODO: revisar estos estilos. */
-}
-
 .property {
   font-weight: 600;
-}
-
-mat-list-item div {
-  font-size: 1.2em;
 }

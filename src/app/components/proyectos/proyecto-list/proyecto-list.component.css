@@ -1,5 +1,5 @@
 h2 {
-  font-size: 2em;
+  font-size: 2rem;
   font-weight: 400;
   padding-left: 5%;
 }
@@ -13,9 +13,7 @@ mat-toolbar {
 section {
   padding-top: 20vh;
   background-image: url("../../../../assets/img/proyecto-header.jpg");
-  /* background-image: url('https://image.freepik.com/foto-gratis/lugar-estudios-taza-amarilla-marco-fotos-gris_23-2147878288.jpg'); */
   background-attachment: fixed;
-  /* background-position: 50% 25%; */
   background-size: 100vw 50vh;
   background-repeat: no-repeat;
 }
@@ -32,14 +30,11 @@ section {
 }
 
 .quitar-filtros mat-icon {
-  font-size: 3em;
+  font-size: 3rem;
 }
 
 div.mat-line {
   min-height: 25px;
-}
-div.mat-line span {
-  font-size: 1.2em;
 }
 
 span.list-title {

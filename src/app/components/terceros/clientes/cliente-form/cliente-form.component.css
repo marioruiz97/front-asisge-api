@@ -9,8 +9,11 @@ app-contacto-list {
 }
 
 .contact-header {
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.54);
+  text-align: center;
   font-weight: 400;
-  font-size: 2em;
+  font-size: 2rem;
 }
 
 .form-group mat-form-field {

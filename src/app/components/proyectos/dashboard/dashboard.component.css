@@ -22,5 +22,5 @@ mat-card.info-card p, mat-card.info-card h3 {
 span.info-title {
   margin-top: 12px;
   font-weight: 500;
-  font-size: 1.2em;
+  font-size: 1rem;
 }

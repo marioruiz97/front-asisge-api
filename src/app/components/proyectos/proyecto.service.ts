@@ -37,6 +37,9 @@ export class ProyectoService {
       } else if (err.status !== 403) {
         this.uiService.showConfirm({ title: 'Error', message: 'Ha ocurrido un error interno', confirm: 'Ok' });
       }
+      if (err.status === 500) {
+        this.returnToList();
+      }
     });
   }
 

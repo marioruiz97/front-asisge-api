@@ -35,3 +35,9 @@ export const DIALOG_CONFIG: MatDialogConfig = {
   maxWidth: '100vw',
   minWidth: '50vw',
 };
+
+export const BASIC_DIALOG_CONFIG: MatDialogConfig = {
+  maxHeight: '100vh',
+  maxWidth: '100vw',
+  minWidth: '50vw',
+};

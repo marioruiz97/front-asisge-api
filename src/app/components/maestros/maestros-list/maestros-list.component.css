@@ -1,11 +1,11 @@
 header {
   min-height: 60vh;
   max-height: 70vh;
-  background-image: url('/assets/img/homepage-header.jpg');
+  background-image: url("/assets/img/homepage-header.jpg");
   background-attachment: fixed;
   background-position: start;
   background-size: cover;
-  filter: grayscale(.45);
+  filter: grayscale(0.45);
 }
 
 header div {
@@ -13,7 +13,8 @@ header div {
   background-color: rgba(0, 0, 0, 0.6) !important;
 }
 
-header p, header h1 {
+header p,
+header h1 {
   color: #fff;
   font-weight: 500;
   text-shadow: 2px 0px 0px black;
@@ -26,5 +27,17 @@ header p {
 }
 
 section mat-card {
-  min-width: 75%;
+  min-width: 85%;
+}
+
+@media (max-width: 550px) {
+  header p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 840px) {
+  mat-card.fit-gt-sm {
+    max-width: 90%;
+  }
 }

@@ -8,7 +8,7 @@
 
 .about-header h1 {
   padding-left: 35px;
-  font-size: 3.5em;
+  font-size: 3.5rem;
   font-weight: 500;
 }
 
@@ -40,7 +40,7 @@
 .hacer-caption h3,
 .about-team h3 {
   color: var(--darken-orange);
-  font-size: 2em;
+  font-size: 2rem;
   font-weight: 300;
 }
 
