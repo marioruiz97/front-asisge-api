@@ -21,6 +21,7 @@ export class PlanTrabajoComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subs.push(this.service.planActualSubject.subscribe(plan => this.planActual = plan));
+    this.service.fetchPlanActual();
   }
 
   recargarPlan() {

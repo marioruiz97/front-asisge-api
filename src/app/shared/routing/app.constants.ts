@@ -12,6 +12,7 @@ export class AppConstants {
 
   public static PATH_MIS_PROYECTOS = 'usuarios/{id}/mis-proyectos';
   public static PATH_PROYECTOS = 'proyectos';
+  public static PATH_PLANTILLAS = 'plantilla';
 
   public static PATH_USUARIO = 'usuarios';
   public static PATH_ESTADO_USUARIO = 'estado-usuario';

@@ -1,0 +1,33 @@
+header {
+  filter: grayscale(0.3);
+  min-height: 60vh;
+  max-height: 70vh;
+  background-image: url("/assets/img/forms-background.jpg");
+  background-attachment: fixed;
+  background-position: 50% 25%;
+  background-size: cover;
+}
+
+header div {
+  margin: 5% auto;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+header p,
+header h1 {
+  color: #fff;
+  font-weight: 500;
+  text-shadow: 2px 0px 0px black;
+  text-align: center;
+}
+
+header p {
+  font-weight: 200 !important;
+  font-size: 1.6rem;
+}
+
+@media (max-width: 550px) {
+  header p {
+    font-size: 0.9rem;
+  }
+}

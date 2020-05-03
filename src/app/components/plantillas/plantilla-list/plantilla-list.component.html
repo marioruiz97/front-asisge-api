@@ -1,0 +1,60 @@
+<div gdAreas="header | content" gdGap="1em" gdRows="auto auto auto">
+
+  <header gdArea="header" fxLayoutAlign="center center">
+    <div fxFlex.gt-sm="60" fxLayout="column" fxLayoutAlign="center center" class="p-3">
+      <h1 fxFlex="50">Plantillas</h1>
+      <p>
+        En este módulo puedes crear y gestionar diferentes plantillas de planes de trabajo para que puedan ser usadas al
+        momento de crear proyectos.
+        Estas plantillas son compartidas por los asesores y pueden ser editadas o crear nuevas.
+      </p>
+    </div>
+  </header>
+
+  <section gdArea="content">
+    <div fxLayoutAlign="center" *ngIf="plantillas.length===0">
+      <h3>Al parecer no existen plantillas, da click en '+' para agegar una</h3>
+    </div>
+
+    <div fxLayoutAlign="center">
+      <button mat-fab routerLink="/plantillas/0" color="primary" matTooltip="Crear plantilla">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutAlign="space-evenly start">
+      <mat-card class="mat-elevation-z2" fxFlex="100" fxFlex.gt-xs="32" *ngFor="let plantilla of plantillas">
+        <mat-card-header>
+          <mat-card-title>Plantilla {{plantilla.idPlantilla + ' - ' + plantilla.nombrePlantilla}}</mat-card-title>
+          <mat-card-subtitle>Úsala para: {{plantilla.descripcionPlantilla}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <mat-list dense>
+            <mat-list-item>
+              <div mat-line> {{plantilla.createdBy}} </div>
+              <span>Creada por</span>
+            </mat-list-item>
+            <mat-list-item>
+              <div mat-line>{{ plantilla.createdDate | date: 'medium'}}</div>
+              <span>Creación</span>
+            </mat-list-item>
+            <mat-list-item>
+              <div mat-line>{{ plantilla.lastModifiedDate | date: 'medium'}}</div>
+              <span>Última modificación</span>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-icon-button matTooltip="Editar plantilla" [routerLink]="['/plantillas/'+plantilla.idPlantilla]">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" matTooltip="Eliminar plantilla"
+            (click)="deletePlantilla(plantilla.idPlantilla)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </section>
+</div>
