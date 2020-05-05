@@ -3,10 +3,10 @@ import { AppService, Response } from 'src/app/shared/app.service';
 import { AppConstants } from 'src/app/shared/routing/app.constants';
 import { Router } from '@angular/router';
 import { UiService } from 'src/app/shared/ui.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Plantilla } from 'src/app/models/proyectos/plantilla.model';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class PlantillaService {
 
   private path = AppConstants.PATH_PLANTILLAS;
@@ -18,15 +18,19 @@ export class PlantillaService {
   }
 
   fetchPlantillaById(id: number) {
-    return this.appService.getRequest(`${this.path}/${id}`).toPromise();
+    return this.appService.getRequest(`${this.path}/${id}`);
   }
 
   create(data: Plantilla) {
-    this.uiService.putSnackBar(this.appService.postRequest(this.path, { plantilla: data }))
+    const plantilla = { plantilla: data };
+    JSON.stringify(plantilla);
+    this.uiService.putSnackBar(this.appService.postRequest(this.path, plantilla))
       .subscribe(exito => { if (exito) { this.returnToList(); } });
   }
   update(id: number, data: Plantilla) {
-    this.uiService.putSnackBar(this.appService.patchRequest(`${this.path}/${id}`, { plantilla: data }))
+    const plantilla = { plantilla: data };
+    JSON.stringify(plantilla);
+    this.uiService.putSnackBar(this.appService.patchRequest(`${this.path}/${id}`, plantilla))
       .subscribe(exito => { if (exito) { this.returnToList(); } });
   }
 

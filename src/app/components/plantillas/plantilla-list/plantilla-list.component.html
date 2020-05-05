@@ -16,14 +16,14 @@
       <h3>Al parecer no existen plantillas, da click en '+' para agegar una</h3>
     </div>
 
-    <div fxLayoutAlign="center">
+    <div fxLayoutAlign="center" class="my-3">
       <button mat-fab routerLink="/plantillas/0" color="primary" matTooltip="Crear plantilla">
         <mat-icon>add</mat-icon>
       </button>
     </div>
 
     <div fxLayout="row wrap" fxLayoutAlign="space-evenly start">
-      <mat-card class="mat-elevation-z2" fxFlex="100" fxFlex.gt-xs="32" *ngFor="let plantilla of plantillas">
+      <mat-card class="mat-elevation-z2 my-3 mx-1" fxFlex="100" fxFlex.gt-xs="33" *ngFor="let plantilla of plantillas">
         <mat-card-header>
           <mat-card-title>Plantilla {{plantilla.idPlantilla + ' - ' + plantilla.nombrePlantilla}}</mat-card-title>
           <mat-card-subtitle>Úsala para: {{plantilla.descripcionPlantilla}}</mat-card-subtitle>
@@ -33,7 +33,7 @@
           <mat-list dense>
             <mat-list-item>
               <div mat-line> {{plantilla.createdBy}} </div>
-              <span>Creada por</span>
+              <span>De</span>
             </mat-list-item>
             <mat-list-item>
               <div mat-line>{{ plantilla.createdDate | date: 'medium'}}</div>
@@ -41,12 +41,12 @@
             </mat-list-item>
             <mat-list-item>
               <div mat-line>{{ plantilla.lastModifiedDate | date: 'medium'}}</div>
-              <span>Última modificación</span>
+              <span>Último cambio</span>
             </mat-list-item>
           </mat-list>
         </mat-card-content>
         <mat-card-actions align="end">
-          <button mat-icon-button matTooltip="Editar plantilla" [routerLink]="['/plantillas/'+plantilla.idPlantilla]">
+          <button mat-icon-button color="primary" matTooltip="Editar plantilla" [routerLink]="['/plantillas/'+plantilla.idPlantilla]">
             <mat-icon>edit</mat-icon>
           </button>
           <button mat-icon-button color="warn" matTooltip="Eliminar plantilla"

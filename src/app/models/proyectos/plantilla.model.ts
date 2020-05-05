@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 export interface Plantilla {
   idPlantilla?: number;
   nombrePlantilla: string;
@@ -11,12 +13,15 @@ export interface Plantilla {
 }
 
 export interface PlantillaEtapa {
+  idPlantillaEtapa?: number;
   nombreEtapa: string;
   duracion: number;
   actividades?: PlantillaActividad[];
+  observable?: Subject<PlantillaActividad[]>;
 }
 
 export interface PlantillaActividad {
+  idActividad?: number;
   nombre: string;
   duracion: number;
 }

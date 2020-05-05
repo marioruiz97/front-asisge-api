@@ -12,12 +12,11 @@ import { AboutComponent } from './components/others/about/about.component';
 import { ContactComponent } from './components/others/contact/contact.component';
 import { ProyectosModule } from './components/proyectos/proyectos.module';
 import { NotificacionSheetComponent } from './components/layout/notificacion-sheet/notificacion-sheet.component';
-import { PlantillaListComponent } from './components/plantillas/plantilla-list/plantilla-list.component';
-import { PlantillaFormComponent } from './components/plantillas/plantilla-form/plantilla-form.component';
+import { PlantillaModule } from './components/plantillas/plantilla.module';
 
 @NgModule({
   declarations: [
-    AppComponent, HomeComponent, AboutComponent, ContactComponent, NotificacionSheetComponent, PlantillaListComponent, PlantillaFormComponent
+    AppComponent, HomeComponent, AboutComponent, ContactComponent, NotificacionSheetComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +24,8 @@ import { PlantillaFormComponent } from './components/plantillas/plantilla-form/p
     AuthModule,
     TercerosModule,
     MaestrosModule,
-    ProyectosModule
+    ProyectosModule,
+    PlantillaModule
   ],
   entryComponents: [NotificacionSheetComponent],
   providers: [AppService],

@@ -4,7 +4,7 @@ mat-form-field {
   margin-top: 1rem;
 }
 
-.form-group, .cards-group {
+.form-group, .cards-group, app-actividad-list {
   min-width: 100%;
 }
 

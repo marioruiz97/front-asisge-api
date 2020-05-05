@@ -67,7 +67,7 @@
               *ngIf="!isWaiting">
               <mat-icon>arrow_back</mat-icon> Cancelar
             </button>
-            <button class="m-2" fxFlex type="submit" mat-raised-button color="primary" [disabled]="false"
+            <button class="m-2" fxFlex type="submit" mat-raised-button color="primary" [disabled]="plantillaForm.invalid"
               *ngIf="!isWaiting">
               <mat-icon>save</mat-icon> Guardar Plantilla
             </button>
@@ -76,48 +76,40 @@
         </mat-card>
       </div>
 
+      <mat-card *ngIf="etapas.length === 0">
+        <h3 mat-subheader>Al parecer no hay etapas, puedes agregar dando click en '+' </h3>
+      </mat-card>
 
-      <div class="cards-group my-4" fxLayoutAlign="center">
-        <mat-card class="mat-elevation-z8" fxFlex fxFlex.gt-xs="85">
+      <div class="cards-group my-4" fxLayout="row wrap" fxLayoutAlign="center">
+        <mat-card class="mat-elevation-z8 my-3 mx-1" fxFlex fxFlex.gt-xs="48" *ngFor="let etapa of etapas">
           <mat-card-header>
-            <mat-card-title>Etapa: nombre</mat-card-title>
+            <mat-card-title>Etapa: {{etapa.nombreEtapa}}</mat-card-title>
+            <mat-card-subtitle>Duración: {{etapa.duracion}} {{etapa.duracion === 1 ? 'día': 'días'}}.
+            </mat-card-subtitle>
           </mat-card-header>
           <mat-divider></mat-divider>
-          <mat-card-content class="my-3">
+          <mat-card-content class="my-3" fxLayout="column" fxLayoutAlign="center center">
             <h3 mat-subheader>Actividades</h3>
-            <mat-list>
-              <mat-list-item fxLayoutAlign="space-evenly">
-                <div>nombre</div>
-                <div>duracion</div>
-                <div>acciones</div>
-              </mat-list-item>
-              <form [formGroup]="actividadForm" (ngSubmit)="addActividad()" fxLayoutAlign="space-evenly">
-                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between">
-                  <mat-form-field class="mx-1">
-                    <mat-label>Nombre Etapa</mat-label>
-                    <input matInput formControlName="nombreEtapa">
-                    <mat-hint>
-                      Ingresa el nombre de la etapa
-                    </mat-hint>
-                    <mat-error>El nombre debe estar entre 1 y 100 caracteres</mat-error>
-                  </mat-form-field>
-                  <mat-form-field class="mx-1">
-                    <mat-label>Duración Etapa</mat-label>
-                    <input type="number" matInput formControlName="duracion">
-                    <mat-hint>
-                      <div>Ingresa la duración promedio de la etapa en días</div>
-                    </mat-hint>
-                    <mat-error>Ingresa una duración válida</mat-error>
-                  </mat-form-field>
-                </div>
-                <button type="submit" mat-raised-button color="primary">Agregar</button>
-              </form>
-            </mat-list>
+
+            <app-actividad-list class="mb-4" [observable]="etapa.observable" *ngIf="etapa.observable"
+              (edit)="saveActividad(etapa, $event)" (delete)="deleteActividad(etapa, $event)"></app-actividad-list>
+
+            <button type="button" mat-raised-button (click)="saveActividad(etapa)" color="primary" matTooltip="Agregar Actividad">
+              Agregar Actividad
+            </button>
           </mat-card-content>
+          <mat-card-actions align="end">
+            <button type="button" mat-icon-button (click)="saveEtapa(etapa)" color="primary" matTooltip="Editar Etapa">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button type="button" mat-icon-button (click)="deleteEtapa(etapa)" color="warn" matTooltip="Eliminar Etapa">
+                <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
         </mat-card>
       </div>
 
-      <button class="my-4" mat-fab (click)="addEtapa()" color="primary" matTooltip="Agregar Etapa">
+      <button type="button" class="my-4" mat-fab (click)="saveEtapa()" color="primary" matTooltip="Agregar Etapa">
         <mat-icon class="mat-18">add</mat-icon>
       </button>
 
