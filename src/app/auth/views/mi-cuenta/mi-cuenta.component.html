@@ -1,18 +1,18 @@
 <div gdAreas="profile | content" gdGap="1em" gdRows="auto auto auto">
 
   <section class="mt-5 pt-3" gdArea="profile" fxLayoutAlign="center">
-    <mat-card class="p-4 mat-elevation-z5" fxFlex.gt-sm="80">
+    <mat-card class="p-3 p-sm-4 mat-elevation-z5" fxFlex fxFlex.gt-sm="80">
       <mat-card-header class="mt-3" fxLayoutAlign="center">
         <mat-card-title>Información Personal</mat-card-title>
       </mat-card-header>
       <mat-card-content fxLayout.gt-sm="row">
         <aside fxLayout="column" fxLayoutGap="1em" fxLayoutAlign="center center">
           <button mat-fab type="button" class="options mat-elevation-z5"></button>
-          <div fxLayout="row" fxLayoutGap="20px">
-            <button mat-raised-button class="px-3 py-1" fxFlex="40" color="primary" (click)="toggleEdit()">
+          <div fxLayout.lt-sm="column" fxLayoutGap="20px">
+            <button mat-raised-button class="px-3 py-1" fxFlexOrder.lt-sm="2" fxFlex  color="primary" (click)="toggleEdit()">
               Editar Perfil
             </button>
-            <button mat-raised-button class="px-3 py-1" fxFlex="40" color="warn" (click)="onChangePass()">
+            <button mat-raised-button class="px-3 py-1" fxFlexOrder.lt-sm="1" fxFlex color="warn" (click)="onChangePass()">
               Cambiar Contraseña
             </button>
           </div>

@@ -5,8 +5,8 @@
   </header>
 
   <section gdArea="content" fxLayoutAlign="center center">
-    <div fxFlex="92" fxLayout="column">
-      <div class="px-5 list-button" fxLayoutAlign="space-between">
+    <div fxFlex fxFlex.gt-xs="92" fxLayout="column">
+      <div class="px-2 px-sm-5 list-button" fxLayoutAlign="space-between">
         <mat-form-field>
           <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="buscar...">
           <mat-icon matSuffix>search</mat-icon>

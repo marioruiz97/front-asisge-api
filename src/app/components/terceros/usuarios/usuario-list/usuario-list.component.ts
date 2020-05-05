@@ -5,6 +5,7 @@ import { Usuario } from 'src/app/models/terceros/usuario.model';
 import { UsuarioService } from '../usuario.service';
 import { UsuarioDetailsComponent } from '../usuario-details/usuario-details.component';
 import { UsuarioClientesComponent } from '../usuario-clientes/usuario-clientes.component';
+import { BASIC_DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
 
 @Component({
   selector: 'app-usuario-list',
@@ -46,13 +47,13 @@ export class UsuarioListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   showDetails(usuario: Usuario) {
     if (usuario.apellido2 && usuario.apellido2 === '') { usuario.apellido2 = ''; }
-    const ref = this.dialog.open(UsuarioDetailsComponent, { data: usuario });
+    const ref = this.dialog.open(UsuarioDetailsComponent, { ...BASIC_DIALOG_CONFIG, data: usuario });
     this.listSub.push(ref.afterClosed().subscribe(res => { if (res) { this.fetch(); } }));
   }
 
   showClientes(usuario: Usuario) {
     if (usuario.apellido2 && usuario.apellido2 === '') { usuario.apellido2 = ''; }
-    this.dialog.open(UsuarioClientesComponent, { data: usuario });
+    this.dialog.open(UsuarioClientesComponent, { ...BASIC_DIALOG_CONFIG, data: usuario });
   }
 
   delete(id: string) {

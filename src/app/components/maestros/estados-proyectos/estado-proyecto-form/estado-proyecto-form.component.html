@@ -8,7 +8,7 @@
     <form autocomplete="off" [formGroup]="estadoForm" (ngSubmit)="onSubmit()" fxLayoutAlign="center">
       <mat-card class="mat-elevation-z8 py-4" fxFlex="80" fxFlex.lt-sm="100">
         <mat-card-content class="form-group p-2" fxLayout="column" fxLayoutAlign="center center">
-          <div class="form-group" fxLayoutAlign="space-between">
+          <div class="form-group" fxLayoutAlign="space-between" fxLayout="row wrap">
             <mat-form-field appearance="outline">
               <mat-label>Código Asignado</mat-label>
               <input matInput formControlName="id">
@@ -21,7 +21,7 @@
               <mat-error>El nombre es obligatorio</mat-error>
             </mat-form-field>
           </div>
-          <div class="form-group" fxLayoutAlign="space-between">
+          <div class="form-group" fxLayoutAlign="space-between" fxLayout="row wrap">
             <mat-form-field appearance="outline">
               <mat-label>Estado Anterior</mat-label>
               <mat-select formControlName="idEstadoAnterior">

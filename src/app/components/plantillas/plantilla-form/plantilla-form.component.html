@@ -1,0 +1,118 @@
+<div gdAreas="header | content" gdGap="1em" gdRows="auto auto auto">
+
+  <header class="pt-4 m-2" gdArea="header" fxLayoutAlign="center center">
+    <h1 fxFlex="50">{{isUpdate ? 'Editar': 'Crear'}} Plantilla</h1>
+  </header>
+
+  <section gdArea="content">
+    <form [formGroup]="plantillaForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center center">
+
+      <div class="cards-group my-4" fxLayoutAlign="center">
+        <mat-card class="mat-elevation-z8 my-4" fxFlex fxFlex.gt-xs="85">
+          <mat-card-header>
+            <mat-card-title>Información plantilla</mat-card-title>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content class="my-3">
+            <div class="form-group" fxLayoutAlign="space-evenly" fxLayout.lt-sm="column">
+              <mat-form-field appearance="outline">
+                <mat-label>Código de la plantilla</mat-label>
+                <input matInput formControlName="idPlantilla">
+                <mat-hint> El código es generado por el sistema </mat-hint>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Nombre Plantilla</mat-label>
+                <input matInput formControlName="nombrePlantilla">
+                <mat-hint>
+                  Ingresa un nombre con el que sea fácil reconocer el uso de la plantilla
+                </mat-hint>
+                <mat-error>El nombre debe estar entre 1 y 100 caracteres</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group" fxLayoutAlign="space-evenly" fxLayout.lt-sm="column">
+              <mat-form-field appearance="outline">
+                <mat-label>Duración del plan</mat-label>
+                <input type="number" matInput formControlName="duracion">
+                <mat-hint>
+                  <div>Ingresa la duración promedio del plan de trabajo en días</div>
+                  <div>La duración será calculada por días</div>
+                </mat-hint>
+                <mat-error>Ingresa una duración válida</mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="mt-4">
+                <mat-label>Horas por mes del plan</mat-label>
+                <input type="number" matInput formControlName="horasMes">
+                <mat-hint>
+                  Ingresa las horas de trabajo por mes del plan
+                </mat-hint>
+                <mat-error>Ingresa un dígito válido válida</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group" fxLayoutAlign="space-evenly" fxLayout.lt-sm="column">
+              <mat-form-field appearance="outline" fxFlex>
+                <mat-label>Descripción Plantilla</mat-label>
+                <textarea matInput formControlName="descripcionPlantilla"></textarea>
+                <mat-icon matPrefix>message</mat-icon>
+                <mat-hint>
+                  Ingresa una descripción que indique el uso de la plantilla
+                </mat-hint>
+                <mat-error>La descripción debe estar entre 1 y 100 caracteres</mat-error>
+              </mat-form-field>
+            </div>
+          </mat-card-content>
+          <mat-card-actions class="form-action" fxLayout.lt-sm="column" fxLayoutAlign.gt-xs="space-evenly">
+            <button class="m-2" fxFlex type="button" mat-raised-button (click)="goBack()" color="warn"
+              *ngIf="!isWaiting">
+              <mat-icon>arrow_back</mat-icon> Cancelar
+            </button>
+            <button class="m-2" fxFlex type="submit" mat-raised-button color="primary" [disabled]="plantillaForm.invalid"
+              *ngIf="!isWaiting">
+              <mat-icon>save</mat-icon> Guardar Plantilla
+            </button>
+            <mat-spinner *ngIf="isWaiting"></mat-spinner>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+      <mat-card *ngIf="etapas.length === 0">
+        <h3 mat-subheader>Al parecer no hay etapas, puedes agregar dando click en '+' </h3>
+      </mat-card>
+
+      <div class="cards-group my-4" fxLayout="row wrap" fxLayoutAlign="center">
+        <mat-card class="mat-elevation-z8 my-3 mx-1" fxFlex fxFlex.gt-xs="48" *ngFor="let etapa of etapas">
+          <mat-card-header>
+            <mat-card-title>Etapa: {{etapa.nombreEtapa}}</mat-card-title>
+            <mat-card-subtitle>Duración: {{etapa.duracion}} {{etapa.duracion === 1 ? 'día': 'días'}}.
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content class="my-3" fxLayout="column" fxLayoutAlign="center center">
+            <h3 mat-subheader>Actividades</h3>
+
+            <app-actividad-list class="mb-4" [observable]="etapa.observable" *ngIf="etapa.observable"
+              (edit)="saveActividad(etapa, $event)" (delete)="deleteActividad(etapa, $event)"></app-actividad-list>
+
+            <button type="button" mat-raised-button (click)="saveActividad(etapa)" color="primary" matTooltip="Agregar Actividad">
+              Agregar Actividad
+            </button>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button type="button" mat-icon-button (click)="saveEtapa(etapa)" color="primary" matTooltip="Editar Etapa">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button type="button" mat-icon-button (click)="deleteEtapa(etapa)" color="warn" matTooltip="Eliminar Etapa">
+                <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+      <button type="button" class="my-4" mat-fab (click)="saveEtapa()" color="primary" matTooltip="Agregar Etapa">
+        <mat-icon class="mat-18">add</mat-icon>
+      </button>
+
+    </form>
+  </section>
+</div>

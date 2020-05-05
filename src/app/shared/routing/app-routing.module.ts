@@ -29,6 +29,8 @@ import { ProyectoListComponent } from 'src/app/components/proyectos/proyecto-lis
 import { ProyectoFormComponent } from 'src/app/components/proyectos/proyecto-form/proyecto-form.component';
 import { DashboardComponent } from 'src/app/components/proyectos/dashboard/dashboard.component';
 import { PlanFormComponent } from 'src/app/components/proyectos/plan-trabajo/plan-form/plan-form.component';
+import { PlantillaFormComponent } from 'src/app/components/plantillas/plantilla-form/plantilla-form.component';
+import { PlantillaListComponent } from 'src/app/components/plantillas/plantilla-list/plantilla-list.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
@@ -89,6 +91,14 @@ const routes: Routes = [
   /**
    * MODULOS DE PROYECTOS
    */
+  {
+    path: 'plantillas', component: PlantillaListComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
+  },
+  {
+    path: 'plantillas/:id', component: PlantillaFormComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
+  },
   {
     path: 'proyectos/nuevo', pathMatch: 'full', component: ProyectoFormComponent, canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }

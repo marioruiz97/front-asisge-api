@@ -9,7 +9,7 @@
 }
 
 .sidenav mat-list-item mat-icon {
-  font-size: 2em;
+  font-size: 1.75rem;
 }
 
 .mat-list-base[dense] .mat-list-item,

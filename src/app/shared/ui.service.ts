@@ -36,11 +36,10 @@ export class UiService {
       }).catch(err => {
         this.loadingState.next(false);
         exito.next(false);
-        if (err.error && err.status !== 403) {
-          const errors: string[] = err.error.errors;
-          this.showConfirm({ title: 'Error', message: err.error.message, errors, confirm: 'Ok' });
-        } else if (err.status !== 403) {
-          this.showConfirm({ title: 'Error', message: 'Ha ocurrido un error interno', confirm: 'Ok' });
+        if (err.status !== 403) {
+          const message = err.error ? err.error.message : 'Ha ocurrido un error interno';
+          const errors: string[] = err.error && err.error.errors ? err.error.errors : [];
+          this.showConfirm({ title: 'Error', message, errors, confirm: 'Ok' });
         }
       });
     });

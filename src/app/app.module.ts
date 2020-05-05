@@ -12,6 +12,7 @@ import { AboutComponent } from './components/others/about/about.component';
 import { ContactComponent } from './components/others/contact/contact.component';
 import { ProyectosModule } from './components/proyectos/proyectos.module';
 import { NotificacionSheetComponent } from './components/layout/notificacion-sheet/notificacion-sheet.component';
+import { PlantillaModule } from './components/plantillas/plantilla.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { NotificacionSheetComponent } from './components/layout/notificacion-she
     AuthModule,
     TercerosModule,
     MaestrosModule,
-    ProyectosModule
+    ProyectosModule,
+    PlantillaModule
   ],
   entryComponents: [NotificacionSheetComponent],
   providers: [AppService],

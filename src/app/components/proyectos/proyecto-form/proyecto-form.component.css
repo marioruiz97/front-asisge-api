@@ -5,6 +5,7 @@
 }
 
 .form-group mat-form-field {
+  margin-top: 1em;
   width: 47%;
 }
 

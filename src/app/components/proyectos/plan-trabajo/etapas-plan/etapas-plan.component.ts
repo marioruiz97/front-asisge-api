@@ -25,6 +25,7 @@ export class EtapasPlanComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.subs.push(this.service.etapasSubject.subscribe(etapas => this.datasource.data = etapas));
+    this.service.fetchEtapas();
   }
 
   ngAfterViewInit() {

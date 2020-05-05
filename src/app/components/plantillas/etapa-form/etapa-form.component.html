@@ -1,0 +1,31 @@
+<section>
+  <div>
+    <h2 matDialogTitle>Gestionar Etapa</h2>
+    <div fxFlex></div>
+    <button mat-icon-button [matDialogClose]="true">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+
+  <span mat-subheader>Los campos con * son obligatorios</span>
+
+  <form [formGroup]="etapaForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content fxLayout="column">
+      <mat-form-field>
+        <mat-label>Nombre Etapa</mat-label>
+        <input type="text" matInput formControlName="nombreEtapa">
+        <mat-hint>Ingrese nombre de la etapa</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Duración</mat-label>
+        <input type="number" matInput formControlName="duracion">
+        <mat-hint>Ingrese la duración promedio de la etapa en días</mat-hint>
+      </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="my-4">
+      <button type="submit" mat-button fxFlex [matDialogClose]="false" [disabled]="etapaForm.invalid" color="primary">Guardar Etapa</button>
+      <button type="button" mat-button fxFlex [matDialogClose]="true" color="warn">Cancelar</button>
+    </mat-dialog-actions>
+  </form>
+</section>

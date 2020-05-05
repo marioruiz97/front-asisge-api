@@ -1,0 +1,19 @@
+@import "../../../../assets/css/header-styles.css";
+
+mat-form-field {
+  margin-top: 1rem;
+}
+
+.form-group, .cards-group, app-actividad-list {
+  min-width: 100%;
+}
+
+.form-group mat-form-field {
+  width: 47%;
+}
+
+@media (max-width: 600px) {
+  .form-group mat-form-field {
+    width: 100%;
+  }
+}

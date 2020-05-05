@@ -1,5 +1,5 @@
 mat-card-title {
-  font-size: 2em;
+  font-size: 2rem;
   text-align: center;
 }
 
@@ -23,4 +23,11 @@ aside div {
 
 mat-list-item {
   height: 38px !important;
+}
+
+@media(max-width:600px) {
+  .options {
+    max-height: 200px;
+    max-width: 200px;
+  }
 }

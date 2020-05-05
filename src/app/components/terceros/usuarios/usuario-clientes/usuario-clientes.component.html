@@ -1,9 +1,15 @@
-<section class="p-3">
-  <h2 matDialogTitle>Gestionar clientes del usuario</h2>
+<section>
+  <div>
+    <h2 matDialogTitle>Gestionar clientes del usuario</h2>
+    <div fxFlex></div>
+    <button mat-icon-button [matDialogClose]="true">
+        <mat-icon>clear</mat-icon>
+    </button>
+  </div>
 
   <mat-dialog-content>
     <div mat-subheader>Información Personal</div>
-    <mat-list>
+    <mat-list dense>
       <mat-list-item *ngFor="let i of info">
         <mat-icon mat-list-icon>info</mat-icon>
         <div mat-line>
@@ -27,7 +33,7 @@
       </mat-form-field>
     </form>
 
-    <mat-list>
+    <mat-list dense>
       <mat-list-item *ngFor="let cliente of clientes">
         <mat-icon mat-list-icon>label_important</mat-icon>
         <div mat-line> {{cliente.tipoDocumento.nombreTipoDocumento + ': '+cliente.identificacion}}</div>

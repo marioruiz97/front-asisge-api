@@ -38,7 +38,7 @@ export class AppMenu {
     {
       name: 'Proyectos', url: '/', icon: 'dashboard',
       children: [
-        { name: 'Ver Planes de Trabajo', url: '', icon: 'next_week' },
+        { name: 'Ver Planes de Trabajo', url: '/plantillas', icon: 'next_week' },
         { name: 'Tablero de Proyectos', url: '/proyectos', icon: 'dashboard' },
         { name: 'Vista de Avances', url: '', icon: 'assessment' },
         { name: 'Próximas Actividades', url: '', icon: 'schedule' }
@@ -68,6 +68,11 @@ export class AppMenu {
       name: 'Terceros', url: '/', icon: 'assignment_ind',
       children: [{ name: 'Gestionar Clientes', url: '/clientes', icon: 'people_outline' }]
     }];
+    this.$cliente.map(padre => {
+      if (padre.children && padre.children.length > 0) {
+        padre.children = padre.children.filter(hijo => hijo.url !== '/plantillas');
+      }
+    });
     return menu.concat(this.$cliente);
   }
 

@@ -24,6 +24,7 @@ export class PlanFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
+    this.subs.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
     this.subs.push(this.dashboardService.proyecto.subscribe(proyecto => {
       if (!proyecto) {
         const message = 'No se encontró proyecto, asegúrate que ingresas desde el dashboard';

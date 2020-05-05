@@ -11,7 +11,7 @@
   <mat-tab label="Crear Etapa">
     <form autocomplete="off" [formGroup]="etapaForm" (ngSubmit)="guardarEtapa()">
       <div class="form-group my-2">
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" fxFlex>
           <mat-label>Nombre Etapa</mat-label>
           <input matInput formControlName="nombreEtapa">
           <mat-hint>Ingrese un nombre de máximo 50 caracteres / actual:{{etapaForm.value.nombreEtapa.length}}</mat-hint>

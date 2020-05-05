@@ -12,6 +12,7 @@ export class AppConstants {
 
   public static PATH_MIS_PROYECTOS = 'usuarios/{id}/mis-proyectos';
   public static PATH_PROYECTOS = 'proyectos';
+  public static PATH_PLANTILLAS = 'plantilla';
 
   public static PATH_USUARIO = 'usuarios';
   public static PATH_ESTADO_USUARIO = 'estado-usuario';
@@ -32,6 +33,12 @@ export class AppConstants {
 export const DIALOG_CONFIG: MatDialogConfig = {
   disableClose: true,
   position: { right: '0px' },
+  maxWidth: '100vw',
+  minWidth: '50vw',
+};
+
+export const BASIC_DIALOG_CONFIG: MatDialogConfig = {
+  maxHeight: '100vh',
   maxWidth: '100vw',
   minWidth: '50vw',
 };
