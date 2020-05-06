@@ -6,6 +6,7 @@ import { PlanTrabajo, EtapaPlan } from 'src/app/models/proyectos/plan-trabajo.mo
 import { Subject, Observable } from 'rxjs';
 import { AppConstants as Cons } from 'src/app/shared/routing/app.constants';
 import { Router } from '@angular/router';
+import { Actividad, ActividadDto } from 'src/app/models/proyectos/actividad.model';
 
 @Injectable()
 export class PlanTrabajoService {
@@ -17,6 +18,7 @@ export class PlanTrabajoService {
 
   private planTrabajoPath = Cons.PATH_PLANES_TRABAJO;
   private etapasPath = Cons.PATH_ETAPA_PLAN;
+  private actividadPath = Cons.PATH_ACTIVIDADES_PLAN;
 
   constructor(
     private dashboardService: DashboardService, private appService: AppService,
@@ -27,7 +29,7 @@ export class PlanTrabajoService {
     const path = this.planTrabajoPath.replace('{idProyecto}', idProyecto.toString());
     this.appService.getRequest(path).subscribe(res => {
       this.planesSubject.next(res.body);
-    }/* , err => {
+    }); /* , err => {
       const message = 'No se han obtenido planes de trabajo, intenta nuevamente';
       this.uiService.showConfirm({ title: 'Error al obtener información', message, confirm: 'Sí, intentar nuevamente' })
         .afterClosed().subscribe(result => {
@@ -35,7 +37,7 @@ export class PlanTrabajoService {
             this.fetchPlanesDeTrabajo(idProyecto);
           }
         });
-    } */);
+    } */
   }
 
 
@@ -49,6 +51,14 @@ export class PlanTrabajoService {
         this.setProperties(this.planActual);
       });
     }
+  }
+
+  recargarPlan(idPlan: number) {
+    const path = Cons.PATH_PLAN_TRABAJO_ID;
+    this.appService.getRequest(`${path}/${idPlan}`).subscribe(res => {
+      this.planActual = res.body as PlanTrabajo;
+      this.setProperties(this.planActual);
+    });
   }
 
   setProperties(plan: PlanTrabajo) {
@@ -74,6 +84,12 @@ export class PlanTrabajoService {
     }
   }
 
+  /*  FIN ACTUALIZACION DE OBSERVABLES  */
+
+  /**
+   *  METODOS PARA PLANES DE TRABAJO
+   */
+
   crearPlan(data: any, proyecto: number) {
     const path = this.planTrabajoPath.replace('{idProyecto}', proyecto.toString());
     this.uiService.putSnackBar(this.appService.postRequest(path, data)).subscribe(exito => {
@@ -87,6 +103,11 @@ export class PlanTrabajoService {
       if (exito) { this.returnToDashboard(); }
     });
   }
+
+
+  /**
+   *  METODOS PARA ETAPAS
+   */
 
   crearEtapa(data: EtapaPlan, plan: number) {
     const path = this.etapasPath.replace('{idPlan}', plan.toString());
@@ -141,13 +162,25 @@ export class PlanTrabajoService {
   }
 
 
-  recargarPlan(idPlan: number) {
-    const path = Cons.PATH_PLAN_TRABAJO_ID;
-    this.appService.getRequest(`${path}/${idPlan}`).subscribe(res => {
-      this.planActual = res.body as PlanTrabajo;
-      this.setProperties(this.planActual);
-    });
+  /**
+   *  METODOS PARA ACTIVIDADES
+   */
+
+  createActividad(plan: number, actividad: ActividadDto) {
+    const path = this.actividadPath.replace('{idPlan}', plan.toString());
+    return this.uiService.putSnackBar(this.appService.postRequest(path, actividad));
   }
+
+  editActividad(plan: number, actividad: ActividadDto) {
+    const path = this.actividadPath.replace('{idPlan}', plan.toString());
+    return this.uiService.putSnackBar(this.appService.patchRequest(`${path}/${actividad.idActividad}`, actividad));
+  }
+
+  deleteActividad() {
+
+  }
+
+
 
   returnToDashboard() {
     if (this.dashboardService && this.dashboardService.dashboard) {

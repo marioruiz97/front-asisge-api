@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Actividad } from 'src/app/models/proyectos/actividad.model';
 import { UiService } from 'src/app/shared/ui.service';
 import { PlanTrabajoService } from '../plan-trabajo.service';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { EtapaPlan } from 'src/app/models/proyectos/plan-trabajo.model';
 
@@ -19,11 +19,13 @@ export class ModalActividadComponent implements OnInit, OnDestroy {
   maxDate: Date;
   etapas: EtapaPlan[] = [];
 
+  private idActividad: number;
   private idPlanTrabajo: number;
   private subs: Subscription[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Actividad,
+    private dialogRef: MatDialogRef<ModalActividadComponent>,
     private service: PlanTrabajoService, private uiService: UiService
   ) { }
 
@@ -36,6 +38,7 @@ export class ModalActividadComponent implements OnInit, OnDestroy {
     }));
     this.subs.push(this.service.etapasSubject.subscribe(etapas => this.etapas = etapas));
     this.initForm();
+    this.setForm();
     this.service.fetchPlanActual();
     this.service.fetchEtapas();
   }
@@ -47,16 +50,38 @@ export class ModalActividadComponent implements OnInit, OnDestroy {
       etapa: new FormControl('', [Validators.required]),
       fechaVencimiento: new FormControl(new Date(), [Validators.required]),
       duracion: new FormControl(1, [Validators.required, Validators.min(1)]),
-      descripcion: new FormControl('', [Validators.minLength(6), Validators.maxLength(255)]),
-      /*
-            nombreEtapa: new FormControl(this.data.nombreEtapa, [Validators.required, Validators.maxLength(50)]),
-            fechaInicio: new FormControl(this.data.fechaInicio, Validators.required),
-            fechaFin: new FormControl(this.data.fechaFin, Validators.required), */
+      descripcion: new FormControl('', [Validators.minLength(6), Validators.maxLength(255)])
     });
   }
 
-  onSubmit() {
+  private setForm() {
+    if (this.data) {
+      this.idActividad = this.data.idActividad;
+      this.actividadForm.setValue({
+        idActividad: this.data.idActividad,
+        nombre: this.data.nombre,
+        etapa: this.data.etapa,
+        fechaVencimiento: this.data.fechaVencimiento ? this.data.fechaVencimiento : new Date(),
+        duracion: this.data.duracion,
+        descripcion: this.data.descripcion ? this.data.descripcion : ''
+      });
+    }
+  }
 
+  onSubmit() {
+    if (this.data && this.idActividad) {
+      // actualizar
+      const actividad = { ...this.actividadForm.value, idActividad: this.idActividad };
+      this.subs.push(this.service.createActividad(this.idPlanTrabajo, actividad).subscribe(exito => {
+        if (exito) { this.dialogRef.close(); }
+      }));
+    } else {
+      // crear
+      const actividad = { ...this.actividadForm.value };
+      this.subs.push(this.service.createActividad(this.idPlanTrabajo, actividad).subscribe(exito => {
+        if (exito) { this.initForm(); }
+      }));
+    }
   }
 
   ngOnDestroy() {
