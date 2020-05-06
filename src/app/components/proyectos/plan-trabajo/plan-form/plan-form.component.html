@@ -5,67 +5,78 @@
   </header>
 
   <section gdArea="content">
-    <form autocomplete="off" [formGroup]="planForm" (ngSubmit)="onSubmit()" fxLayoutAlign="center">
-      <mat-card class="mat-elevation-z8 py-4" fxFlex fxFlex.gt-sm="80">
-        <mat-card-content class="p-2">
+    <mat-tab-group mat-stretch-tabs>
+      <mat-tab label="Crear plan manualmente">
+        <form autocomplete="off" [formGroup]="planForm" (ngSubmit)="onSubmit()" fxLayoutAlign="center" class="my-4">
+          <mat-card class="mat-elevation-z8 py-4" fxFlex fxFlex.gt-sm="80">
+            <mat-card-content class="p-2">
 
-          <div class="form-group" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-evenly">
-            <mat-form-field appearance="outline">
-              <mat-label>Nombre del Plan</mat-label>
-              <input matInput formControlName="nombrePlan">
-              <mat-hint>
-                Ingrese un nombre de máximo 50 caracteres / actual:{{planForm.value.nombrePlan.length}}
-              </mat-hint>
-              <mat-error>Ingrese un nombre válido</mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Horas por mes</mat-label>
-              <input type="number" matInput formControlName="horasMes">
-              <mat-hint>
-                Cantidad de horas de trabajo al mes
-              </mat-hint>
-              <mat-error>Campo obligatorio</mat-error>
-            </mat-form-field>
-          </div>
+              <div class="form-group" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-evenly">
+                <mat-form-field appearance="outline">
+                  <mat-label>Nombre del Plan</mat-label>
+                  <input matInput formControlName="nombrePlan">
+                  <mat-hint>
+                    Ingrese un nombre de máximo 50 caracteres / actual:{{planForm.value.nombrePlan.length}}
+                  </mat-hint>
+                  <mat-error>Ingrese un nombre válido</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Horas por mes</mat-label>
+                  <input type="number" matInput formControlName="horasMes">
+                  <mat-hint>
+                    Cantidad de horas de trabajo al mes
+                  </mat-hint>
+                  <mat-error>Campo obligatorio</mat-error>
+                </mat-form-field>
+              </div>
 
-          <div class="form-group" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-evenly">
-            <mat-form-field appearance="outline">
-              <mat-label>Fecha de inicio</mat-label>
-              <input matInput [matDatepicker]="inicio" formControlName="fechaInicio">
-              <mat-datepicker-toggle matSuffix [for]="inicio"></mat-datepicker-toggle>
-              <mat-datepicker #inicio></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Fecha de fin estimada</mat-label>
-              <input matInput [min]="minDate" [matDatepicker]="fin" formControlName="fechaFinEstimada">
-              <mat-datepicker-toggle matSuffix [for]="fin"></mat-datepicker-toggle>
-              <mat-datepicker #fin></mat-datepicker>
-            </mat-form-field>
-          </div>
+              <div class="form-group" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-evenly">
+                <mat-form-field appearance="outline">
+                  <mat-label>Fecha de inicio</mat-label>
+                  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="inicio"
+                    formControlName="fechaInicio">
+                  <mat-datepicker-toggle matSuffix [for]="inicio"></mat-datepicker-toggle>
+                  <mat-datepicker #inicio></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Fecha de fin estimada</mat-label>
+                  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fin"
+                    formControlName="fechaFinEstimada">
+                  <mat-datepicker-toggle matSuffix [for]="fin"></mat-datepicker-toggle>
+                  <mat-datepicker #fin></mat-datepicker>
+                </mat-form-field>
+              </div>
 
-          <div class="form-group" fxLayoutAlign="space-evenly">
-            <mat-form-field appearance="outline" fxFlex>
-              <mat-label>Objetivo del plan de trabajo</mat-label>
-              <textarea matInput formControlName="objetivoPlan"></textarea>
-              <mat-icon matPrefix>message</mat-icon>
-              <mat-hint>
-                <p>Ingresa el propósito del plan de trabajo</p>
-                <p>Máximo 255 caracteres / actual:{{planForm.value.objetivoPlan.length}}</p>
-              </mat-hint>
-            </mat-form-field>
-          </div>
-        </mat-card-content>
+              <div class="form-group" fxLayoutAlign="space-evenly">
+                <mat-form-field appearance="outline" fxFlex>
+                  <mat-label>Objetivo del plan de trabajo</mat-label>
+                  <textarea matInput formControlName="objetivoPlan"></textarea>
+                  <mat-icon matPrefix>message</mat-icon>
+                  <mat-hint>
+                    <p>Ingresa el propósito del plan de trabajo</p>
+                    <p>Máximo 255 caracteres / actual:{{planForm.value.objetivoPlan.length}}</p>
+                  </mat-hint>
+                </mat-form-field>
+              </div>
+            </mat-card-content>
 
-        <mat-card-actions class="form-action mt-4" fxLayoutAlign="center" fxLayout.lt-sm="column">
-          <button class="m-2" type="button" mat-raised-button (click)="goBack()" color="warn" *ngIf="!isWaiting" >
-            <mat-icon>arrow_back</mat-icon> Cancelar
-          </button>
-          <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!planForm.valid" *ngIf="!isWaiting" >
-            <mat-icon>save</mat-icon> Crear Plan
-          </button>
-          <mat-spinner *ngIf="isWaiting"></mat-spinner>
-        </mat-card-actions>
-      </mat-card>
-    </form>
+            <mat-card-actions class="form-action mt-4" fxLayoutAlign="center" fxLayout.lt-sm="column">
+              <button class="m-2" type="button" mat-raised-button (click)="goBack()" color="warn" *ngIf="!isWaiting">
+                <mat-icon>arrow_back</mat-icon> Volver al dashboard
+              </button>
+              <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!planForm.valid"
+                *ngIf="!isWaiting">
+                <mat-icon>save</mat-icon> Crear Plan
+              </button>
+              <mat-spinner *ngIf="isWaiting"></mat-spinner>
+            </mat-card-actions>
+          </mat-card>
+        </form>
+      </mat-tab>
+
+      <mat-tab label="Crear desde plantilla">
+        <app-plan-plantilla class="my-4" fxLayoutAlign="center"></app-plan-plantilla>
+      </mat-tab>
+    </mat-tab-group>
   </section>
 </div>

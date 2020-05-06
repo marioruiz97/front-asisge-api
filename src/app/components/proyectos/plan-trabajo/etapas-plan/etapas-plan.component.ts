@@ -1,8 +1,11 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/material';
 import { EtapaPlan } from 'src/app/models/proyectos/plan-trabajo.model';
 import { PlanTrabajoService } from '../plan-trabajo.service';
+import { EditarEtapaComponent } from '../editar-etapa/editar-etapa.component';
+import { DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
+import { isNullOrUndefined } from 'util';
 
 
 @Component({
@@ -12,7 +15,7 @@ import { PlanTrabajoService } from '../plan-trabajo.service';
 })
 export class EtapasPlanComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['idEtapaPDT', 'nombreEtapa', 'fechaInicio', 'fechaFin'];
+  displayedColumns = ['idEtapaPDT', 'nombreEtapa', 'fechaInicio', 'fechaFin', 'acciones'];
   datasource = new MatTableDataSource<EtapaPlan>();
 
   private subs: Subscription[] = [];
@@ -20,7 +23,7 @@ export class EtapasPlanComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private service: PlanTrabajoService) { }
+  constructor(private service: PlanTrabajoService, private dialog: MatDialog) { }
 
 
   ngOnInit() {
@@ -35,6 +38,26 @@ export class EtapasPlanComponent implements OnInit, AfterViewInit, OnDestroy {
 
   doFilter(filterString: string) {
     this.datasource.filter = filterString.trim().toLocaleLowerCase();
+  }
+
+  editEtapa(etapa: EtapaPlan) {
+    const ref = this.dialog.open(EditarEtapaComponent, { ...DIALOG_CONFIG, data: etapa });
+    // recibir la etapa modificada
+    ref.afterClosed().subscribe(result => {
+      if (!isNullOrUndefined(result.idEtapaPDT) && result.idEtapaPDT !== 0) {
+        this.datasource.data.filter(e => e.idEtapaPDT === result.idEtapaPDT).map(et => {
+          et.nombreEtapa = result.nombreEtapa;
+          et.fechaFin = result.fechaFin;
+          et.fechaInicio = result.fechaInicio;
+        });
+      }
+    });
+  }
+
+  deleteEtapa(idEtapa: number) {
+    this.subs.push(this.service.deleteEtapa(idEtapa).subscribe(res => {
+      if (res) { this.service.fetchEtapas(); }
+    }));
   }
 
   ngOnDestroy() {

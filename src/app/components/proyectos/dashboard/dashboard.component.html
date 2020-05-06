@@ -49,7 +49,7 @@
           </button>
         </form>
         <p>
-          <button mat-mini-fab routerLink="/planes/nuevo" color="primary" matTooltip="Crear Plan de trabajo"><mat-icon>add</mat-icon></button>
+          <button mat-mini-fab [routerLink]="['/proyectos/'+ proyecto.idProyecto +'/nuevo-plan']" color="primary" matTooltip="Crear Plan de trabajo"><mat-icon>add</mat-icon></button>
         </p>
       </mat-card-content>
     </mat-card>

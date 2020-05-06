@@ -6,6 +6,7 @@ import { AgregarEtapasComponent } from './agregar-etapas/agregar-etapas.componen
 import { PlanTrabajoService } from './plan-trabajo.service';
 import { Subscription } from 'rxjs';
 import { PlanTrabajo } from 'src/app/models/proyectos/plan-trabajo.model';
+import { ModalActividadComponent } from './modal-actividad/modal-actividad.component';
 
 @Component({
   selector: 'app-plan-trabajo',
@@ -37,6 +38,12 @@ export class PlanTrabajoComponent implements OnInit, OnDestroy {
   agregarEtapa() {
     if (this.verificarPlan()) {
       this.dialog.open(AgregarEtapasComponent, DIALOG_CONFIG);
+    }
+  }
+
+  agregarActividad() {
+    if (this.verificarPlan()) {
+      this.dialog.open(ModalActividadComponent, { ...DIALOG_CONFIG, data: {} });
     }
   }
 

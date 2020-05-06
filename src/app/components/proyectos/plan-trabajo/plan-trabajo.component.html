@@ -1,5 +1,5 @@
 <div fxLayoutAlign="center" *ngIf="!planActual">
-  <h3>Debeser seleccionar primero un plan de trabajo</h3>
+  <h3>Debes seleccionar primero un plan de trabajo</h3>
 </div>
 
 <mat-drawer-container class="mt-4 py-4" *ngIf="planActual">
@@ -13,7 +13,7 @@
         <div mat-line><mat-icon mat-list-icon>queue</mat-icon></div>
         <div mat-line><span>Agregar Etapa</span></div>
       </mat-list-item>
-      <mat-list-item>
+      <mat-list-item (click)="agregarActividad()">
         <div mat-line><mat-icon mat-list-icon>post_add</mat-icon></div>
         <div mat-line><span>Agregar Actividad</span></div>
       </mat-list-item>
@@ -27,12 +27,12 @@
       </mat-list-item>
     </mat-action-list>
   </mat-drawer>
-  <mat-drawer-content class="pl-2 pr-1">
+  <mat-drawer-content class="pl-2 pr-1" fxLayout="column" fxLayoutGap="1rem">
     <div class="row mb-3">
       <button mat-icon-button (click)="aside.toggle()" matTooltip="Abrir menú lateral">
         <mat-icon>{{ aside.opened ? 'keyboard_arrow_left' : 'keyboard_arrow_right'}}</mat-icon>
       </button>
-      <h3 class="pl-4 my-0">Plan de trabajo</h3>
+      <h3 class="pl-4 my-auto">Plan de trabajo</h3>
       <div fxFlex></div>
       <button class="mr-3" mat-icon-button (click)="recargarPlan()" matTooltip="Recargar Plan">
         <mat-icon class="mat-18">refresh</mat-icon>

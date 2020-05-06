@@ -1,19 +1,24 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UiService } from 'src/app/shared/ui.service';
-import { PlanTrabajoService } from '../plan-trabajo.service';
+import { Plantilla } from 'src/app/models/proyectos/plantilla.model';
 import { DashboardService } from '../../dashboard/dashboard.service';
-import { ActivatedRoute } from '@angular/router';
-import { isNullOrUndefined } from 'util';
+import { PlanTrabajoService } from '../plan-trabajo.service';
+import { UiService } from 'src/app/shared/ui.service';
+import { Subscription } from 'rxjs';
+import { PlantillaService } from 'src/app/components/plantillas/plantilla.service';
 
 @Component({
-  templateUrl: './plan-form.component.html',
-  styleUrls: ['./plan-form.component.css']
+  selector: 'app-plan-plantilla',
+  templateUrl: './plan-desde-plantilla.component.html',
+  styleUrls: ['./plan-desde-plantilla.component.css']
 })
-export class PlanFormComponent implements OnInit, OnDestroy {
+export class PlanDesdePlantillaComponent implements OnInit, OnDestroy {
 
-  planForm: FormGroup;
+  planPlantillaForm: FormGroup;
+  selectPlantillaForm: FormGroup;
+
+  plantillas: Plantilla[] = [];
+  selectedPlantilla: Plantilla;
   isWaiting = false;
   minDate = new Date();
   maxDate: Date = null;
@@ -23,40 +28,51 @@ export class PlanFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private uiService: UiService, private service: PlanTrabajoService,
-    private dashboardService: DashboardService, private activatedRoute: ActivatedRoute
+    private dashboardService: DashboardService, private plantillaService: PlantillaService
   ) { }
 
   ngOnInit() {
-    this.initForm();
+    this.initForms();
     this.subs.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
+    this.subs.push(this.plantillaService.fetchPlantillas().subscribe(res => this.plantillas = res.body as Plantilla[]));
     this.subs.push(this.dashboardService.proyecto.subscribe(proyecto => {
       this.minDate = proyecto.createdDate ? proyecto.createdDate : this.minDate;
       this.maxDate = proyecto.fechaCierreProyecto ? proyecto.fechaCierreProyecto : null;
       this.idProyecto = proyecto.idProyecto;
     }));
-    if (isNullOrUndefined(this.dashboardService.dashboard)) {
-      this.subs.push(this.activatedRoute.paramMap.subscribe(params => {
-        const id = +params.get('id');
-        if (id && id !== 0) {
-          this.dashboardService.fetchDashboard(id);
-        }
-      }));
-    }
     this.dashboardService.fetchInfoProyecto();
   }
 
-  initForm() {
-    this.planForm = new FormGroup({
+  private initForms() {
+    this.planPlantillaForm = new FormGroup({
       nombrePlan: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       fechaInicio: new FormControl('', Validators.required),
       fechaFinEstimada: new FormControl('', Validators.required),
       horasMes: new FormControl(0, [Validators.required, Validators.min(1)]),
       objetivoPlan: new FormControl('', [Validators.required, Validators.maxLength(255)])
     });
+    this.selectPlantillaForm = new FormGroup({
+      plantilla: new FormControl('', Validators.required)
+    });
   }
 
+
   onSubmit() {
-    this.service.crearPlan(this.planForm.value, this.idProyecto);
+    this.service.crearPlanDesdeTemplate(this.planPlantillaForm.value, this.idProyecto, this.selectedPlantilla.idPlantilla);
+  }
+
+  selectPlantilla() {
+    this.selectedPlantilla = this.plantillas.filter(plantilla =>
+      plantilla.idPlantilla === this.selectPlantillaForm.value.plantilla).slice()[0];
+    const fechaFin = new Date();
+    fechaFin.setDate(fechaFin.getDate() + this.selectedPlantilla.duracion);
+    this.planPlantillaForm.setValue({
+      nombrePlan: '',
+      fechaInicio: new Date(),
+      fechaFinEstimada: fechaFin,
+      horasMes: this.selectedPlantilla.horasMes,
+      objetivoPlan: '',
+    });
   }
 
   goBack() {
@@ -74,4 +90,5 @@ export class PlanFormComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.subs) { this.subs.forEach(sub => sub.unsubscribe()); }
   }
+
 }

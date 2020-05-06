@@ -1,0 +1,91 @@
+<mat-card class="mat-elevation-z8 pt-4" fxFlex fxFlex.gt-sm="80">
+  <mat-card-content>
+    <mat-vertical-stepper linear #stepper>
+      <mat-step [stepControl]="selectPlantillaForm">
+        <form [formGroup]="selectPlantillaForm" (ngSubmit)="selectPlantilla()">
+          <ng-template matStepLabel>Selecciona la plantilla</ng-template>
+          <div fxLayout="column">
+            <mat-form-field appearance="outline">
+              <mat-label>Plantilla</mat-label>
+              <mat-select formControlName="plantilla">
+                <mat-option [value]="item.idPlantilla" *ngFor="let item of plantillas" [matTooltip]="item.descripcionPlantilla">
+                  {{ item.idPlantilla + ' ' + item.nombrePlantilla}}
+                </mat-option>
+              </mat-select>
+              <mat-hint>Seleccione la plantilla de guía</mat-hint>
+            </mat-form-field>
+          </div>
+          <div>
+            <button mat-button matStepperNext [disabled]="selectPlantillaForm.invalid" color="primary">Siguiente</button>
+          </div>
+        </form>
+      </mat-step>
+
+
+      <!-- paso de completar info -->
+      <mat-step [stepControl]="planPlantillaForm">
+        <ng-template matStepLabel>Completa la información</ng-template>
+        <form autocomplete="off" [formGroup]="planPlantillaForm" (ngSubmit)="onSubmit()">
+
+          <div class="form-group" fxLayoutAlign="center" *ngIf="selectedPlantilla">
+            <h4>Plantilla Seleccionada: {{selectedPlantilla.nombrePlantilla}}</h4>
+          </div>
+
+          <div class="form-group" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-evenly">
+            <mat-form-field appearance="outline">
+              <mat-label>Nombre del Plan</mat-label>
+              <input matInput formControlName="nombrePlan">
+              <mat-hint>
+                Ingrese un nombre de máximo 50 caracteres / actual:{{planPlantillaForm.value.nombrePlan.length}}
+              </mat-hint>
+              <mat-error>Ingrese un nombre válido</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Horas por mes</mat-label>
+              <input type="number" matInput formControlName="horasMes">
+              <mat-hint>
+                Cantidad de horas de trabajo al mes
+              </mat-hint>
+              <mat-error>Campo obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-evenly">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha de inicio</mat-label>
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="inicio" formControlName="fechaInicio">
+              <mat-datepicker-toggle matSuffix [for]="inicio"></mat-datepicker-toggle>
+              <mat-datepicker #inicio></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha de fin estimada</mat-label>
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fin" formControlName="fechaFinEstimada">
+              <mat-datepicker-toggle matSuffix [for]="fin"></mat-datepicker-toggle>
+              <mat-datepicker #fin></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="form-group" fxLayoutAlign="space-evenly">
+            <mat-form-field appearance="outline" fxFlex>
+              <mat-label>Objetivo del plan de trabajo</mat-label>
+              <textarea matInput formControlName="objetivoPlan"></textarea>
+              <mat-icon matPrefix>message</mat-icon>
+              <mat-hint>
+                <p>Ingresa el propósito del plan de trabajo</p>
+                <p>Máximo 255 caracteres / actual:{{planPlantillaForm.value.objetivoPlan.length}}</p>
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-action mt-4" fxLayoutAlign="center" fxLayout.lt-sm="column">
+            <button class="m-2" type="button" mat-raised-button matStepperPrevious color="warn" *ngIf="!isWaiting">
+              <mat-icon>arrow_back</mat-icon> Cambiar Plantilla
+            </button>
+            <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!planPlantillaForm.valid"
+              *ngIf="!isWaiting">
+              <mat-icon>save</mat-icon> Crear Plan
+            </button>
+            <mat-spinner *ngIf="isWaiting"></mat-spinner>
+          </div>
+        </form>
+      </mat-step>
+    </mat-vertical-stepper>
+  </mat-card-content>
+</mat-card>

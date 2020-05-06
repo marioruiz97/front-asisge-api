@@ -3,7 +3,7 @@ import { DashboardService } from '../dashboard/dashboard.service';
 import { AppService } from 'src/app/shared/app.service';
 import { UiService } from 'src/app/shared/ui.service';
 import { PlanTrabajo, EtapaPlan } from 'src/app/models/proyectos/plan-trabajo.model';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { AppConstants as Cons } from 'src/app/shared/routing/app.constants';
 import { Router } from '@angular/router';
 
@@ -81,6 +81,13 @@ export class PlanTrabajoService {
     });
   }
 
+  crearPlanDesdeTemplate(data: any, proyecto: number, plantilla: number) {
+    const path = this.planTrabajoPath.replace('{idProyecto}', proyecto.toString());
+    this.uiService.putSnackBar(this.appService.postRequest(`${path}?plantilla=${plantilla}`, data)).subscribe(exito => {
+      if (exito) { this.returnToDashboard(); }
+    });
+  }
+
   crearEtapa(data: EtapaPlan, plan: number) {
     const path = this.etapasPath.replace('{idPlan}', plan.toString());
     this.uiService.loadingState.next(true);
@@ -102,6 +109,37 @@ export class PlanTrabajoService {
       }
     });
   }
+
+  changeEtapaActual(idPlan: number, etapaActual: number) {
+    const path = this.etapasPath.replace('{idPlan}', idPlan.toString());
+    this.uiService.putSnackBar(this.appService.postRequest(`${path}/${etapaActual}`, {})).subscribe(exito => {
+      if (exito) { this.recargarPlan(idPlan); }
+    });
+  }
+
+  editEtapa(idPlan: number, etapa: EtapaPlan) {
+    const path = this.etapasPath.replace('{idPlan}', idPlan.toString());
+    return this.uiService.putSnackBar(this.appService.patchRequest(`${path}/${etapa.idEtapaPDT}`, etapa));
+  }
+
+  deleteEtapa(idEtapa: number) {
+    const path = this.etapasPath.replace('{idPlan}', this.planActual.idPlanDeTrabajo.toString());
+    return new Observable(observer => {
+      const data = {
+        title: 'Estás seguro de eliminar la Etapa?',
+        message: 'Esta acción es irreversible. \n¿Estás seguro?',
+        confirm: 'Sí, Eliminar'
+      };
+      const dialogRef = this.uiService.showConfirm(data);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.uiService.putSnackBar(this.appService.deleteRequest(`${path}/${idEtapa}`))
+            .subscribe(exito => observer.next(exito));
+        }
+      });
+    });
+  }
+
 
   recargarPlan(idPlan: number) {
     const path = Cons.PATH_PLAN_TRABAJO_ID;
