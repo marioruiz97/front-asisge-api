@@ -21,7 +21,7 @@ export class PlanTrabajoComponent implements OnInit, OnDestroy {
   constructor(private dialog: MatDialog, private service: PlanTrabajoService) { }
 
   ngOnInit() {
-    this.subs.push(this.service.planActualSubject.subscribe(plan => this.planActual = plan));
+    this.subs.push(this.service.planActualSubject.subscribe(plan => this.planActual = plan.planDeTrabajo));
     this.service.fetchPlanActual();
   }
 

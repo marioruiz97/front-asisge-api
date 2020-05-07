@@ -19,6 +19,7 @@ import { EtapasPlanComponent } from './plan-trabajo/etapas-plan/etapas-plan.comp
 import { PlanDesdePlantillaComponent } from './plan-trabajo/plan-desde-plantilla/plan-desde-plantilla.component';
 import { EditarEtapaComponent } from './plan-trabajo/editar-etapa/editar-etapa.component';
 import { ModalActividadComponent } from './plan-trabajo/modal-actividad/modal-actividad.component';
+import { ActividadesPlanComponent } from './plan-trabajo/actividades-plan/actividades-plan.component';
 
 
 
@@ -39,7 +40,8 @@ import { ModalActividadComponent } from './plan-trabajo/modal-actividad/modal-ac
     EtapasPlanComponent,
     PlanDesdePlantillaComponent,
     EditarEtapaComponent,
-    ModalActividadComponent
+    ModalActividadComponent,
+    ActividadesPlanComponent
   ],
   imports: [
     SharedModule

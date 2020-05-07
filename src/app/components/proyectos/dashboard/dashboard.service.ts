@@ -7,7 +7,7 @@ import { Dashboard, Notificacion } from 'src/app/models/proyectos/dashboard.mode
 import { AppConstants as Cons } from 'src/app/shared/routing/app.constants';
 import { UiService } from 'src/app/shared/ui.service';
 import { Router } from '@angular/router';
-import { PlanTrabajoService } from '../plan-trabajo/plan-trabajo.service';
+import { Actividad } from 'src/app/models/proyectos/actividad.model';
 
 @Injectable()
 export class DashboardService {
@@ -18,6 +18,7 @@ export class DashboardService {
   proyecto = new Subject<Proyecto>();
   notificaciones = new Subject<Notificacion[]>();
   estados = new Subject<EstadoLineDto[]>();
+  proximasActividades = new Subject<Actividad[]>();
 
   private dashboardPath = Cons.PATH_DASHBOARD;
 
@@ -60,6 +61,7 @@ export class DashboardService {
     this.cliente.next(dashboard.cliente);
     this.miembros.next(dashboard.miembros);
     this.proyecto.next(dashboard.proyecto);
+    this.proximasActividades.next(dashboard.proximasActividades);
     this.notificaciones.next(dashboard.notificaciones);
     this.uiService.loadingState.next(false);
   }
@@ -91,6 +93,12 @@ export class DashboardService {
   fetchEstadosLine() {
     if (this.dashboard && this.dashboard.lineaEstados) {
       this.estados.next(this.dashboard.lineaEstados);
+    }
+  }
+
+  fetchProximasActividades() {
+    if (this.dashboard && this.dashboard.proximasActividades) {
+      this.proximasActividades.next(this.dashboard.proximasActividades);
     }
   }
 

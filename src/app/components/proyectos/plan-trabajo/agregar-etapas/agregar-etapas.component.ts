@@ -38,7 +38,8 @@ export class AgregarEtapasComponent implements OnInit, OnDestroy {
 
   initNuevaEtapa() {
     this.subs.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
-    this.subs.push(this.service.planActualSubject.subscribe(plan => {
+    this.subs.push(this.service.planActualSubject.subscribe(planBoard => {
+      const plan = planBoard.planDeTrabajo;
       this.idPlanTrabajo = plan.idPlanDeTrabajo;
       this.nombreEtapaActual = plan.etapaActual ? plan.etapaActual.nombreEtapa : undefined;
       this.minDate = plan.fechaInicio ? plan.fechaInicio : new Date();

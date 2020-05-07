@@ -2,19 +2,20 @@ import { Injectable } from '@angular/core';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { AppService } from 'src/app/shared/app.service';
 import { UiService } from 'src/app/shared/ui.service';
-import { PlanTrabajo, EtapaPlan } from 'src/app/models/proyectos/plan-trabajo.model';
+import { EtapaPlan } from 'src/app/models/proyectos/plan-trabajo.model';
 import { Subject, Observable } from 'rxjs';
 import { AppConstants as Cons } from 'src/app/shared/routing/app.constants';
 import { Router } from '@angular/router';
-import { Actividad, ActividadDto } from 'src/app/models/proyectos/actividad.model';
+import { ActividadDto } from 'src/app/models/proyectos/actividad.model';
+import { PlanTrabajoBoard } from 'src/app/models/proyectos/plan-trabajo-board.model';
 
 @Injectable()
 export class PlanTrabajoService {
 
-  planActual: PlanTrabajo;
-  etapasSubject = new Subject<EtapaPlan[]>();
-  planActualSubject = new Subject<PlanTrabajo>();
-  planesSubject = new Subject<PlanTrabajo[]>();
+  private idProyecto: number;
+
+  planActual: PlanTrabajoBoard;
+  planActualSubject = new Subject<PlanTrabajoBoard>();
 
   private planTrabajoPath = Cons.PATH_PLANES_TRABAJO;
   private etapasPath = Cons.PATH_ETAPA_PLAN;
@@ -27,19 +28,16 @@ export class PlanTrabajoService {
 
   fetchPlanesDeTrabajo(idProyecto: number) {
     const path = this.planTrabajoPath.replace('{idProyecto}', idProyecto.toString());
-    this.appService.getRequest(path).subscribe(res => {
-      this.planesSubject.next(res.body);
-    }); /* , err => {
-      const message = 'No se han obtenido planes de trabajo, intenta nuevamente';
-      this.uiService.showConfirm({ title: 'Error al obtener información', message, confirm: 'Sí, intentar nuevamente' })
-        .afterClosed().subscribe(result => {
-          if (result) {
-            this.fetchPlanesDeTrabajo(idProyecto);
-          }
-        });
-    } */
+    this.idProyecto = idProyecto;
+    return this.appService.getRequest(path);
   }
 
+  limpiarPlan(id: number) {
+    if (!this.idProyecto || this.idProyecto !== id) {
+      this.planActual = null;
+      this.planActualSubject.next(null);
+    }
+  }
 
   selectActual(id: number) {
     if (this.planActual && this.planActual.idPlanDeTrabajo && this.planActual.idPlanDeTrabajo === id) {
@@ -47,8 +45,7 @@ export class PlanTrabajoService {
     } else {
       const path = Cons.PATH_PLAN_TRABAJO_ID;
       this.appService.getRequest(`${path}/${id}`).subscribe(res => {
-        this.planActual = res.body as PlanTrabajo;
-        this.setProperties(this.planActual);
+        this.setProperties(res.body as PlanTrabajoBoard);
       });
     }
   }
@@ -56,17 +53,15 @@ export class PlanTrabajoService {
   recargarPlan(idPlan: number) {
     const path = Cons.PATH_PLAN_TRABAJO_ID;
     this.appService.getRequest(`${path}/${idPlan}`).subscribe(res => {
-      this.planActual = res.body as PlanTrabajo;
-      this.setProperties(this.planActual);
+      this.setProperties(res.body as PlanTrabajoBoard);
     });
   }
 
-  setProperties(plan: PlanTrabajo) {
+  setProperties(plan: PlanTrabajoBoard) {
     if (plan) {
       this.uiService.showSnackBar('Se ha seleccionado plan correctamente', 2);
       this.planActual = plan;
       this.planActualSubject.next(this.planActual);
-      this.etapasSubject.next(this.planActual.etapas);
     } else {
       this.uiService.showSnackBar('No se ha podido seleccionar plan, intenta nuevamente', 3);
     }
@@ -78,11 +73,6 @@ export class PlanTrabajoService {
     }
   }
 
-  fetchEtapas() {
-    if (this.planActual && this.planActual.etapas) {
-      this.etapasSubject.next(this.planActual.etapas);
-    }
-  }
 
   /*  FIN ACTUALIZACION DE OBSERVABLES  */
 
@@ -115,11 +105,7 @@ export class PlanTrabajoService {
     this.appService.postRequest(path, data).then(res => {
       this.uiService.loadingState.next(false);
       this.uiService.showSnackBar('Etapa agregada con éxito', 3);
-      if (this.planActual.etapas) {
-        this.planActual.etapas.push(res.body as EtapaPlan);
-      } else {
-        this.planActual.etapas = [res.body as EtapaPlan];
-      }
+      this.recargarPlan(plan);
     }).catch(err => {
       this.uiService.loadingState.next(false);
       if (err.error && err.status !== 403) {
@@ -145,19 +131,23 @@ export class PlanTrabajoService {
 
   deleteEtapa(idEtapa: number) {
     const path = this.etapasPath.replace('{idPlan}', this.planActual.idPlanDeTrabajo.toString());
-    return new Observable(observer => {
-      const data = {
-        title: 'Estás seguro de eliminar la Etapa?',
-        message: 'Esta acción es irreversible. \n¿Estás seguro?',
-        confirm: 'Sí, Eliminar'
-      };
-      const dialogRef = this.uiService.showConfirm(data);
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.uiService.putSnackBar(this.appService.deleteRequest(`${path}/${idEtapa}`))
-            .subscribe(exito => observer.next(exito));
-        }
-      });
+    const data = {
+      title: 'Estás seguro de eliminar la Etapa?',
+      message: 'Esta acción es irreversible. \n¿Estás seguro?',
+      confirm: 'Sí, Eliminar'
+    };
+    const dialogRef = this.uiService.showConfirm(data);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.uiService.putSnackBar(this.appService.deleteRequest(`${path}/${idEtapa}`))
+          .subscribe(exito => {
+            if (exito) {
+              this.planActual.planDeTrabajo.etapas = this.planActual.planDeTrabajo.etapas.filter(etapa => etapa.idEtapaPDT !== idEtapa);
+              this.planActual.etapas = this.planActual.etapas.filter(etapa => etapa.etapa.idEtapaPDT !== idEtapa);
+              this.fetchPlanActual();
+            }
+          });
+      }
     });
   }
 

@@ -27,8 +27,8 @@ export class EtapasPlanComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   ngOnInit() {
-    this.subs.push(this.service.etapasSubject.subscribe(etapas => this.datasource.data = etapas));
-    this.service.fetchEtapas();
+    this.subs.push(this.service.planActualSubject.subscribe(plan => this.datasource.data = plan.planDeTrabajo.etapas));
+    this.service.fetchPlanActual();
   }
 
   ngAfterViewInit() {
@@ -55,9 +55,7 @@ export class EtapasPlanComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   deleteEtapa(idEtapa: number) {
-    this.subs.push(this.service.deleteEtapa(idEtapa).subscribe(res => {
-      if (res) { this.service.fetchEtapas(); }
-    }));
+    this.service.deleteEtapa(idEtapa);
   }
 
   ngOnDestroy() {

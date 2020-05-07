@@ -38,9 +38,15 @@
         </mat-form-field>
       </div>
 
-      <button mat-raised-button (click)="cerrarModal()" color="warn" *ngIf="!isWaiting">Volver al plan de trabajo</button>
-      <button mat-button (click)="guardarEtapa()" color="primary" *ngIf="!isWaiting" [disabled]="etapaForm.invalid">Agregar etapa</button>
-      <mat-spinner *ngIf="isWaiting"></mat-spinner>
+      <div class="form-actions" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-evenly" fxLayoutGap="20px">
+        <button type="button" mat-raised-button (click)="cerrarModal()" color="warn" *ngIf="!isWaiting">
+          Volver al plan de trabajo
+        </button>
+        <button type="submit" mat-button color="primary" *ngIf="!isWaiting" [disabled]="etapaForm.invalid">
+          Agregar etapa
+        </button>
+        <mat-spinner *ngIf="isWaiting"></mat-spinner>
+      </div>
     </form>
   </mat-tab>
   <mat-tab label="Pasar a otra Etapa">

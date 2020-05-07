@@ -51,6 +51,17 @@
     </div>
 
     <div class="form-group" fxLayout="column">
+      <mat-form-field appearance="outline">
+        <mat-label>Responsbles</mat-label>
+        <mat-select formControlName="responsables" multiple>
+          <mat-option [value]="item.usuario.idUsuario" *ngFor="let item of miembros">{{ item.usuario.nombre + ' ' + item.usuario.apellido1}} </mat-option>
+        </mat-select>
+        <mat-hint>Seleccione los responsables de la actividad</mat-hint>
+        <mat-error>Selecciona al menos un responsable</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group" fxLayout="column">
       <mat-form-field appearance="outline" fxFlex>
         <mat-label>Descripción de la actividad</mat-label>
         <textarea matInput formControlName="descripcion"></textarea>

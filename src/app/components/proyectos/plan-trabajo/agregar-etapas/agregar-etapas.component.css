@@ -1,3 +1,7 @@
-.form-group {
+.form-group, .form-actions {
   width: 100%;
+}
+
+.form-actions button{
+  min-width: 40%;
 }
