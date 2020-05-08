@@ -1,0 +1,67 @@
+<div class="row">
+  <h3>Detalles Actividad</h3>
+  <div fxFlex></div>
+  <button mat-icon-button matTooltip="Cerrar" [matDialogClose]="true">
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>
+
+<mat-tab-group mat-stretch-tabs mat-dialog-content>
+  <mat-tab label="Actividad">
+    <div>
+      <div fxLayout.lt-sm="column" fxLayoutAlign="space-between">
+        <mat-card class="mx-1 my-2 mat-elevation-z2" fxFlex fxFlex.gt-xs="48">
+          <h3 class="m-0 p-0" mat-subheader>Información Actividad</h3>
+          <mat-card-content fxLayout fxLayout.lt-sm="column">
+            <div fxLayout="column" fxFlex>
+              <span class="info-title">Código:</span> <span>{{data.idActividad}}</span>
+              <span class="info-title">Nombre:</span> <span>{{data.nombre}}</span>
+              <span class="info-title">Descripción:</span>
+              <p class="m-0">{{data.descripcion}}</p>
+            </div>
+            <div fxLayout="column" fxFlex>
+              <span class="info-title">Duración (horas):</span> <span>{{data.duracion}}</span>
+              <span class="info-title">Fecha Vencimiento:</span> <span>{{ data.fechaVencimiento | date: 'medium'}}</span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mx-1 my-2 mat-elevation-z2" fxFlex fxFlex.gt-xs="48">
+          <h3 class="m-0 p-0" mat-subheader>Información Etapa</h3>
+          <mat-card-content fxLayout="column">
+            <span class="info-title">Nombre:</span> <span>{{data.etapa.nombreEtapa}}</span>
+            <span class="info-title">Fecha Inicio:</span> <span>{{ data.etapa.fechaInicio | date: 'medium'}}</span>
+            <span class="info-title">Fecha Fín:</span> <span>{{ data.etapa.fechaFin | date: 'medium'}}</span>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <mat-card class="mx-1 my-3 mat-elevation-z2">
+        <h3 class="m-0 py-0" mat-subheader>Responsables</h3>
+        <mat-card-content>
+          <!-- LISTA PARA PC DE ESCRITORIO -->
+          <mat-list fxHide.lt-sm>
+            <mat-list-item *ngFor="let user of data.responsables">
+              <ngx-avatar [name]="getName(user)" matListAvatar class="mr-4"></ngx-avatar>
+              <h3 mat-line>{{getName(user)}}</h3>
+              <p mat-line>{{user.correo}}</p>
+            </mat-list-item>
+          </mat-list>
+
+          <!-- LISTA PARA MOVILES -->
+          <mat-list dense fxHide.gt-xs>
+            <mat-list-item *ngFor="let user of data.responsables">
+              <ngx-avatar [name]="getName(user)" matListAvatar class="mr-2"></ngx-avatar>
+              <h3 mat-line>{{getName(user)}}</h3>
+              <p mat-line>{{user.correo}}</p>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Seguimiento">
+    <div mat-subheader>Seguimiento de la Actividad</div>
+
+  </mat-tab>
+</mat-tab-group>

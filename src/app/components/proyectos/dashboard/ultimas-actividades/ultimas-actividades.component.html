@@ -11,7 +11,7 @@
       </mat-list-item>
       <mat-list-item *ngFor="let item of notificaciones">
         <mat-icon matListIcon [ngClass]="item.color">message</mat-icon>
-        <p [ngClass]="item.color" matLine>{{item.mensaje}}</p>
+        <p matLine>{{item.mensaje}}</p> <!-- [ngClass]="item.color" -->
         <mat-icon style="color: rgba(0, 0, 0, 0.54);">info</mat-icon>
       </mat-list-item>
     </mat-list>

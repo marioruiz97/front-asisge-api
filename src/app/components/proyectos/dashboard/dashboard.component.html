@@ -5,13 +5,16 @@
 
 <div gdAreas="info | dashboards" gdRows="auto auto" *ngIf="!isWaiting">
 
-  <header gdArea="info" class="pt-5" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-evenly" *ngIf="cliente && proyecto">
+  <header gdArea="info" class="pt-5" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-evenly"
+    *ngIf="cliente && proyecto">
     <mat-card fxFlex fxFlex.gt-sm="32" class="mb-5 info-card mat-elevation-z4">
       <div class="p-1 mat-elevation-z5 card-title" style="background-color: #3b5998;">
         <h3>Cliente</h3>
       </div>
       <mat-card-content class="my-3">
-        <p><ngx-avatar src="/assets/img/customer-avatar.png" size="70"></ngx-avatar></p>
+        <p>
+          <ngx-avatar src="/assets/img/customer-avatar.png" size="70"></ngx-avatar>
+        </p>
         <h3>{{cliente.razonSocial}}</h3>
         <p>{{returnIdentificacion()}}</p>
       </mat-card-content>
@@ -27,6 +30,10 @@
         <p class="m-0">{{proyecto.descripcionGeneral}}</p>
         <span class="info-title">Fecha de Inicio:</span>
         <span>{{ proyecto.createdDate | date: 'medium'}}</span>
+        <span class="info-title">Fecha de Cierre Estimada:</span>
+        <span>{{proyecto.fechaCierreProyecto | date: 'medium'}}</span>
+        <span class="info-title" *ngIf="horasMes">Horas por mes:</span>
+        <span *ngIf="horasMes">{{horasMes}}</span>
       </mat-card-content>
     </mat-card>
     <mat-card fxFlex fxFlex.gt-sm="32" class="mb-5 info-card mat-elevation-z4">
@@ -36,20 +43,24 @@
       <mat-card-content class="my-3" fxLayout="column" fxLayoutAlign="center center">
         <span class="info-title">Selecciona un plan de trabajo o crea uno nuevo</span>
         <form class="mt-3 mb-1" [formGroup]="planForm" (ngSubmit)="selectPlan()">
-          <mat-form-field appearance="outline">
+          <mat-form-field class="m-2" appearance="outline">
             <mat-label>Selecciona plan</mat-label>
             <mat-select formControlName="planTrabajo" #select>
               <mat-option>Seleccionar</mat-option>
-              <mat-option [value]="plan.idPlanDeTrabajo" *ngFor="let plan of planes">{{plan.idPlanDeTrabajo + ' - ' + plan.nombrePlan}}</mat-option>
+              <mat-option [value]="plan.idPlanDeTrabajo" *ngFor="let plan of planes">
+                {{plan.idPlanDeTrabajo + ' - ' + plan.nombrePlan}}</mat-option>
             </mat-select>
             <mat-hint>Selecciona un plan existente</mat-hint>
           </mat-form-field>
-          <button type="submit" mat-button color="accent" [disabled]="planForm.invalid">
+          <button type="submit" class="m-2" mat-button color="accent" [disabled]="planForm.invalid">
             Seleccionar
           </button>
         </form>
         <p>
-          <button mat-mini-fab [routerLink]="['/proyectos/'+ proyecto.idProyecto +'/nuevo-plan']" color="primary" matTooltip="Crear Plan de trabajo"><mat-icon>add</mat-icon></button>
+          <button mat-mini-fab [routerLink]="['/proyectos/'+ proyecto.idProyecto +'/nuevo-plan']" color="primary"
+            matTooltip="Crear Plan de trabajo">
+            <mat-icon>add</mat-icon>
+          </button>
         </p>
       </mat-card-content>
     </mat-card>
@@ -63,13 +74,14 @@
           <h3 class="mat-h1">Dashboard</h3>
           <div fxFlex></div>
           <button class="mr-3" mat-icon-button (click)="recargarDashboard()" matTooltip="Recargar Dashboard">
-              <mat-icon class="mat-18">refresh</mat-icon>
+            <mat-icon class="mat-18">refresh</mat-icon>
           </button>
         </div>
 
         <app-estados fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" [estado]="proyecto.estadoProyecto">
         </app-estados>
-        <div class="row my-5" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" fxLayoutAlign.gt-sm="space-evenly">
+        <div class="row my-5" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px"
+          fxLayoutAlign.gt-sm="space-evenly">
           <app-miembros fxFlex.gt-sm="49"></app-miembros>
           <app-ultimas-actividades fxFlex.gt-sm="49"></app-ultimas-actividades>
         </div>

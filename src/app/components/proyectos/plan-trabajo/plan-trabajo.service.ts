@@ -166,8 +166,31 @@ export class PlanTrabajoService {
     return this.uiService.putSnackBar(this.appService.patchRequest(`${path}/${actividad.idActividad}`, actividad));
   }
 
-  deleteActividad() {
-
+  deleteActividad(idActividad: number) {
+    return new Observable(observer => {
+      const path = this.actividadPath.replace('{idPlan}', this.planActual.idPlanDeTrabajo.toString());
+      const data = {
+        title: 'Estás seguro de eliminar la Actividad?',
+        message: 'Esta acción es irreversible. \n¿Estás seguro?',
+        confirm: 'Sí, Eliminar'
+      };
+      const dialogRef = this.uiService.showConfirm(data);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.uiService.putSnackBar(this.appService.deleteRequest(`${path}/${idActividad}`))
+            .subscribe(exito => {
+              if (exito) {
+                // this.fetchPlanActual(); TODO: VERIFICAR SI SE DEBE RECARGAR EL PLAN COMPLETO
+                observer.next(true);
+              } else {
+                observer.error();
+              }
+            });
+        } else {
+          observer.complete();
+        }
+      });
+    });
   }
 
 

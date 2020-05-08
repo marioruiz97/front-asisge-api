@@ -1,0 +1,21 @@
+mat-toolbar, mat-toolbar-row {
+  min-height: fit-content;
+  height: fit-content;
+}
+
+mat-toolbar {
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+.quitar-filtros mat-icon {
+  font-size: 3rem;
+}
+
+
+/* @media (max-width: 608px) {
+  mat-toolbar,
+  mat-toolbar-row {
+    height: fit-content;
+  }
+} */

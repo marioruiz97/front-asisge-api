@@ -65,11 +65,11 @@ export class ModalActividadComponent implements OnInit, OnDestroy {
   private setForm() {
     if (this.data.idActividad) {
       this.idActividad = this.data.idActividad;
-      const responsables = this.data.responsables.map(user => user.idUsuario);
+      const responsables: number[] = this.data.responsables.map(user => user.idUsuario);
       this.actividadForm.setValue({
         idActividad: this.data.idActividad,
         nombre: this.data.nombre,
-        etapa: this.data.etapa,
+        etapa: this.data.etapa.idEtapaPDT,
         fechaVencimiento: this.data.fechaVencimiento ? this.data.fechaVencimiento : new Date(),
         duracion: this.data.duracion,
         descripcion: this.data.descripcion ? this.data.descripcion : '',
@@ -83,7 +83,7 @@ export class ModalActividadComponent implements OnInit, OnDestroy {
       // actualizar
       const actividad = { ...this.actividadForm.value, idActividad: this.idActividad };
       this.subs.push(this.service.editActividad(this.idPlanTrabajo, actividad).subscribe(exito => {
-        if (exito) { this.dialogRef.close(); }
+        if (exito) { this.dialogRef.close(actividad); }
       }));
     } else {
       // crear

@@ -20,6 +20,7 @@ import { PlanDesdePlantillaComponent } from './plan-trabajo/plan-desde-plantilla
 import { EditarEtapaComponent } from './plan-trabajo/editar-etapa/editar-etapa.component';
 import { ModalActividadComponent } from './plan-trabajo/modal-actividad/modal-actividad.component';
 import { ActividadesPlanComponent } from './plan-trabajo/actividades-plan/actividades-plan.component';
+import { DetalleActividadComponent } from './plan-trabajo/detalle-actividad/detalle-actividad.component';
 
 
 
@@ -41,12 +42,13 @@ import { ActividadesPlanComponent } from './plan-trabajo/actividades-plan/activi
     PlanDesdePlantillaComponent,
     EditarEtapaComponent,
     ModalActividadComponent,
-    ActividadesPlanComponent
+    ActividadesPlanComponent,
+    DetalleActividadComponent
   ],
   imports: [
     SharedModule
   ],
-  entryComponents: [AgregarMiembroComponent, AgregarEtapasComponent, EditarEtapaComponent, ModalActividadComponent],
+  entryComponents: [AgregarMiembroComponent, AgregarEtapasComponent, EditarEtapaComponent, ModalActividadComponent, DetalleActividadComponent],
   providers: [ProyectoService, DashboardService, PlanTrabajoService]
 })
 export class ProyectosModule { }

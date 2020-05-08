@@ -34,10 +34,7 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
 
   getVencida(actividad: Actividad) {
     const date = new Date();
-    console.log('today get time', date.getTime())
-    console.log('fecha vencimiento', actividad.fechaVencimiento)
-    /* return date.getTime() > actividad.fechaVencimiento.getTime() ? 'Vencida' : 'Por vencer'; */
-    return 'por vencer'
+    return date.getTime() > new Date(actividad.fechaVencimiento).getTime() ? 'Vencida' : 'Por vencer';
   }
 
   doFilter(filterString: string) {

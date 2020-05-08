@@ -34,7 +34,7 @@
     <ng-container matColumnDef="acciones">
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let doc">
-        <div>
+        <div *ngIf="doc.idEstadoAnterior">
           <button mat-icon-button color="primary" [routerLink]="['/estado-proyecto/'+doc.id]" matTooltip="Editar">
             <mat-icon class="mat-18">edit</mat-icon>
           </button>

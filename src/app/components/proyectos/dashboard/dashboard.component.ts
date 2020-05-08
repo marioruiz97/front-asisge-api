@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   planForm: FormGroup;
   planes: PlanTrabajo[] = [];
+  horasMes: number;
 
   private subs: Subscription[] = [];
 
@@ -36,6 +37,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.subs.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
     this.subs.push(this.service.cliente.subscribe(cliente => this.cliente = cliente));
     this.subs.push(this.service.proyecto.subscribe(proyecto => this.proyecto = proyecto));
+    this.subs.push(this.planTrabajoService.planActualSubject.subscribe(plan =>
+      this.horasMes = plan && plan.planDeTrabajo ? plan.planDeTrabajo.horasMes : null));
     this.subs.push(this.activatedRoute.paramMap.subscribe(params => {
       const id = +params.get('id');
       if (id && id !== 0) {
@@ -44,6 +47,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.subs.push(this.planTrabajoService.fetchPlanesDeTrabajo(id).subscribe(res => this.planes = res.body));
       }
     }));
+    this.planTrabajoService.fetchPlanActual();
     this.initForm();
   }
 
