@@ -17,21 +17,33 @@
             <mat-form-field appearance="outline">
               <mat-label>Nombre Estado</mat-label>
               <input matInput placeholder="Ej. Creada" formControlName="nombreEstado">
-              <mat-hint>Ingrese un nombre hasta 100 caracteres ({{estadoForm.value.nombreEstado.length}}/max. 100) </mat-hint>
+              <mat-hint>Ingrese un nombre hasta 100 caracteres ({{estadoForm.value.nombreEstado.length}}/max. 100)
+              </mat-hint>
               <mat-error>El nombre es obligatorio</mat-error>
             </mat-form-field>
           </div>
           <div class="form-group" fxLayoutAlign="center">
             <mat-form-field fxFlex appearance="outline">
               <mat-label>Descripción</mat-label>
-              <textarea matInput placeholder="Ej. estado inicial de toda actividad" formControlName="descripcion"></textarea>
+              <textarea matInput placeholder="Ej. estado inicial de toda actividad"
+                formControlName="descripcion"></textarea>
               <mat-icon matPrefix>message</mat-icon>
-              <mat-hint>Campo Obligatorio max. 255 caracteres / actual:{{estadoForm.value.descripcion.length}} </mat-hint>
+              <mat-hint>Campo Obligatorio max. 255 caracteres / actual:{{estadoForm.value.descripcion.length}}
+              </mat-hint>
               <mat-error>Ingrese una descripción válida</mat-error>
             </mat-form-field>
           </div>
-          <div class="form-group" fxLayoutAlign="space-between" fxLayout="row wrap">
-            <p fxLayout="column">
+          <div class="form-group" fxLayout="column" fxLayoutGap="1rem">
+            <label id="radio-group">Selecciona si el estado tiene alguna condición especial</label>
+            <mat-radio-group color="primary" aria-labelledby="radio-group" formControlName="condicion">
+              <mat-radio-button [value]="0">Ninguna</mat-radio-button>
+              <mat-radio-button [value]="1">Estado Inicial</mat-radio-button>
+              <mat-radio-button [value]="2">Actividad No Aprobada</mat-radio-button>
+              <mat-radio-button [value]="3">Actividad Completada</mat-radio-button>
+            </mat-radio-group>
+
+
+            <!--  <p fxLayout="column">
               <mat-checkbox color="primary" formControlName="estadoInicial">Es Requerido?</mat-checkbox>
               <mat-hint>Este campo indica si es obligatorio para finalizar el proyecto.</mat-hint>
             </p>
@@ -42,7 +54,7 @@
             <p fxLayout="column">
               <mat-checkbox color="primary" formControlName="actividadCompletada">Es Requerido?</mat-checkbox>
               <mat-hint>Este campo indica si es obligatorio para finalizar el proyecto.</mat-hint>
-            </p>
+            </p> -->
           </div>
         </mat-card-content>
 
@@ -50,7 +62,8 @@
           <button class="m-2" type="button" mat-raised-button (click)="goBack()" color="warn" *ngIf="!isWaiting">
             <mat-icon>arrow_back</mat-icon>Regresar al listado
           </button>
-          <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!estadoForm.valid" *ngIf="!isWaiting">
+          <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!estadoForm.valid"
+            *ngIf="!isWaiting">
             <mat-icon>save</mat-icon> Guardar Estado
           </button>
           <mat-spinner *ngIf="isWaiting"></mat-spinner>

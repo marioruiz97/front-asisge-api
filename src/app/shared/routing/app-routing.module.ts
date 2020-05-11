@@ -24,6 +24,10 @@ import { TipoDocumentoFormComponent } from 'src/app/components/maestros/tipo-doc
 import { EstadoProyectoPageComponent } from 'src/app/components/maestros/estados-proyectos/estado-proyecto-page/estado-proyecto-page.component';
 // tslint:disable-next-line: max-line-length
 import { EstadoProyectoFormComponent } from 'src/app/components/maestros/estados-proyectos/estado-proyecto-form/estado-proyecto-form.component';
+// tslint:disable-next-line: max-line-length
+import { EstadoActividadPageComponent } from 'src/app/components/maestros/estados-actividad/estado-actividad-page/estado-actividad-page.component';
+// tslint:disable-next-line: max-line-length
+import { EstadoActividadFormComponent } from 'src/app/components/maestros/estados-actividad/estado-actividad-form/estado-actividad-form.component';
 
 import { ProyectoListComponent } from 'src/app/components/proyectos/proyecto-list/proyecto-list.component';
 import { ProyectoFormComponent } from 'src/app/components/proyectos/proyecto-form/proyecto-form.component';
@@ -31,6 +35,7 @@ import { DashboardComponent } from 'src/app/components/proyectos/dashboard/dashb
 import { PlanFormComponent } from 'src/app/components/proyectos/plan-trabajo/plan-form/plan-form.component';
 import { PlantillaFormComponent } from 'src/app/components/plantillas/plantilla-form/plantilla-form.component';
 import { PlantillaListComponent } from 'src/app/components/plantillas/plantilla-list/plantilla-list.component';
+
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
@@ -70,6 +75,14 @@ const routes: Routes = [
   },
   {
     path: 'estado-proyecto/:id', component: EstadoProyectoFormComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
+  {
+    path: 'estado-actividad', component: EstadoActividadPageComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ROLE_ADMIN'] }
+  },
+  {
+    path: 'estado-actividad/:id', component: EstadoActividadFormComponent, canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ROLE_ADMIN'] }
   },
 

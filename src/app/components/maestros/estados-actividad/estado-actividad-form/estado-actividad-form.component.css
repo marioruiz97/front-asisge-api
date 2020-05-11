@@ -4,17 +4,21 @@
   width: 100%;
 }
 
-.form-group mat-form-field, .form-group p {
+.form-group mat-form-field {
   padding: 10px 5px;
   min-width: 47%;
 }
 
-.form-group p mat-hint {
-  font-size: 75% !important;
+.form-group label#radio-group {
+  font-size: 85% !important;
+}
+
+.form-group mat-radio-button {
+  margin: 0.55rem;
 }
 
 .form-action button {
-  min-width: 30%;
+  min-width: 35%;
 }
 
 @media (max-width: 600px) {

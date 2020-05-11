@@ -40,9 +40,7 @@ export class EstadoActividadFormComponent implements OnInit, OnDestroy {
       idEstado: new FormControl({ value: '', disabled: true }),
       nombreEstado: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       descripcion: new FormControl('', [Validators.maxLength(255)]),
-      estadoInicial: new FormControl(false),
-      actividadNoAprobada: new FormControl(false),
-      actividadCompletada: new FormControl(false)
+      condicion: new FormControl(0)
     });
   }
 
@@ -57,13 +55,15 @@ export class EstadoActividadFormComponent implements OnInit, OnDestroy {
   private setForm(estado: EstadoActividad) {
     this.curId = estado.idEstado;
     this.isUpdate = true;
+    let condicion = 0;
+    if (estado.actividadNoAprobada) { condicion = 2; }
+    if (estado.actividadCompletada) { condicion = 3; }
+    if (estado.estadoInicial) { condicion = 1; }
     this.estadoForm.setValue({
       idEstado: estado.idEstado,
       nombreEstado: estado.nombreEstado,
       descripcion: estado.descripcion,
-      estadoInicial: estado.estadoInicial,
-      actividadNoAprobada: estado.actividadNoAprobada,
-      actividadCompletada: estado.actividadCompletada
+      condicion
     });
   }
 
@@ -82,10 +82,33 @@ export class EstadoActividadFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    const estado: EstadoActividad = { ...this.estadoForm.value };
+    switch (this.estadoForm.value.condicion) {
+      case 1:
+        estado.estadoInicial = true;
+        estado.actividadNoAprobada = false;
+        estado.actividadCompletada = false;
+        break;
+      case 2:
+        estado.estadoInicial = false;
+        estado.actividadNoAprobada = true;
+        estado.actividadCompletada = false;
+        break;
+      case 3:
+        estado.estadoInicial = false;
+        estado.actividadNoAprobada = false;
+        estado.actividadCompletada = true;
+        break;
+      default:
+        estado.estadoInicial = false;
+        estado.actividadNoAprobada = false;
+        estado.actividadCompletada = false;
+        break;
+    }
     if (this.curId && this.curId !== 0) {
-      this.service.update(this.curId, this.estadoForm.value);
+      this.service.update(this.curId, estado);
     } else {
-      this.service.create(this.estadoForm.value);
+      this.service.create(estado);
     }
   }
 

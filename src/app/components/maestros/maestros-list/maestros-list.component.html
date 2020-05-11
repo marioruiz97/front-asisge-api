@@ -45,6 +45,23 @@
       </mat-card-actions>
     </mat-card>
 
+    <mat-card class="p-2 p-sm-4 mat-elevation-z3">
+      <mat-card-title-group>
+        <mat-card-title>Estados de Actividad</mat-card-title>
+        <mat-card-subtitle>
+          Gestiona los posibles estados que puede tener una actividad.
+          Define el estado inicial, estados no aprobados y estados completados
+        </mat-card-subtitle>
+      </mat-card-title-group>
+      <mat-divider></mat-divider>
+      <mat-card-content class="pt-4">
+        <app-estado-actividad-list fxLayout="column"></app-estado-actividad-list>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button routerLink="/estado-actividad">Ir al módulo</button>
+      </mat-card-actions>
+    </mat-card>
+
     <mat-card class="p-2 p-sm-4 mat-elevation-z3 fit-gt-sm">
       <mat-card-title-group>
         <mat-card-title>Auditorias</mat-card-title>

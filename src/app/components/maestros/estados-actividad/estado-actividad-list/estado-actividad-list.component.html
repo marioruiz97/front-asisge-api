@@ -44,10 +44,10 @@
     <th mat-header-cell *matHeaderCellDef> Acciones </th>
     <td mat-cell *matCellDef="let doc">
       <div>
-        <button mat-icon-button color="primary" [routerLink]="['/estado-actividad/'+doc.id]" matTooltip="Editar">
+        <button mat-icon-button color="primary" [routerLink]="['/estado-actividad/'+doc.idEstado]" matTooltip="Editar">
           <mat-icon class="mat-18">edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="delete(doc.id)" matTooltip="Eliminar">
+        <button mat-icon-button color="warn" (click)="delete(doc.idEstado)" matTooltip="Eliminar">
           <mat-icon class="mat-18">delete</mat-icon>
         </button>
       </div>

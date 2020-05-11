@@ -14,6 +14,7 @@ export class AppMenu {
       children: [
         { name: 'Gestionar Maestros', url: '/maestros', icon: 'work_outline' },
         { name: 'Estados de Proyecto', url: '/estado-proyecto', icon: 'emoji_events' },
+        { name: 'Estados de Actividad', url: '/estado-actividad', icon: 'room_service' },
         { name: 'Tipos de Documento', url: '/tipo-documento', icon: 'featured_video' },
         { name: 'Auditoría', url: '/audit', icon: 'supervisor_account' },
         /* { name: 'Tipos de Cierre', url: '/tipo-cierre', icon: 'room_service' }, */
