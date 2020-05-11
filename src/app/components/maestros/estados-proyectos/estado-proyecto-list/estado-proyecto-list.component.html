@@ -19,7 +19,9 @@
     </ng-container>
     <ng-container matColumnDef="descripcion">
       <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide.lt-sm> Descripción </th>
-      <td mat-cell *matCellDef="let doc" fxHide.lt-sm> {{doc.descripcion}} </td>
+      <td mat-cell *matCellDef="let doc" fxHide.lt-sm>
+        <p class="px-2">  {{doc.descripcion}} </p>
+      </td>
     </ng-container>
     <ng-container matColumnDef="idEstadoAnterior">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado Anterior </th>

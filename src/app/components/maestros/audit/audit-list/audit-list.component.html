@@ -8,7 +8,9 @@
 <table mat-table [dataSource]="datasource" matSort class="mat-elevation-z8">
   <ng-container matColumnDef="emailUsuario">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
-    <td mat-cell *matCellDef="let doc"> {{doc.emailUsuario}} </td>
+    <td mat-cell *matCellDef="let doc">
+      <p class="pr-2"> {{doc.emailUsuario}} </p>
+    </td>
   </ng-container>
   <ng-container matColumnDef="accionRealizada">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Acción Realizada </th>
@@ -16,7 +18,9 @@
   </ng-container>
   <ng-container matColumnDef="descripcionAccion">
     <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide.lt-sm> Descripción Acción </th>
-    <td mat-cell *matCellDef="let doc" fxHide.lt-sm> {{doc.descripcionAccion}} </td>
+    <td mat-cell *matCellDef="let doc" fxHide.lt-sm>
+      <p class="px-2"> {{doc.descripcionAccion}} </p>
+    </td>
   </ng-container>
   <ng-container matColumnDef="fechaAccion">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Accion </th>

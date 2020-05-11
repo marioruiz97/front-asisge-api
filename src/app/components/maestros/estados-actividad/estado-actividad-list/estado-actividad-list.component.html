@@ -19,8 +19,8 @@
   </ng-container>
   <ng-container matColumnDef="descripcion">
     <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide.lt-sm> Descripción </th>
-    <td mat-cell *matCellDef="let doc" fxHide.lt-sm>
-      <p> {{doc.descripcion}} </p>
+    <td mat-cell *matCellDef="let doc" fxHide.lt-sm class="fit-content">
+      <p class="px-2"> {{doc.descripcion}} </p>
     </td>
   </ng-container>
   <ng-container matColumnDef="estadoInicial">
@@ -34,9 +34,9 @@
     <td mat-cell *matCellDef="let doc" fxHide fxShow.gt-xs> {{doc.actividadNoAprobada ? 'Sí' : 'No'}} </td>
   </ng-container>
   <ng-container matColumnDef="actividadCompletada">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs
+    <th mat-header-cell *matHeaderCellDef mat-sort-header
       matTooltip="Especifica cuando una actividad ha sido Completada"> Actividad Completada </th>
-    <td mat-cell *matCellDef="let doc" fxHide fxShow.gt-xs> {{doc.actividadCompletada ? 'Sí' : 'No'}} </td>
+    <td mat-cell *matCellDef="let doc"> {{doc.actividadCompletada ? 'Sí' : 'No'}} </td>
   </ng-container>
 
   <!-- botones para editar, eliminar -->

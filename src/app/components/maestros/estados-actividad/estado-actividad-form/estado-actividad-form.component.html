@@ -7,8 +7,8 @@
   <section gdArea="content">
     <form autocomplete="off" [formGroup]="estadoForm" (ngSubmit)="onSubmit()" fxLayoutAlign="center">
       <mat-card class="mat-elevation-z8 py-4" fxFlex="80" fxFlex.lt-sm="100">
-        <mat-card-content class="form-group p-2" fxLayout="column" fxLayoutAlign="center center">
-          <div class="form-group" fxLayoutAlign="space-between" fxLayout="row wrap">
+        <mat-card-content>
+          <div class="form-group" fxLayoutAlign="space-between" fxLayout.lt-sm="column">
             <mat-form-field appearance="outline">
               <mat-label>Código Asignado</mat-label>
               <input matInput formControlName="idEstado">
@@ -22,7 +22,7 @@
               <mat-error>El nombre es obligatorio</mat-error>
             </mat-form-field>
           </div>
-          <div class="form-group" fxLayoutAlign="center">
+          <div class="form-group">
             <mat-form-field fxFlex appearance="outline">
               <mat-label>Descripción</mat-label>
               <textarea matInput placeholder="Ej. estado inicial de toda actividad"
@@ -33,28 +33,14 @@
               <mat-error>Ingrese una descripción válida</mat-error>
             </mat-form-field>
           </div>
-          <div class="form-group" fxLayout="column" fxLayoutGap="1rem">
+          <div class="form-group mt-3" fxLayout="column" fxLayoutGap="1rem">
             <label id="radio-group">Selecciona si el estado tiene alguna condición especial</label>
-            <mat-radio-group color="primary" aria-labelledby="radio-group" formControlName="condicion">
+            <mat-radio-group color="primary" aria-labelledby="radio-group" formControlName="condicion" fxLayoutAlign="space-evenly" fxLayout.lt-sm="column">
               <mat-radio-button [value]="0">Ninguna</mat-radio-button>
               <mat-radio-button [value]="1">Estado Inicial</mat-radio-button>
               <mat-radio-button [value]="2">Actividad No Aprobada</mat-radio-button>
               <mat-radio-button [value]="3">Actividad Completada</mat-radio-button>
             </mat-radio-group>
-
-
-            <!--  <p fxLayout="column">
-              <mat-checkbox color="primary" formControlName="estadoInicial">Es Requerido?</mat-checkbox>
-              <mat-hint>Este campo indica si es obligatorio para finalizar el proyecto.</mat-hint>
-            </p>
-            <p fxLayout="column">
-              <mat-checkbox color="primary" formControlName="actividadNoAprobada">Es Requerido?</mat-checkbox>
-              <mat-hint>Este campo indica si es obligatorio para finalizar el proyecto.</mat-hint>
-            </p>
-            <p fxLayout="column">
-              <mat-checkbox color="primary" formControlName="actividadCompletada">Es Requerido?</mat-checkbox>
-              <mat-hint>Este campo indica si es obligatorio para finalizar el proyecto.</mat-hint>
-            </p> -->
           </div>
         </mat-card-content>
 
