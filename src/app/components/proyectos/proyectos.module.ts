@@ -21,6 +21,8 @@ import { EditarEtapaComponent } from './plan-trabajo/editar-etapa/editar-etapa.c
 import { ModalActividadComponent } from './plan-trabajo/modal-actividad/modal-actividad.component';
 import { ActividadesPlanComponent } from './plan-trabajo/actividades-plan/actividades-plan.component';
 import { DetalleActividadComponent } from './plan-trabajo/detalle-actividad/detalle-actividad.component';
+import { SeguimientoListComponent } from './plan-trabajo/seguimiento-list/seguimiento-list.component';
+import { SeguimientoFormComponent } from './plan-trabajo/seguimiento-form/seguimiento-form.component';
 
 
 
@@ -43,7 +45,9 @@ import { DetalleActividadComponent } from './plan-trabajo/detalle-actividad/deta
     EditarEtapaComponent,
     ModalActividadComponent,
     ActividadesPlanComponent,
-    DetalleActividadComponent
+    DetalleActividadComponent,
+    SeguimientoListComponent,
+    SeguimientoFormComponent
   ],
   imports: [
     SharedModule

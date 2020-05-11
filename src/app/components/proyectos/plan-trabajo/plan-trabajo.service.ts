@@ -6,7 +6,7 @@ import { EtapaPlan } from 'src/app/models/proyectos/plan-trabajo.model';
 import { Subject, Observable } from 'rxjs';
 import { AppConstants as Cons } from 'src/app/shared/routing/app.constants';
 import { Router } from '@angular/router';
-import { ActividadDto } from 'src/app/models/proyectos/actividad.model';
+import { ActividadDto, Seguimiento } from 'src/app/models/proyectos/actividad.model';
 import { PlanTrabajoBoard } from 'src/app/models/proyectos/plan-trabajo-board.model';
 
 @Injectable()
@@ -20,6 +20,7 @@ export class PlanTrabajoService {
   private planTrabajoPath = Cons.PATH_PLANES_TRABAJO;
   private etapasPath = Cons.PATH_ETAPA_PLAN;
   private actividadPath = Cons.PATH_ACTIVIDADES_PLAN;
+  private seguimientoPath = Cons.SEGUIMIENTOS;
 
   constructor(
     private dashboardService: DashboardService, private appService: AppService,
@@ -155,7 +156,6 @@ export class PlanTrabajoService {
   /**
    *  METODOS PARA ACTIVIDADES
    */
-
   createActividad(plan: number, actividad: ActividadDto) {
     const path = this.actividadPath.replace('{idPlan}', plan.toString());
     return this.uiService.putSnackBar(this.appService.postRequest(path, actividad));
@@ -191,6 +191,19 @@ export class PlanTrabajoService {
         }
       });
     });
+  }
+
+  /**
+   * METODOS PARA SEGUIMIENTOS
+   */
+  fetchSeguimientos(idActividad: number) {
+    const path = this.seguimientoPath.replace('{idActividad}', idActividad.toString());
+    return this.appService.getRequest(path);
+  }
+
+  crearSeguimiento(idActividad: number, data: Seguimiento) {
+    const path = this.seguimientoPath.replace('{idActividad}', idActividad.toString());
+    return this.uiService.putSnackBar(this.appService.postRequest(path, data));
   }
 
 

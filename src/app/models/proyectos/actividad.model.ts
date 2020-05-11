@@ -24,7 +24,9 @@ export interface ActividadDto {
 export interface Seguimiento {
   idSeguimiento?: number;
   actividadAsociada: Actividad;
-  fechaSeguimiento?: Date;
+  /* fechaSeguimiento?: Date; */
+  createdDate?: Date;
+  lastModifiedDate?: Date;
   horasTrabajadas: number;
   usuarioSeguimiento?: Usuario;
   observaciones: string;

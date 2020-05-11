@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subs.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
+    this.subs.push(this.uiService.dashboardLoading.subscribe(state => this.isWaiting = state));
     this.subs.push(this.service.cliente.subscribe(cliente => this.cliente = cliente));
     this.subs.push(this.service.proyecto.subscribe(proyecto => this.proyecto = proyecto));
     this.subs.push(this.planTrabajoService.planActualSubject.subscribe(plan =>

@@ -1,0 +1,39 @@
+<form autocomplete="off" [formGroup]="seguimientoForm" (ngSubmit)="onSubmit()" fxLayout="column">
+  <div class="form-group" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between" fxLayoutGap="1rem">
+    <mat-form-field appearance="outline" fxFlex>
+      <mat-label>Horas trabajadas</mat-label>
+      <input type="number" matInput formControlName="horasTrabajadas">
+      <mat-hint>Ingrese las horas en la actividad</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="outline" fxFlex>
+      <mat-label>Descripción labor</mat-label>
+      <textarea matInput formControlName="descripcionLabor"></textarea>
+      <mat-hint>
+        <p class="m-0">Ingrese la labor realizada y los compromisos adquiridos</p>
+        <p class="m-0">Máximo 255 caracteres / actual:{{seguimientoForm.value.descripcionLabor.length}}</p>
+      </mat-hint>
+      <mat-error>Ingrese una descripción válida</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-group" fxLayout="column">
+    <mat-form-field appearance="outline" fxFlex>
+      <mat-label>Observaciones</mat-label>
+      <textarea matInput formControlName="observaciones"></textarea>
+      <mat-hint>
+        <p class="m-0">Ingresa las observaciones del seguimiento</p>
+        <p class="m-0">Máximo 255 caracteres / actual:{{seguimientoForm.value.observaciones.length}}</p>
+      </mat-hint>
+    </mat-form-field>
+  </div>
+
+  <div class="mt-4 mb-3 form-actions" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-evenly" fxLayoutGap="12px">
+    <button type="button" mat-raised-button (click)="closeForm()" color="warn" *ngIf="!isWaiting" fxFlex fxFlex.gt-xs="45">
+      Cancelar
+    </button>
+    <button type="submit" mat-raised-button color="primary" *ngIf="!isWaiting" [disabled]="seguimientoForm.invalid" fxFlex fxFlex.gt-xs="45">
+      Guardar Seguimiento
+    </button>
+    <mat-spinner *ngIf="isWaiting"></mat-spinner>
+  </div>
+</form>

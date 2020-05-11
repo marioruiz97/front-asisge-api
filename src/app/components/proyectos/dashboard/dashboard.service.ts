@@ -29,7 +29,7 @@ export class DashboardService {
   ) { }
 
   fetchDashboard(idDashboard: number) {
-    this.uiService.loadingState.next(true);
+    this.uiService.dashboardLoading.next(true);
     if (this.dashboard && this.dashboard.idDashboard && this.dashboard.idDashboard === idDashboard) {
       this.setDashboardProperties(this.dashboard);
     } else {
@@ -48,7 +48,7 @@ export class DashboardService {
 
   recargarDashboard() {
     if (this.dashboard && this.dashboard.idDashboard) {
-      this.uiService.loadingState.next(true);
+      this.uiService.dashboardLoading.next(true);
       const idDashboard = this.dashboard.idDashboard;
       this.appService.getRequest(`${this.dashboardPath}/${idDashboard}`).subscribe(res => {
         this.dashboard = res.body as Dashboard;
@@ -63,7 +63,7 @@ export class DashboardService {
     this.proyecto.next(dashboard.proyecto);
     this.proximasActividades.next(dashboard.proximasActividades);
     this.notificaciones.next(dashboard.notificaciones);
-    this.uiService.loadingState.next(false);
+    this.uiService.dashboardLoading.next(false);
   }
 
   fetchInfoCliente() {
@@ -101,7 +101,6 @@ export class DashboardService {
       this.proximasActividades.next(this.dashboard.proximasActividades);
     }
   }
-
   /**
    * FIN DE METODOS DE PROPIEDADES BASICAS DEL DASHBOARD, DE AQUI EN ADELANTE SE ENCUENTRA METODOS ESPECIFICOS DE LA GESTION DE CADA PARTE
    */
