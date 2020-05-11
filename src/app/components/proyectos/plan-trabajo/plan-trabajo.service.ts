@@ -20,7 +20,7 @@ export class PlanTrabajoService {
   private planTrabajoPath = Cons.PATH_PLANES_TRABAJO;
   private etapasPath = Cons.PATH_ETAPA_PLAN;
   private actividadPath = Cons.PATH_ACTIVIDADES_PLAN;
-  private seguimientoPath = Cons.SEGUIMIENTOS;
+  private seguimientoPath = Cons.PATH_SEGUIMIENTOS;
 
   constructor(
     private dashboardService: DashboardService, private appService: AppService,

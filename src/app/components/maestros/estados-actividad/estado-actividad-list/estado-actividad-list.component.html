@@ -1,0 +1,62 @@
+<div class="px-1 px-sm-5 list-button" fxLayoutAlign="space-between">
+  <mat-form-field>
+    <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="buscar...">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+  <button mat-button routerLink="/estado-actividad/0" color="primary">
+    <mat-icon>add</mat-icon> Crear Estado
+  </button>
+</div>
+
+<table mat-table [dataSource]="datasource" matSort class="mat-elevation-z8">
+  <ng-container matColumnDef="idEstado">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Id Estado </th>
+    <td mat-cell *matCellDef="let doc"> {{doc.idEstado}} </td>
+  </ng-container>
+  <ng-container matColumnDef="nombreEstado">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre Estado </th>
+    <td mat-cell *matCellDef="let doc"> {{doc.nombreEstado}} </td>
+  </ng-container>
+  <ng-container matColumnDef="descripcion">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide.lt-sm> Descripción </th>
+    <td mat-cell *matCellDef="let doc" fxHide.lt-sm>
+      <p> {{doc.descripcion}} </p>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="estadoInicial">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs
+      matTooltip="Especifica si el estado es el inicial de toda actividad"> Estado Inicial </th>
+    <td mat-cell *matCellDef="let doc" fxHide fxShow.gt-xs> {{doc.estadoInicial ? 'Sí' : 'No'}} </td>
+  </ng-container>
+  <ng-container matColumnDef="actividadNoAprobada">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs
+      matTooltip="Especifica cuando una actividad no cumple el criterio de aceptación"> Actividad No Aprobada </th>
+    <td mat-cell *matCellDef="let doc" fxHide fxShow.gt-xs> {{doc.actividadNoAprobada ? 'Sí' : 'No'}} </td>
+  </ng-container>
+  <ng-container matColumnDef="actividadCompletada">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs
+      matTooltip="Especifica cuando una actividad ha sido Completada"> Actividad Completada </th>
+    <td mat-cell *matCellDef="let doc" fxHide fxShow.gt-xs> {{doc.actividadCompletada ? 'Sí' : 'No'}} </td>
+  </ng-container>
+
+  <!-- botones para editar, eliminar -->
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+    <td mat-cell *matCellDef="let doc">
+      <div>
+        <button mat-icon-button color="primary" [routerLink]="['/estado-actividad/'+doc.id]" matTooltip="Editar">
+          <mat-icon class="mat-18">edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="delete(doc.id)" matTooltip="Eliminar">
+          <mat-icon class="mat-18">delete</mat-icon>
+        </button>
+      </div>
+    </td>
+  </ng-container>
+  <!-- elementos necesarios para el mat-table de angular material-->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<!-- paginador de angular material-->
+<mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 30, 50, 100]" class="mat-elevation-z8">
+</mat-paginator>
