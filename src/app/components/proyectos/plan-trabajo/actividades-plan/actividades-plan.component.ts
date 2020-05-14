@@ -11,6 +11,7 @@ import { DetalleActividadComponent } from '../detalle-actividad/detalle-activida
 import { FormGroup, FormControl } from '@angular/forms';
 import { Usuario } from 'src/app/models/terceros/usuario.model';
 import { DashboardService } from '../../dashboard/dashboard.service';
+import { PasarActividadEstadoComponent } from '../pasar-actividad-estado/pasar-actividad-estado.component';
 
 
 export interface FiltroActividad {
@@ -28,7 +29,7 @@ export interface FiltroActividad {
 export class ActividadesPlanComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private subs: Subscription[] = [];
-  displayedColumns = ['idActividad', 'nombre', 'etapa', 'fechaVencimiento', 'duracion', 'acciones'];
+  displayedColumns = ['idActividad', 'nombre', 'etapa', 'estadoActividad', 'fechaVencimiento', 'duracion', 'acciones'];
   datasource = new MatTableDataSource<Actividad>();
 
   etapas: EtapaPlan[] = [];
@@ -104,18 +105,22 @@ export class ActividadesPlanComponent implements OnInit, AfterViewInit, OnDestro
       minWidth: '80vw',
       maxWidth: '100vw'
     };
-    const ref = this.dialog.open(DetalleActividadComponent, { ...config, data: actividad });
-    /* ref.afterClosed().subscribe(result => {
-      if (!isNullOrUndefined(result.idActividad) && result.idActividad !== 0) {
-        this.datasource.data.filter(e => e.idActividad === result.idActividad).map(act => {
-          act.nombre = result.nombre;
-          act.fechaVencimiento = result.fechaVencimiento;
-          // actividad.etapa = result.etapa;
-          act.duracion = result.duracion;
-          act.descripcion = result.descripcion;
+    this.dialog.open(DetalleActividadComponent, { ...config, data: actividad });
+  }
+
+  changeEstado(actividad: Actividad) {
+    const ref = this.dialog.open(PasarActividadEstadoComponent, { ...DIALOG_CONFIG, data: actividad });
+    ref.afterClosed().subscribe(result => {
+      if (!isNullOrUndefined(result.idActividad)) {
+        this.datasource.data.filter(item => item.idActividad === result.idActividad).map(item => {
+          item.estadoActividad = result.estadoActividad;
         });
       }
-    }); */
+    });
+  }
+
+  showApproval(actividad: Actividad) {
+    this.service.solicitarAprobacion(actividad);
   }
 
 

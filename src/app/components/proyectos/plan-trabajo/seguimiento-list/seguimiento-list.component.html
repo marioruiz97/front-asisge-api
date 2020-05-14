@@ -49,9 +49,14 @@
 
 
 <div fxLayout="column" fxLayoutAlign="center center">
-  <button class="my-4" mat-fab color="primary" type="button" (click)="showForm = true">
-    <mat-icon class="mat-18">add</mat-icon>
-  </button>
+  <div class="my-4" fxLayoutGap="14px">
+    <button mat-fab color="primary" type="button" (click)="showForm = true" matTooltip="Agregar Seguimiento">
+      <mat-icon class="mat-18">add</mat-icon>
+    </button>
+    <button mat-fab color="warn" type="button" (click)="showApproval()" matTooltip="Solicitar Aprobación">
+      <mat-icon class="mat-18">security</mat-icon>
+    </button>
+  </div>
 
-  <app-seguimiento-form [idActividad]="actividad" (cerrarForm)="showForm = false" (recargarSeguimiento)="this.fetchSeguimientos()" *ngIf="showForm" fxLayout="column"></app-seguimiento-form>
+  <app-seguimiento-form [idActividad]="idActividad" (cerrarForm)="showForm = false" (recargarSeguimiento)="this.fetchSeguimientos()" *ngIf="showForm" fxLayout="column"></app-seguimiento-form>
 </div>

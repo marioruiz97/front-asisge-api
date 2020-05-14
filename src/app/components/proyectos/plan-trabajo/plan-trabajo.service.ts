@@ -6,7 +6,7 @@ import { EtapaPlan } from 'src/app/models/proyectos/plan-trabajo.model';
 import { Subject, Observable } from 'rxjs';
 import { AppConstants as Cons } from 'src/app/shared/routing/app.constants';
 import { Router } from '@angular/router';
-import { ActividadDto, Seguimiento } from 'src/app/models/proyectos/actividad.model';
+import { ActividadDto, Seguimiento, Actividad } from 'src/app/models/proyectos/actividad.model';
 import { PlanTrabajoBoard } from 'src/app/models/proyectos/plan-trabajo-board.model';
 
 @Injectable()
@@ -164,6 +164,25 @@ export class PlanTrabajoService {
   editActividad(plan: number, actividad: ActividadDto) {
     const path = this.actividadPath.replace('{idPlan}', plan.toString());
     return this.uiService.putSnackBar(this.appService.patchRequest(`${path}/${actividad.idActividad}`, actividad));
+  }
+
+  changeEstado(actividad: Actividad, nuevoEstado: number) {
+    const plan = this.planActual.idPlanDeTrabajo;
+    const path = Cons.PATH_ACTIVIDADES;
+    return this.appService
+      .patchRequest(`${path}/${actividad.idActividad}?plan=${plan}&aprobar=${false}&nuevo-estado=${nuevoEstado}`, actividad);
+  }
+
+  solicitarAprobacion(actividad: Actividad) {
+    const plan = this.planActual.idPlanDeTrabajo;
+    const path = Cons.PATH_ACTIVIDADES;
+    const data = { title: 'Solicitar aprobación', message: '¿Deseas solicitar aprobación para esta actividad?', confirm: 'Sí' };
+    this.uiService.showConfirm(data).afterClosed().subscribe(res => {
+      if (res) {
+        this.uiService.putSnackBar(this.appService
+          .patchRequest(`${path}/${actividad.idActividad}?plan=${plan}&aprobar=${true}&nuevo-estado=0`, actividad)).subscribe();
+      }
+    });
   }
 
   deleteActividad(idActividad: number) {

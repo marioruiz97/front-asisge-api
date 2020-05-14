@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, Input } from '@
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { PlanTrabajoService } from '../plan-trabajo.service';
-import { Seguimiento } from 'src/app/models/proyectos/actividad.model';
+import { Seguimiento, Actividad } from 'src/app/models/proyectos/actividad.model';
 import { Usuario } from 'src/app/models/terceros/usuario.model';
 
 @Component({
@@ -15,16 +15,18 @@ export class SeguimientoListComponent implements OnInit, AfterViewInit, OnDestro
   displayedColumns: string[] = ['usuarioSeguimiento', 'createdDate', 'horasTrabajadas', 'descripcionLabor'];
   datasource = new MatTableDataSource<Seguimiento>();
   showForm = false;
+  idActividad: number;
 
   private subs: Subscription[] = [];
 
-  @Input() actividad: number;
+  @Input() actividad: Actividad;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(private service: PlanTrabajoService) { }
 
   ngOnInit() {
+    this.idActividad = this.actividad.idActividad;
     this.fetchSeguimientos();
   }
 
@@ -34,7 +36,11 @@ export class SeguimientoListComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   fetchSeguimientos() {
-    this.subs.push(this.service.fetchSeguimientos(this.actividad).subscribe(res => this.datasource.data = res.body as Seguimiento[]));
+    this.subs.push(this.service.fetchSeguimientos(this.idActividad).subscribe(res => this.datasource.data = res.body as Seguimiento[]));
+  }
+
+  showApproval() {
+    this.service.solicitarAprobacion(this.actividad);
   }
 
   getNombre(usuario: Usuario) {

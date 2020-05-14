@@ -76,7 +76,7 @@
           <button mat-icon-button matTooltip="Ir al dashboard" [routerLink]="['/proyectos/'+pro.idProyecto]">
             <mat-icon>dashboard</mat-icon>
           </button>
-          <button mat-icon-button color="warn" matTooltip="Eliminar proyecto">
+          <button mat-icon-button color="warn" matTooltip="Eliminar proyecto" *ngIf="auth.hasRoles(['ROLE_ADMIN'])">
             <mat-icon>delete</mat-icon>
           </button>
         </mat-card-actions>

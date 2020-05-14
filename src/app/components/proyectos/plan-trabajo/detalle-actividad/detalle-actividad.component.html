@@ -21,6 +21,7 @@
             </div>
             <div fxLayout="column" fxFlex>
               <span class="info-title">Duración (horas):</span> <span>{{data.duracion}}</span>
+              <span class="info-title">Estado Actual:</span> <span>{{data.estadoActividad.nombreEstado}}</span>
               <span class="info-title">Fecha Vencimiento:</span>
               <span>{{ data.fechaVencimiento | date: 'medium'}}</span>
             </div>
@@ -64,7 +65,7 @@
   <mat-tab label="Seguimiento">
     <div>
       <h3 class="py-0" mat-subheader>Seguimiento de la Actividad</h3>
-      <app-seguimiento-list [actividad]="data.idActividad" *ngIf="data.idActividad"></app-seguimiento-list>
+      <app-seguimiento-list [actividad]="data" *ngIf="data.idActividad"></app-seguimiento-list>
     </div>
   </mat-tab>
 </mat-tab-group>

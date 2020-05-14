@@ -54,6 +54,10 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide.lt-sm> Etapa </th>
         <td mat-cell *matCellDef="let doc" fxHide.lt-sm> {{doc.etapa.nombreEtapa}} </td>
       </ng-container>
+      <ng-container matColumnDef="estadoActividad">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide.lt-sm> Estado Actual </th>
+        <td mat-cell *matCellDef="let doc" fxHide.lt-sm> {{doc.estadoActividad.nombreEstado}} </td>
+      </ng-container>
       <ng-container matColumnDef="duracion">
         <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide.lt-sm> Duración en horas </th>
         <td mat-cell *matCellDef="let doc" fxHide.lt-sm> {{doc.duracion }} </td>
@@ -65,15 +69,26 @@
       <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let doc">
-          <button mat-icon-button color="primary" (click)="editActividad(doc)" matTooltip="Editar Actividad">
-            <mat-icon>edit</mat-icon>
+          <button mat-icon-button [matMenuTriggerFor]="actions">
+            <mat-icon class="mat-18">more_horiz</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="deleteActividad(doc.idActividad)" matTooltip="Eliminar Actividad">
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button mat-icon-button (click)="showDetails(doc)" matTooltip="Ver Detalles de la actividad">
-            <mat-icon>description</mat-icon>
-          </button>
+          <mat-menu #actions="matMenu">
+            <button mat-menu-item color="primary" (click)="editActividad(doc)" *ngIf="! doc.estadoActividad.actividadCompletada">
+              <mat-icon>edit</mat-icon> Editar Actividad
+            </button>
+            <button mat-menu-item color="warn" (click)="deleteActividad(doc.idActividad)">
+              <mat-icon>delete</mat-icon> Eliminar Actividad
+            </button>
+            <button mat-menu-item (click)="showDetails(doc)">
+              <mat-icon>description</mat-icon> Detalles y Seguimiento
+            </button>
+            <button mat-menu-item (click)="changeEstado(doc)" *ngIf="! doc.estadoActividad.actividadCompletada">
+              <mat-icon>swap_horiz</mat-icon> Pasar Estado
+            </button>
+            <button mat-menu-item (click)="showApproval(doc)" *ngIf="! doc.estadoActividad.actividadCompletada">
+              <mat-icon>security</mat-icon> Solicitar Aprobación
+            </button>
+          </mat-menu>
         </td>
       </ng-container>
 

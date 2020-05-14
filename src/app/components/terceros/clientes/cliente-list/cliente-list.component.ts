@@ -5,6 +5,7 @@ import { Cliente } from 'src/app/models/terceros/cliente.model';
 import { ClienteService } from '../cliente.service';
 import { AsesorClienteComponent } from '../asesor-cliente/asesor-cliente.component';
 import { BASIC_DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-cliente-list',
@@ -20,7 +21,7 @@ export class ClienteListComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private service: ClienteService, private dialog: MatDialog) { }
+  constructor(private service: ClienteService, private dialog: MatDialog, public auth: AuthService) { }
 
   ngOnInit() {
     this.fetch();

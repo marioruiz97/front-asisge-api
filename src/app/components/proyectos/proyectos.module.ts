@@ -23,6 +23,7 @@ import { ActividadesPlanComponent } from './plan-trabajo/actividades-plan/activi
 import { DetalleActividadComponent } from './plan-trabajo/detalle-actividad/detalle-actividad.component';
 import { SeguimientoListComponent } from './plan-trabajo/seguimiento-list/seguimiento-list.component';
 import { SeguimientoFormComponent } from './plan-trabajo/seguimiento-form/seguimiento-form.component';
+import { PasarActividadEstadoComponent } from './plan-trabajo/pasar-actividad-estado/pasar-actividad-estado.component';
 
 
 
@@ -47,12 +48,20 @@ import { SeguimientoFormComponent } from './plan-trabajo/seguimiento-form/seguim
     ActividadesPlanComponent,
     DetalleActividadComponent,
     SeguimientoListComponent,
-    SeguimientoFormComponent
+    SeguimientoFormComponent,
+    PasarActividadEstadoComponent
   ],
   imports: [
     SharedModule
   ],
-  entryComponents: [AgregarMiembroComponent, AgregarEtapasComponent, EditarEtapaComponent, ModalActividadComponent, DetalleActividadComponent],
+  entryComponents: [
+    AgregarMiembroComponent,
+    AgregarEtapasComponent,
+    EditarEtapaComponent,
+    ModalActividadComponent,
+    DetalleActividadComponent,
+    PasarActividadEstadoComponent
+  ],
   providers: [ProyectoService, DashboardService, PlanTrabajoService]
 })
 export class ProyectosModule { }

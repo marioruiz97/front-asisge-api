@@ -1,11 +1,13 @@
 import { EtapaPlan } from './plan-trabajo.model';
 import { Usuario } from '../terceros/usuario.model';
+import { EstadoActividad } from './estado-actividad.model';
 
 export interface Actividad {
   idActividad?: number;
   nombre: string;
   responsables: Usuario[];
   etapa: EtapaPlan;
+  estadoActividad: EstadoActividad;
   fechaVencimiento: Date;
   duracion: number;
   descripcion: string;
@@ -16,6 +18,7 @@ export interface ActividadDto {
   nombre: string;
   responsables: number[];
   etapa: number;
+  estadoActividad: number;
   fechaVencimiento: Date;
   duracion: number;
   descripcion: string;

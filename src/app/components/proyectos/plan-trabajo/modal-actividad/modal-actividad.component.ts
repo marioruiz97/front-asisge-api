@@ -81,13 +81,13 @@ export class ModalActividadComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.data.idActividad && this.idActividad) {
       // actualizar
-      const actividad = { ...this.actividadForm.value, idActividad: this.idActividad };
+      const actividad = { ...this.actividadForm.value, idActividad: this.idActividad, estadoActividad: this.data.estadoActividad.idEstado };
       this.subs.push(this.service.editActividad(this.idPlanTrabajo, actividad).subscribe(exito => {
         if (exito) { this.dialogRef.close(actividad); }
       }));
     } else {
       // crear
-      const actividad = { ...this.actividadForm.value };
+      const actividad = { ...this.actividadForm.value, estadoActividad: 0 };
       this.subs.push(this.service.createActividad(this.idPlanTrabajo, actividad).subscribe(exito => {
         if (exito) { this.initForm(); }
       }));
