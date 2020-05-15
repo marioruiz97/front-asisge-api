@@ -225,6 +225,16 @@ export class PlanTrabajoService {
     return this.uiService.putSnackBar(this.appService.postRequest(path, data));
   }
 
+  editarSeguimiento(idActividad: number, data: Seguimiento) {
+    const path = this.seguimientoPath.replace('{idActividad}', idActividad.toString());
+    return this.uiService.putSnackBar(this.appService.patchRequest(`${path}/${data.idSeguimiento}`, data));
+  }
+
+  deleteSeguimiento(idActividad: number, idSeguimiento: number) {
+    const path = this.seguimientoPath.replace('{idActividad}', idActividad.toString());
+    return this.uiService.putSnackBar(this.appService.deleteRequest(`${path}/${idSeguimiento}`));
+  }
+
 
 
   returnToDashboard() {

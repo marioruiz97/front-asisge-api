@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs';
 import { PlanTrabajoService } from '../plan-trabajo.service';
 import { Seguimiento, Actividad } from 'src/app/models/proyectos/actividad.model';
 import { Usuario } from 'src/app/models/terceros/usuario.model';
+import { AuthService } from 'src/app/auth/auth.service';
+import { UiService, ConfirmDialogData } from 'src/app/shared/ui.service';
 
 @Component({
   selector: 'app-seguimiento-list',
@@ -12,22 +14,26 @@ import { Usuario } from 'src/app/models/terceros/usuario.model';
 })
 export class SeguimientoListComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns: string[] = ['usuarioSeguimiento', 'createdDate', 'horasTrabajadas', 'descripcionLabor'];
+  displayedColumns: string[] = ['usuarioSeguimiento', 'createdDate', 'horasTrabajadas', 'descripcionLabor', 'acciones'];
   datasource = new MatTableDataSource<Seguimiento>();
   showForm = false;
   idActividad: number;
+  editSeguimiento: Seguimiento;
 
+  private curUser: number;
   private subs: Subscription[] = [];
 
   @Input() actividad: Actividad;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private service: PlanTrabajoService) { }
+  constructor(private service: PlanTrabajoService, private auth: AuthService, private uiService: UiService) { }
 
   ngOnInit() {
     this.idActividad = this.actividad.idActividad;
+    this.subs.push(this.auth.currentUser.subscribe(tokenInfo => this.curUser = tokenInfo.userid));
     this.fetchSeguimientos();
+    this.auth.fetchTokenInfo();
   }
 
   ngAfterViewInit() {
@@ -45,6 +51,35 @@ export class SeguimientoListComponent implements OnInit, AfterViewInit, OnDestro
 
   getNombre(usuario: Usuario) {
     return `${usuario.nombre} ${usuario.apellido1}`;
+  }
+
+  canEditOrDelete(seguimiento: Seguimiento) {
+    return this.auth.hasRole('ROLE_ADMIN') || this.curUser === seguimiento.usuarioSeguimiento.idUsuario;
+  }
+
+  editarSeguimiento(seguimiento: Seguimiento) {
+    this.editSeguimiento = seguimiento;
+    this.showForm = true;
+  }
+
+  eliminarSeguimiento(id: number) {
+    const dialog: ConfirmDialogData = {
+      title: 'Estás seguro de eliminar el Seguimiento?',
+      message: 'Esta acción es irreversible. \n¿Estás seguro?',
+      confirm: 'Sí, Eliminar'
+    };
+    this.uiService.showConfirm(dialog).afterClosed().subscribe(result => {
+      if (result) {
+        this.service.deleteSeguimiento(this.idActividad, id).subscribe(exito => {
+          if (exito) { this.datasource.data = this.datasource.data.filter(seguimiento => seguimiento.idSeguimiento !== id); }
+        });
+      }
+    });
+  }
+
+  closeForm() {
+    this.showForm = false;
+    this.editSeguimiento = undefined;
   }
 
   ngOnDestroy() {

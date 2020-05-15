@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { Actividad } from 'src/app/models/proyectos/actividad.model';
 import { DashboardService } from '../dashboard.service';
+import { UiService } from 'src/app/shared/ui.service';
 
 @Component({
   selector: 'app-proximas-actividades',
@@ -20,10 +21,17 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private dashboardService: DashboardService, private uiService: UiService) { }
 
   ngOnInit() {
-    this.subs.push(this.dashboardService.proximasActividades.subscribe(list => this.datasource.data = list));
+    this.subs.push(this.dashboardService.proximasActividades.subscribe(list => {
+      this.datasource.data = list;
+      const date = new Date();
+      if (this.datasource.data.filter(actividad => date.getTime() > new Date(actividad.fechaVencimiento).getTime()).length > 0) {
+        const message = 'Hay actividades cuyas fechas de vencimiento ya han pasado';
+        this.uiService.showConfirm({ title: 'Hay actividades vencidas', message, confirm: 'Ok' });
+      }
+    }));
     this.dashboardService.fetchProximasActividades();
   }
 

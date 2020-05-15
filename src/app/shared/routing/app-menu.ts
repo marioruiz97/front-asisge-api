@@ -29,8 +29,8 @@ export class AppMenu {
         { name: 'Gestionar Usuarios', url: '/usuarios', icon: 'supervisor_account' },
         { name: 'Gestionar Clientes', url: '/clientes', icon: 'people_outline' },
         /* { name: 'Perfiles', url: '/perfiles', icon: 'supervisor_account' }, */
-        { name: 'Inactivaciones', url: '/', icon: 'pan_tool' },
-        { name: 'Adjuntos', url: '/', icon: 'attachment' }
+        /* { name: 'Inactivaciones', url: '/', icon: 'pan_tool' },
+        { name: 'Adjuntos', url: '/', icon: 'attachment' } */
       ]
     }
   ];

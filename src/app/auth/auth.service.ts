@@ -82,6 +82,15 @@ export class AuthService {
     return this.currentAuthInfo;
   }
 
+  fetchTokenInfo() {
+    const payload = this.token ? JSON.parse(atob(this.token.split('.')[1])) : null;
+    if (payload) {
+      this.currentAuthInfo.next({
+        userid: payload.usuario_id, email: payload.usuario_email, nombre: payload.usuario_name
+      });
+    }
+  }
+
   get token() {
     if (this.appToken) {
       return this.appToken;
