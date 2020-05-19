@@ -35,3 +35,10 @@ export interface Seguimiento {
   observaciones: string;
   descripcionLabor: string;
 }
+
+export interface Tiempo {
+  actividad: Actividad;
+  usuario: Usuario;
+  seguimientos: Seguimiento[];
+  horasTrabajadas: number;
+}

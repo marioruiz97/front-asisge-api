@@ -1,11 +1,14 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, Input } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { PlanTrabajoService } from '../plan-trabajo.service';
 import { Seguimiento, Actividad } from 'src/app/models/proyectos/actividad.model';
 import { Usuario } from 'src/app/models/terceros/usuario.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { UiService, ConfirmDialogData } from 'src/app/shared/ui.service';
+import { isNullOrUndefined } from 'util';
+import { PasarActividadEstadoComponent } from '../pasar-actividad-estado/pasar-actividad-estado.component';
+import { DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
 
 @Component({
   selector: 'app-seguimiento-list',
@@ -27,7 +30,10 @@ export class SeguimientoListComponent implements OnInit, AfterViewInit, OnDestro
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private service: PlanTrabajoService, private auth: AuthService, private uiService: UiService) { }
+  constructor(
+    private service: PlanTrabajoService, private auth: AuthService,
+    private uiService: UiService, private dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.idActividad = this.actividad.idActividad;
@@ -47,6 +53,15 @@ export class SeguimientoListComponent implements OnInit, AfterViewInit, OnDestro
 
   showApproval() {
     this.service.solicitarAprobacion(this.actividad);
+  }
+
+  changeEstado() {
+    const ref = this.dialog.open(PasarActividadEstadoComponent, { ...DIALOG_CONFIG, data: this.actividad });
+    ref.afterClosed().subscribe(result => {
+      if (!isNullOrUndefined(result.idActividad)) {
+        this.actividad.estadoActividad = result.estadoActividad;
+      }
+    });
   }
 
   getNombre(usuario: Usuario) {

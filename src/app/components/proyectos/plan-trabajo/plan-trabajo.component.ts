@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { AgregarMiembroComponent } from './agregar-miembro/agregar-miembro.component';
 import { DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
 import { AgregarEtapasComponent } from './agregar-etapas/agregar-etapas.component';
 import { PlanTrabajoService } from './plan-trabajo.service';
@@ -29,10 +28,6 @@ export class PlanTrabajoComponent implements OnInit, OnDestroy {
     if (this.planActual) {
       this.service.recargarPlan(this.planActual.idPlanDeTrabajo);
     }
-  }
-
-  agregarMiembro() {
-    this.dialog.open(AgregarMiembroComponent, DIALOG_CONFIG);
   }
 
   agregarEtapa() {

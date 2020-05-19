@@ -2,7 +2,7 @@ section mat-card {
   padding: 7px;
 }
 
-mat-card.info-card>:first-child {
+mat-card.info-card > :first-child {
   margin-top: -40px;
   color: #fff;
 }
@@ -11,7 +11,8 @@ mat-card.info-card h3 {
   font-weight: 500;
 }
 
-mat-card.info-card p, mat-card.info-card h3 {
+mat-card.info-card p,
+mat-card.info-card h3 {
   text-align: center;
 }
 
@@ -23,4 +24,20 @@ span.info-title {
   margin-top: 12px;
   font-weight: 500;
   font-size: 1rem;
+}
+
+.sidenav mat-list-item * {
+  color: var(--darken-orange);
+  font-weight: 400;
+  text-align: center;
+}
+
+.sidenav mat-list-item mat-icon {
+  font-size: 1.75rem;
+}
+
+.sidenav .mat-list-base[dense] .mat-list-item,
+.sidenav .mat-list-base .mat-list-item {
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
 }

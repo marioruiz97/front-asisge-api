@@ -5,9 +5,13 @@
 <mat-drawer-container class="mt-4 py-4" *ngIf="planActual">
   <mat-drawer #aside class="sidenav" role="directory" mode="side">
     <mat-action-list>
-      <mat-list-item (click)="agregarMiembro()">
-        <div mat-line><mat-icon mat-list-icon>person_add</mat-icon></div>
-        <div mat-line><span>Agregar Miembro</span></div>
+      <mat-list-item (click)="agregarEtapa()">
+        <div mat-line><mat-icon mat-list-icon>queue</mat-icon></div>
+        <div mat-line><span>Editar Plan</span></div>
+      </mat-list-item>
+      <mat-list-item (click)="agregarEtapa()">
+        <div mat-line><mat-icon mat-list-icon>queue</mat-icon></div>
+        <div mat-line><span>Aprobar Plan de Trabajo</span></div>
       </mat-list-item>
       <mat-list-item (click)="agregarEtapa()">
         <div mat-line><mat-icon mat-list-icon>queue</mat-icon></div>
@@ -40,6 +44,5 @@
     </div>
     <app-etapas-plan></app-etapas-plan>
     <app-actividades-plan></app-actividades-plan>
-    <!-- <app-proximas-actividades class="row mb-3"></app-proximas-actividades> -->
   </mat-drawer-content>
 </mat-drawer-container>

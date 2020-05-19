@@ -24,6 +24,8 @@ import { DetalleActividadComponent } from './plan-trabajo/detalle-actividad/deta
 import { SeguimientoListComponent } from './plan-trabajo/seguimiento-list/seguimiento-list.component';
 import { SeguimientoFormComponent } from './plan-trabajo/seguimiento-form/seguimiento-form.component';
 import { PasarActividadEstadoComponent } from './plan-trabajo/pasar-actividad-estado/pasar-actividad-estado.component';
+import { TiemposComponent } from './dashboard/tiempos/tiempos.component';
+import { TiempoService } from './dashboard/tiempos/tiempo.service';
 
 
 
@@ -49,7 +51,8 @@ import { PasarActividadEstadoComponent } from './plan-trabajo/pasar-actividad-es
     DetalleActividadComponent,
     SeguimientoListComponent,
     SeguimientoFormComponent,
-    PasarActividadEstadoComponent
+    PasarActividadEstadoComponent,
+    TiemposComponent
   ],
   imports: [
     SharedModule
@@ -62,6 +65,6 @@ import { PasarActividadEstadoComponent } from './plan-trabajo/pasar-actividad-es
     DetalleActividadComponent,
     PasarActividadEstadoComponent
   ],
-  providers: [ProyectoService, DashboardService, PlanTrabajoService]
+  providers: [ProyectoService, DashboardService, PlanTrabajoService, TiempoService]
 })
 export class ProyectosModule { }

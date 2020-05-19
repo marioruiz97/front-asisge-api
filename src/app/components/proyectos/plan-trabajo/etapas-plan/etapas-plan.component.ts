@@ -17,6 +17,7 @@ export class EtapasPlanComponent implements OnInit, AfterViewInit, OnDestroy {
 
   displayedColumns = ['idEtapaPDT', 'nombreEtapa', 'fechaInicio', 'fechaFin', 'acciones'];
   datasource = new MatTableDataSource<EtapaPlan>();
+  etapaActual: EtapaPlan;
 
   private subs: Subscription[] = [];
 
@@ -27,7 +28,10 @@ export class EtapasPlanComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   ngOnInit() {
-    this.subs.push(this.service.planActualSubject.subscribe(plan => this.datasource.data = plan.planDeTrabajo.etapas));
+    this.subs.push(this.service.planActualSubject.subscribe(plan => {
+      this.datasource.data = plan.planDeTrabajo.etapas;
+      this.etapaActual = plan.planDeTrabajo.etapaActual ? plan.planDeTrabajo.etapaActual : null;
+    }));
     this.service.fetchPlanActual();
   }
 

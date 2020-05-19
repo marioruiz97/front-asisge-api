@@ -33,6 +33,7 @@ export class AppConstants {
   public static PATH_ACTIVIDADES_PLAN = 'planes/{idPlan}/actividades';
   public static PATH_ACTIVIDADES = 'actividades';
   public static PATH_SEGUIMIENTOS = 'actividades/{idActividad}/seguimientos';
+  public static PATH_TIEMPOS = 'planes/{idPlan}/tiempos';
 }
 
 export const DIALOG_CONFIG: MatDialogConfig = {

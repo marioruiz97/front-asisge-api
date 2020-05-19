@@ -8,6 +8,9 @@ import { UiService } from 'src/app/shared/ui.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { PlanTrabajo } from 'src/app/models/proyectos/plan-trabajo.model';
 import { PlanTrabajoService } from '../plan-trabajo/plan-trabajo.service';
+import { AgregarMiembroComponent } from '../plan-trabajo/agregar-miembro/agregar-miembro.component';
+import { DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,7 +33,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private service: DashboardService,
     private activatedRoute: ActivatedRoute,
     private uiService: UiService,
-    private planTrabajoService: PlanTrabajoService
+    private planTrabajoService: PlanTrabajoService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -55,6 +59,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.planForm = new FormGroup({
       planTrabajo: new FormControl('', Validators.required)
     });
+  }
+
+  agregarMiembro() {
+    this.dialog.open(AgregarMiembroComponent, DIALOG_CONFIG);
   }
 
   selectPlan() {

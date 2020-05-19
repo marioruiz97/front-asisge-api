@@ -58,6 +58,9 @@
     <button mat-fab color="warn" type="button" (click)="showApproval()" matTooltip="Solicitar Aprobación">
       <mat-icon class="mat-18">security</mat-icon>
     </button>
+    <button mat-fab type="button" (click)="changeEstado()" matTooltip="Pasar Actividad de Estado">
+      <mat-icon class="mat-18">swap_horiz</mat-icon>
+    </button>
   </div>
 
   <app-seguimiento-form [idActividad]="idActividad" [seguimiento]="editSeguimiento" (cerrarForm)="closeForm()" (recargarSeguimiento)="this.fetchSeguimientos()" *ngIf="showForm" fxLayout="column"></app-seguimiento-form>
