@@ -8,6 +8,7 @@ import { AppConstants as Cons } from 'src/app/shared/routing/app.constants';
 import { Router } from '@angular/router';
 import { ActividadDto, Seguimiento, Actividad } from 'src/app/models/proyectos/actividad.model';
 import { PlanTrabajoBoard } from 'src/app/models/proyectos/plan-trabajo-board.model';
+import { TiempoService } from '../dashboard/tiempos/tiempo.service';
 
 @Injectable()
 export class PlanTrabajoService {
@@ -23,8 +24,11 @@ export class PlanTrabajoService {
   private seguimientoPath = Cons.PATH_SEGUIMIENTOS;
 
   constructor(
-    private dashboardService: DashboardService, private appService: AppService,
-    private uiService: UiService, private router: Router
+    private dashboardService: DashboardService,
+    private appService: AppService,
+    private uiService: UiService,
+    private tiempoService: TiempoService,
+    private router: Router
   ) { }
 
   fetchPlanesDeTrabajo(idProyecto: number) {
@@ -55,6 +59,7 @@ export class PlanTrabajoService {
     const path = Cons.PATH_PLAN_TRABAJO_ID;
     this.appService.getRequest(`${path}/${idPlan}`).subscribe(res => {
       this.setProperties(res.body as PlanTrabajoBoard);
+      this.tiempoService.fetchTiempos(idPlan, true);
     });
   }
 
@@ -95,6 +100,12 @@ export class PlanTrabajoService {
     });
   }
 
+  editarPlan(data: any, idPlan: number) {
+    const path = Cons.PATH_PLAN_TRABAJO_ID;
+    this.uiService.putSnackBar(this.appService.patchRequest(`${path}/${idPlan}`, data)).subscribe(exito => {
+      if (exito) { this.returnToDashboard(); }
+    });
+  }
 
   /**
    *  METODOS PARA ETAPAS

@@ -17,6 +17,16 @@ export class ProyectoService {
     return this.appService.getRequest(this.proyectoPath);
   }
 
+  fetchEstados(idEstadoActual: number): Observable<Response> {
+    const path = AppConstants.PATH_ESTADO_PROYECTO;
+    return this.appService.getRequest(`${path}/${idEstadoActual}/estados-siguientes`);
+  }
+
+  getProyecto(id: number) {
+    const path = this.proyectoPath;
+    return this.appService.getRequest(`${path}/${id}`).toPromise();
+  }
+
   showNotFound(err) {
     const message = err.error ? err.error.message : 'Ha ocurrido un error';
     this.uiService.showConfirm({ title: 'Error', message, confirm: 'Ok' });
@@ -40,6 +50,12 @@ export class ProyectoService {
       if (err.status === 500) {
         this.returnToList();
       }
+    });
+  }
+
+  editarProyecto(idProyecto: number, data: Proyecto) {
+    this.uiService.putSnackBar(this.appService.patchRequest(`${this.proyectoPath}/${idProyecto}`, data)).subscribe(exito => {
+      if (exito) { this.gotoDashboard(idProyecto); }
     });
   }
 

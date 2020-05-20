@@ -117,7 +117,15 @@ const routes: Routes = [
     data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
   },
   {
+    path: 'proyectos/:id/editar', pathMatch: 'full', component: ProyectoFormComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
+  },
+  {
     path: 'proyectos/:id/nuevo-plan', pathMatch: 'full', component: PlanFormComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
+  },
+  {
+    path: 'proyectos/:id/plan/:idPlan', pathMatch: 'full', component: PlanFormComponent, canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] }
   },
   { path: 'proyectos', component: ProyectoListComponent, canActivate: [AuthGuard] },

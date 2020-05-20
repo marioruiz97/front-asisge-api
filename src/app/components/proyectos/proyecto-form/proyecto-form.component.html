@@ -1,7 +1,7 @@
 <div gdAreas="header | content" gdGap="1em" gdRows="auto auto auto">
 
   <header class="pt-4 m-2" gdArea="header" fxLayoutAlign="center center">
-    <h1 fxFlex="50">Nuevo Proyecto</h1>
+    <h1 fxFlex="50">{{ isUpdate ? 'Editar' : 'Crear' }} Proyecto</h1>
   </header>
 
   <section gdArea="content">
@@ -30,8 +30,14 @@
             <mat-form-field appearance="outline">
               <mat-label>Estado del proyecto</mat-label>
               <mat-select formControlName="estadoProyecto">
-                <mat-option [value]="1">1 - Creado</mat-option>
-              </mat-select>
+                <mat-option [value]="1" *ngIf="!isUpdate">1 - Creado</mat-option>
+                <mat-option [value]="estado.id" *ngFor="let estado of estados" >
+                  <div fxLayoutAlign="space-between">
+                    <span>{{estado.id + ' - ' + estado.nombreEstado}} </span>
+                    <span class="muted">({{estado.idEstadoAnterior? 'Sigue al: '+estado.idEstadoAnterior : 'Estado inicial'}})</span>
+                  </div>
+                </mat-option>
+                </mat-select>
               <mat-hint>El estado inicial siempre es creado</mat-hint>
             </mat-form-field>
             <mat-form-field appearance="outline">
@@ -65,7 +71,7 @@
             <mat-icon>arrow_back</mat-icon> Cancelar
           </button>
           <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!proyectoForm.valid" *ngIf="!isWaiting" >
-            <mat-icon>save</mat-icon> Crear Proyecto
+            <mat-icon>save</mat-icon> Guardar Proyecto
           </button>
           <mat-spinner *ngIf="isWaiting"></mat-spinner>
         </mat-card-actions>

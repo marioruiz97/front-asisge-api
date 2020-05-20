@@ -5,7 +5,7 @@
 <mat-drawer-container class="mt-4 py-4" *ngIf="planActual">
   <mat-drawer #aside class="sidenav" role="directory" mode="side">
     <mat-action-list>
-      <mat-list-item (click)="agregarEtapa()">
+      <mat-list-item [routerLink]="['/proyectos/'+ planActual.proyecto.idProyecto +'/plan/'+ planActual.idPlanDeTrabajo]">
         <div mat-line><mat-icon mat-list-icon>queue</mat-icon></div>
         <div mat-line><span>Editar Plan</span></div>
       </mat-list-item>

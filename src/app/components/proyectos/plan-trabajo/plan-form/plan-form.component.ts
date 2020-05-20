@@ -4,8 +4,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UiService } from 'src/app/shared/ui.service';
 import { PlanTrabajoService } from '../plan-trabajo.service';
 import { DashboardService } from '../../dashboard/dashboard.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { isNullOrUndefined } from 'util';
+import { PlanTrabajo } from 'src/app/models/proyectos/plan-trabajo.model';
 
 @Component({
   templateUrl: './plan-form.component.html',
@@ -18,6 +19,10 @@ export class PlanFormComponent implements OnInit, OnDestroy {
   minDate = new Date();
   maxDate: Date = null;
 
+  private params: ParamMap;
+  private curPlanId: number;
+  isUpdate = false;
+
   private idProyecto: number;
   private subs: Subscription[] = [];
 
@@ -28,24 +33,34 @@ export class PlanFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
+    this.subs.push(this.activatedRoute.paramMap.subscribe(params => this.params = params));
     this.subs.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
     this.subs.push(this.dashboardService.proyecto.subscribe(proyecto => {
       this.minDate = proyecto.createdDate ? proyecto.createdDate : this.minDate;
       this.maxDate = proyecto.fechaCierreProyecto ? proyecto.fechaCierreProyecto : null;
       this.idProyecto = proyecto.idProyecto;
+      if (this.params.has('idPlan')) {
+        const idPlan = +this.params.get('idPlan');
+        if (idPlan && idPlan !== 0) {
+          if (this.service.planActual && this.service.planActual.idPlanDeTrabajo === idPlan) {
+            this.setForm(this.service.planActual.planDeTrabajo);
+          } else {
+            this.uiService.showConfirm({ title: 'Error', message: 'No se pudo obtener información' });
+            this.service.returnToDashboard();
+          }
+        }
+      }
     }));
     if (isNullOrUndefined(this.dashboardService.dashboard)) {
-      this.subs.push(this.activatedRoute.paramMap.subscribe(params => {
-        const id = +params.get('id');
-        if (id && id !== 0) {
-          this.dashboardService.fetchDashboard(id);
-        }
-      }));
+      const id = +this.params.get('id');
+      if (id && id !== 0) {
+        this.dashboardService.fetchDashboard(id);
+      }
     }
     this.dashboardService.fetchInfoProyecto();
   }
 
-  initForm() {
+  private initForm() {
     this.planForm = new FormGroup({
       nombrePlan: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       fechaInicio: new FormControl('', Validators.required),
@@ -55,8 +70,24 @@ export class PlanFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  private setForm(plan: PlanTrabajo) {
+    this.curPlanId = plan.idPlanDeTrabajo;
+    this.isUpdate = true;
+    this.planForm.setValue({
+      nombrePlan: plan.nombrePlan,
+      fechaInicio: plan.fechaInicio,
+      fechaFinEstimada: plan.fechaFinEstimada,
+      horasMes: plan.horasMes,
+      objetivoPlan: plan.objetivoPlan
+    });
+  }
+
   onSubmit() {
-    this.service.crearPlan(this.planForm.value, this.idProyecto);
+    if (this.isUpdate) {
+      this.service.editarPlan(this.planForm.value, this.curPlanId);
+    } else {
+      this.service.crearPlan(this.planForm.value, this.idProyecto);
+    }
   }
 
   goBack() {

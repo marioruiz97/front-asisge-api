@@ -1,12 +1,12 @@
 <div gdAreas="header | content" gdGap="1em" gdRows="auto auto auto">
 
   <header class="pt-4 m-2" gdArea="header" fxLayoutAlign="center center">
-    <h1 fxFlex="50">Nuevo Plan de trabajo</h1>
+    <h1 fxFlex="50">{{!isUpdate ? 'Nuevo' : 'Editar'}} Plan de trabajo</h1>
   </header>
 
   <section gdArea="content">
     <mat-tab-group mat-stretch-tabs>
-      <mat-tab label="Crear plan manualmente">
+      <mat-tab [label]="isUpdate ? 'Editar plan' : 'Crear plan manualmente'">
         <form autocomplete="off" [formGroup]="planForm" (ngSubmit)="onSubmit()" fxLayoutAlign="center" class="my-4">
           <mat-card class="mat-elevation-z8 py-4" fxFlex fxFlex.gt-sm="80">
             <mat-card-content class="p-2">
@@ -33,15 +33,13 @@
               <div class="form-group" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-evenly">
                 <mat-form-field appearance="outline">
                   <mat-label>Fecha de inicio</mat-label>
-                  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="inicio"
-                    formControlName="fechaInicio">
+                  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="inicio" formControlName="fechaInicio">
                   <mat-datepicker-toggle matSuffix [for]="inicio"></mat-datepicker-toggle>
                   <mat-datepicker #inicio></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field appearance="outline">
                   <mat-label>Fecha de fin estimada</mat-label>
-                  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fin"
-                    formControlName="fechaFinEstimada">
+                  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fin" formControlName="fechaFinEstimada">
                   <mat-datepicker-toggle matSuffix [for]="fin"></mat-datepicker-toggle>
                   <mat-datepicker #fin></mat-datepicker>
                 </mat-form-field>
@@ -66,7 +64,7 @@
               </button>
               <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!planForm.valid"
                 *ngIf="!isWaiting">
-                <mat-icon>save</mat-icon> Crear Plan
+                <mat-icon>save</mat-icon> Guardar Plan
               </button>
               <mat-spinner *ngIf="isWaiting"></mat-spinner>
             </mat-card-actions>
@@ -74,8 +72,11 @@
         </form>
       </mat-tab>
 
-      <mat-tab label="Crear desde plantilla">
-        <app-plan-plantilla class="my-4" fxLayoutAlign="center"></app-plan-plantilla>
+      <mat-tab label="Crear desde plantilla" *ngIf="!isUpdate">
+        <!-- <div *ngIf="isUpdate">
+          <h3>Esta opción no está disponible al editar plan</h3>
+        </div> -->
+        <app-plan-plantilla class="my-4" fxLayoutAlign="center" *ngIf="!isUpdate"></app-plan-plantilla>
       </mat-tab>
     </mat-tab-group>
   </section>

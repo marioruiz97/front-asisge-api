@@ -36,15 +36,18 @@ export class TiemposComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.initForm();
     this.setSortingAccesor();
+    this.datasource.filterPredicate = this.createFilter();
     this.subs.push(this.dashboardService.miembros.subscribe(miembros => this.miembrosProyecto = miembros.map(miembro => miembro.usuario)));
+    this.subs.push(this.service.tiempos.subscribe(tiempos => {
+      tiempos.forEach(registro => registro.horasTrabajadas = registro.seguimientos
+        .reduce((total, seg) => total += seg.horasTrabajadas, 0));
+      this.datasource.data = tiempos;
+    }));
     this.subs.push(this.planService.planActualSubject.subscribe(plan => {
-      this.subs.push(this.service.fetchTiempos(plan.idPlanDeTrabajo).subscribe(res => {
-        const list: Tiempo[] = res.body as Tiempo[];
-        list.forEach(registro => registro.horasTrabajadas = registro.seguimientos
-          .reduce((total, seg) => total += seg.horasTrabajadas, 0));
-        this.datasource.data = list;
-        this.datasource.filterPredicate = this.createFilter();
-      }));
+      if (plan.etapas && plan.etapas.length > 0
+        && plan.etapas.filter(etapa => etapa.actividades && etapa.actividades.length > 0).length > 0) {
+        this.service.fetchTiempos(plan.idPlanDeTrabajo);
+      }
     }));
     this.dashboardService.fetchMiembros();
   }

@@ -27,6 +27,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   planes: PlanTrabajo[] = [];
   horasMes: number;
 
+  projectId: number;
   private subs: Subscription[] = [];
 
   constructor(
@@ -46,6 +47,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.subs.push(this.activatedRoute.paramMap.subscribe(params => {
       const id = +params.get('id');
       if (id && id !== 0) {
+        this.projectId = id;
         this.service.fetchDashboard(id);
         this.planTrabajoService.limpiarPlan(id);
         this.subs.push(this.planTrabajoService.fetchPlanesDeTrabajo(id).subscribe(res => this.planes = res.body));

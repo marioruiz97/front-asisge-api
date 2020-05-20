@@ -71,7 +71,7 @@
               <div mat-line><mat-icon mat-list-icon>person_add</mat-icon></div>
               <div mat-line><span>Gestionar Miembros</span></div>
             </mat-list-item>
-            <mat-list-item>
+            <mat-list-item [routerLink]="['/proyectos/'+projectId+'/editar']">
               <div mat-line><mat-icon mat-list-icon>queue</mat-icon></div>
               <div mat-line><span>Editar Proyecto</span></div>
             </mat-list-item>

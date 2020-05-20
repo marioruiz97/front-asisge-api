@@ -6,6 +6,8 @@ import { ClienteService } from '../../terceros/clientes/cliente.service';
 import { UiService } from 'src/app/shared/ui.service';
 import { ProyectoService } from '../proyecto.service';
 import { startWith, map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { EstadoProyecto, Proyecto } from 'src/app/models/proyectos/proyecto.model';
 
 @Component({
   selector: 'app-proyecto-form',
@@ -20,12 +22,17 @@ export class ProyectoFormComponent implements OnInit, OnDestroy {
   isWaiting = false;
   minDate = new Date();
 
+  isUpdate = false;
+  estados: EstadoProyecto[] = [];
+  private curProjectId: number;
+  private clienteId: number;
   private subs: Subscription[] = [];
 
   constructor(
     private clienteService: ClienteService,
     private uiService: UiService,
-    private service: ProyectoService
+    private service: ProyectoService,
+    private activatedRoute: ActivatedRoute
   ) {
     this.minDate.setDate(this.minDate.getDate() + 1);
   }
@@ -38,6 +45,13 @@ export class ProyectoFormComponent implements OnInit, OnDestroy {
       map(value => value ? this._filter(value) : this.clientes.slice())
     );
     this.subs.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
+    this.subs.push(this.activatedRoute.paramMap.subscribe(params => {
+      const id = +params.get('id');
+      if (id && id !== 0) {
+        this.curProjectId = id;
+        this.getProyecto(id);
+      }
+    }));
   }
 
   private initForm() {
@@ -68,6 +82,39 @@ export class ProyectoFormComponent implements OnInit, OnDestroy {
     ));
   }
 
+  private fetchEstados(estado: EstadoProyecto) {
+    this.proyectoForm.get('estadoProyecto').enable();
+    this.subs.push(this.service.fetchEstados(estado.id).subscribe(res => {
+      this.estados = res.body;
+      this.estados.push(estado);
+    }));
+  }
+
+  private getProyecto(id: number) {
+    this.service.getProyecto(id)
+      .then(res => {
+        this.setForm(res.body);
+      })
+      .catch(err => {
+        this.service.showNotFound(err);
+        this.service.gotoDashboard(id);
+      });
+  }
+
+  private setForm(proyecto: Proyecto) {
+    this.fetchEstados(proyecto.estadoProyecto);
+    this.isUpdate = true;
+    this.clienteId = proyecto.cliente.idCliente;
+    this.proyectoForm.setValue({
+      nombreProyecto: proyecto.nombreProyecto,
+      descripcionGeneral: proyecto.descripcionGeneral,
+      fechaCierreProyecto: proyecto.fechaCierreProyecto,
+      estadoProyecto: proyecto.estadoProyecto.id,
+      cliente: this.setClienteValue(proyecto.cliente)
+    });
+    this.proyectoForm.get('cliente').disable();
+  }
+
   setClienteValue(cliente: Cliente) {
     return `${cliente.idCliente} - ${cliente.razonSocial}`;
     /* const value = `${cliente.idCliente} - ${cliente.nombreComercial}`;
@@ -83,10 +130,14 @@ export class ProyectoFormComponent implements OnInit, OnDestroy {
 
 
   onSubmit() {
-    const cliente: string = this.proyectoForm.value.cliente;
-    const idCliente = cliente.substring(0, cliente.indexOf('-')).trim();
-    this.proyectoForm.value.cliente = parseInt(idCliente, 10);
-    this.service.crearProyecto(this.proyectoForm.value);
+    if (this.isUpdate) {
+      this.service.editarProyecto(this.curProjectId, { ...this.proyectoForm.value, cliente: this.clienteId });
+    } else {
+      const cliente: string = this.proyectoForm.value.cliente;
+      const idCliente = cliente.substring(0, cliente.indexOf('-')).trim();
+      this.proyectoForm.value.cliente = parseInt(idCliente, 10);
+      this.service.crearProyecto(this.proyectoForm.value);
+    }
   }
 
   goBack() {
@@ -97,7 +148,13 @@ export class ProyectoFormComponent implements OnInit, OnDestroy {
     };
     const dialogRef = this.uiService.showConfirm(data);
     this.subs.push(dialogRef.afterClosed().subscribe(result => {
-      if (result) { this.service.returnToList(); }
+      if (result) {
+        if (this.isUpdate) {
+          this.service.gotoDashboard(this.curProjectId);
+        } else {
+          this.service.returnToList();
+        }
+      }
     }));
   }
 
