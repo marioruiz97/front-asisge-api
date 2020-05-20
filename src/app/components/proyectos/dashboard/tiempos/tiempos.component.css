@@ -1,0 +1,10 @@
+mat-toolbar,
+mat-toolbar-row {
+  min-height: fit-content;
+  height: fit-content;
+}
+
+mat-toolbar {
+  margin: 0 auto;
+  border-radius: 5px;
+}

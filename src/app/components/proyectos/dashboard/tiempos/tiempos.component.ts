@@ -8,6 +8,12 @@ import { TiempoService } from './tiempo.service';
 import { PlanTrabajoService } from '../../plan-trabajo/plan-trabajo.service';
 import { DashboardService } from '../dashboard.service';
 
+export interface FiltroTiempo {
+  usuario: number;
+  fechaDesde: Date;
+  fechaHasta: Date;
+}
+
 @Component({
   selector: 'app-tiempos',
   templateUrl: './tiempos.component.html',
@@ -29,15 +35,15 @@ export class TiemposComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
+    this.setSortingAccesor();
     this.subs.push(this.dashboardService.miembros.subscribe(miembros => this.miembrosProyecto = miembros.map(miembro => miembro.usuario)));
     this.subs.push(this.planService.planActualSubject.subscribe(plan => {
       this.subs.push(this.service.fetchTiempos(plan.idPlanDeTrabajo).subscribe(res => {
         const list: Tiempo[] = res.body as Tiempo[];
         list.forEach(registro => registro.horasTrabajadas = registro.seguimientos
           .reduce((total, seg) => total += seg.horasTrabajadas, 0));
-        console.log('list', list)
         this.datasource.data = list;
-        console.log('datasource', this.datasource.data)
+        this.datasource.filterPredicate = this.createFilter();
       }));
     }));
     this.dashboardService.fetchMiembros();
@@ -56,19 +62,45 @@ export class TiemposComponent implements OnInit, AfterViewInit, OnDestroy {
     this.datasource.paginator = this.paginator;
   }
 
+  private setSortingAccesor() {
+    this.datasource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'usuario': return item.usuario.idUsuario;
+        case 'actividad': return item.actividad.nombre;
+        case 'fechaVencimiento': return new Date(item.actividad.fechaVencimiento);
+        case 'duracion': return item.actividad.duracion;
+        default: return item[property];
+      }
+    };
+  }
+
+  private createFilter(): (data: Tiempo, filter: string) => boolean {
+    const filterFunction = (data: Tiempo, filter: string): boolean => {
+      const filtro = JSON.parse(filter) as FiltroTiempo;
+      const desde = !filtro.fechaDesde || (filtro.fechaDesde
+        && data.seguimientos.filter(seg => new Date(seg.createdDate).getTime() > new Date(filtro.fechaDesde).getTime()).length > 0);
+      const hasta = !filtro.fechaHasta || (filtro.fechaHasta
+        && data.seguimientos.filter(seg => new Date(seg.createdDate).getTime() < new Date(filtro.fechaHasta).getTime()).length > 0);
+      const filtroUsuario = !filtro.usuario || (filtro.usuario
+        && data.actividad.responsables.map(user => user.idUsuario).includes(filtro.usuario));
+      return desde && hasta && filtroUsuario;
+    };
+    return filterFunction;
+  }
+
   doFilter() {
-    /* const filtro: FiltroActividad = this.filterForm.value;
-    this.quitarFiltros = true;
-    this.datasource.filter = JSON.stringify(filtro); */
+    const filtro: FiltroTiempo = this.filterForm.value;
+    /* this.quitarFiltros = true; */
+    this.datasource.filter = JSON.stringify(filtro);
   }
 
   removeFilter() {
-    /* const filtro: FiltroActividad = {
-      nombre: '', etapa: null, fechaVencimiento: null, usuario: null
+    const filtro: FiltroTiempo = {
+      fechaDesde: null, fechaHasta: null, usuario: null
     };
-    this.quitarFiltros = false;
+    /* this.quitarFiltros = false; */
     this.initForm();
-    this.datasource.filter = JSON.stringify(filtro); */
+    this.datasource.filter = JSON.stringify(filtro);
   }
 
   ngOnDestroy() {
