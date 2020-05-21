@@ -1,0 +1,24 @@
+@import "../../../../../assets/css/header-styles.css";
+
+.form-group {
+  width: 100%;
+}
+
+.form-group mat-form-field {
+  padding: 10px 5px;
+  min-width: 47%;
+}
+
+.form-group label#radio-group {
+  padding-left: 5px;
+  font-size: 90% !important;
+}
+
+.form-group mat-radio-button {
+  margin-top: 0.50rem;
+  margin-bottom: 0.50rem;
+}
+
+.form-action button {
+  min-width: 38%;
+}

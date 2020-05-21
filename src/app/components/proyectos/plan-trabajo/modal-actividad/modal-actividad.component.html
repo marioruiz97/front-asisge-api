@@ -1,0 +1,86 @@
+<div class="row">
+  <!-- mat-dialog-title -->
+  <h3>Gestionar Actividad</h3>
+  <div fxFlex></div>
+  <button mat-icon-button matTooltip="Cerrar" [matDialogClose]="true">
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>
+
+<form autocomplete="off" [formGroup]="actividadForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div class="form-group" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between" fxLayoutGap="1rem">
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Código Asignado</mat-label>
+        <input matInput formControlName="idActividad">
+        <mat-hint>El código es autoasignado por el sistema</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Nombre Actividad</mat-label>
+        <input matInput formControlName="nombre">
+        <mat-hint>Ingrese un nombre de máximo 80 caracteres / actual:{{actividadForm.value.nombre.length}}</mat-hint>
+        <mat-error>Ingrese un nombre válido</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between" fxLayoutGap="1rem">
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Duración</mat-label>
+        <input type="number" matInput formControlName="duracion">
+        <mat-hint>Ingrese la duración promedio de la actividad en horas</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Fecha de vencimiento</mat-label>
+        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fin" formControlName="fechaVencimiento">
+        <mat-datepicker-toggle matSuffix [for]="fin"></mat-datepicker-toggle>
+        <mat-datepicker #fin></mat-datepicker>
+        <mat-hint>Ingresa la fecha de vencimiento de la actividad</mat-hint>
+        <mat-error>Campo Obligatorio</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group" fxLayout="column">
+      <mat-form-field appearance="outline">
+        <mat-label>Etapa</mat-label>
+        <mat-select formControlName="etapa">
+          <mat-option [value]="item.idEtapaPDT" *ngFor="let item of etapas">{{ item.idEtapaPDT + ' ' + item.nombreEtapa}} </mat-option>
+        </mat-select>
+        <mat-hint>Seleccione la etapa correspondiente a la actividad</mat-hint>
+        <mat-error>La etapa es obligatoria</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group" fxLayout="column">
+      <mat-form-field appearance="outline">
+        <mat-label>Responsbles</mat-label>
+        <mat-select formControlName="responsables" multiple>
+          <mat-option [value]="item.usuario.idUsuario" *ngFor="let item of miembros">{{ item.usuario.nombre + ' ' + item.usuario.apellido1}} </mat-option>
+        </mat-select>
+        <mat-hint>Seleccione los responsables de la actividad</mat-hint>
+        <mat-error>Selecciona al menos un responsable</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group" fxLayout="column">
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Descripción de la actividad</mat-label>
+        <textarea matInput formControlName="descripcion"></textarea>
+        <mat-icon matPrefix>message</mat-icon>
+        <mat-hint>
+          <p>Ingresa una descripción que permita identificar el propósito del proyecto</p>
+          <p>Máximo 255 caracteres / actual:{{actividadForm.value.descripcion.length}}</p>
+        </mat-hint>
+      </mat-form-field>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions class="form-actions" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-evenly" fxLayoutGap="20x">
+    <button type="button" mat-raised-button [matDialogClose]="true" color="warn" *ngIf="!isWaiting">
+      Volver al plan de trabajo
+    </button>
+    <button type="submit" mat-raised-button [matDialogClose]="false" color="primary" *ngIf="!isWaiting" [disabled]="actividadForm.invalid">
+      Guardar Actividad
+    </button>
+    <mat-spinner *ngIf="isWaiting"></mat-spinner>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,7 @@
+mat-form-field {
+  margin-bottom: 1rem;
+}
+
+.form-actions button{
+  min-width: 40%;
+}

@@ -27,6 +27,10 @@
         <p class="m-0">{{proyecto.descripcionGeneral}}</p>
         <span class="info-title">Fecha de Inicio:</span>
         <span>{{ proyecto.createdDate | date: 'medium'}}</span>
+        <span class="info-title">Fecha de Cierre Estimada:</span>
+        <span>{{proyecto.fechaCierreProyecto | date: 'medium'}}</span>
+        <span class="info-title" *ngIf="horasMes">Horas contratadas por mes:</span>
+        <span *ngIf="horasMes">{{horasMes}}</span>
       </mat-card-content>
     </mat-card>
     <mat-card fxFlex fxFlex.gt-sm="32" class="mb-5 info-card mat-elevation-z4">
@@ -36,7 +40,7 @@
       <mat-card-content class="my-3" fxLayout="column" fxLayoutAlign="center center">
         <span class="info-title">Selecciona un plan de trabajo o crea uno nuevo</span>
         <form class="mt-3 mb-1" [formGroup]="planForm" (ngSubmit)="selectPlan()">
-          <mat-form-field appearance="outline">
+          <mat-form-field class="m-2" appearance="outline">
             <mat-label>Selecciona plan</mat-label>
             <mat-select formControlName="planTrabajo" #select>
               <mat-option>Seleccionar</mat-option>
@@ -44,12 +48,14 @@
             </mat-select>
             <mat-hint>Selecciona un plan existente</mat-hint>
           </mat-form-field>
-          <button type="submit" mat-button color="accent" [disabled]="planForm.invalid">
+          <button type="submit" class="m-2" mat-button color="accent" [disabled]="planForm.invalid">
             Seleccionar
           </button>
         </form>
         <p>
-          <button mat-mini-fab routerLink="/planes/nuevo" color="primary" matTooltip="Crear Plan de trabajo"><mat-icon>add</mat-icon></button>
+          <button mat-mini-fab [routerLink]="['/proyectos/'+ proyecto.idProyecto +'/nuevo-plan']" color="primary" matTooltip="Crear Plan de trabajo">
+            <mat-icon>add</mat-icon>
+          </button>
         </p>
       </mat-card-content>
     </mat-card>
@@ -58,23 +64,47 @@
   <mat-tab-group gdArea="dashboards" mat-stretch-tabs>
     <mat-tab label="General">
       <!-- widgets del dashboard -->
-      <section class="my-4" fxLayout="column">
-        <div class="row mb-4">
-          <h3 class="mat-h1">Dashboard</h3>
-          <div fxFlex></div>
-          <button class="mr-3" mat-icon-button (click)="recargarDashboard()" matTooltip="Recargar Dashboard">
+      <mat-drawer-container class="mt-4 py-4">
+        <mat-drawer #aside class="sidenav" role="directory" mode="side">
+          <mat-action-list>
+            <mat-list-item (click)="agregarMiembro()">
+              <div mat-line><mat-icon mat-list-icon>person_add</mat-icon></div>
+              <div mat-line><span>Gestionar Miembros</span></div>
+            </mat-list-item>
+            <mat-list-item [routerLink]="['/proyectos/'+projectId+'/editar']">
+              <div mat-line><mat-icon mat-list-icon>edit</mat-icon></div>
+              <div mat-line><span>Editar Proyecto</span></div>
+            </mat-list-item>
+            <mat-list-item (click)="pasarEstado()">
+              <div mat-line><mat-icon mat-list-icon>swap_horiz</mat-icon></div>
+              <div mat-line><span>Pasar Estado Proyecto</span></div>
+            </mat-list-item>
+            <mat-list-item>
+              <div mat-line><mat-icon mat-list-icon>attach_file</mat-icon></div>
+              <div mat-line><span>Cargar Archivos</span></div>
+            </mat-list-item>
+          </mat-action-list>
+        </mat-drawer>
+        <mat-drawer-content class="pl-2 my-4" fxLayout="column">
+          <div class="row mb-4">
+            <button mat-icon-button (click)="aside.toggle()" matTooltip="Abrir menú lateral">
+              <mat-icon>{{ aside.opened ? 'keyboard_arrow_left' : 'keyboard_arrow_right'}}</mat-icon>
+            </button>
+            <h3 class="pl-4 my-auto">Dashboard</h3>
+            <div fxFlex></div>
+            <button class="mr-3" mat-icon-button (click)="recargarDashboard()" matTooltip="Recargar Dashboard">
               <mat-icon class="mat-18">refresh</mat-icon>
-          </button>
-        </div>
+            </button>
+          </div>
 
-        <app-estados fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" [estado]="proyecto.estadoProyecto">
-        </app-estados>
-        <div class="row my-5" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" fxLayoutAlign.gt-sm="space-evenly">
-          <app-miembros fxFlex.gt-sm="49"></app-miembros>
-          <app-ultimas-actividades fxFlex.gt-sm="49"></app-ultimas-actividades>
-        </div>
-        <app-proximas-actividades class="row mb-3"></app-proximas-actividades>
-      </section>
+          <app-estados fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" [estado]="proyecto.estadoProyecto"></app-estados>
+          <div class="row my-5" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" fxLayoutAlign.gt-sm="space-evenly">
+            <app-miembros fxFlex.gt-sm="49"></app-miembros>
+            <app-ultimas-actividades fxFlex.gt-sm="49"></app-ultimas-actividades>
+          </div>
+          <app-proximas-actividades class="row mb-3"></app-proximas-actividades>
+        </mat-drawer-content>
+      </mat-drawer-container>
     </mat-tab>
 
     <!-- fin widgets - otros componentes -->
@@ -82,7 +112,7 @@
       <app-plan-trabajo></app-plan-trabajo>
     </mat-tab>
     <mat-tab label="Tiempos">
-      Content 3
+      <app-tiempos class="mt-4 px-2" fxLayout="column"></app-tiempos>
     </mat-tab>
   </mat-tab-group>
 </div>

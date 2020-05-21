@@ -12,6 +12,10 @@ import { TipoDocumentoPageComponent } from './tipo-documento/tipo-documento-page
 import { AuditPageComponent } from './audit/audit-page/audit-page.component';
 import { AuditListComponent } from './audit/audit-list/audit-list.component';
 import { AuditsService } from './audit/audits.service';
+import { EstadoActividadListComponent } from './estados-actividad/estado-actividad-list/estado-actividad-list.component';
+import { EstadoActividadFormComponent } from './estados-actividad/estado-actividad-form/estado-actividad-form.component';
+import { EstadoActividadService } from './estados-actividad/estado-actividad.service';
+import { EstadoActividadPageComponent } from './estados-actividad/estado-actividad-page/estado-actividad-page.component';
 
 
 
@@ -26,12 +30,15 @@ import { AuditsService } from './audit/audits.service';
     MaestrosListComponent,
     AuditPageComponent,
     AuditListComponent,
+    EstadoActividadListComponent,
+    EstadoActividadFormComponent,
+    EstadoActividadPageComponent,
   ],
   imports: [
     SharedModule
   ],
   providers: [
-    TipoDocumentoService, EstadoProyectoService, AuditsService
+    TipoDocumentoService, EstadoProyectoService, EstadoActividadService, AuditsService
   ]
 })
 export class MaestrosModule { }

@@ -15,6 +15,7 @@ export interface ConfirmDialogData {
 export class UiService {
 
   loadingState = new Subject<boolean>();
+  dashboardLoading = new Subject<boolean>();
 
   constructor(private snackBar: MatSnackBar, private dialog: MatDialog) { }
 

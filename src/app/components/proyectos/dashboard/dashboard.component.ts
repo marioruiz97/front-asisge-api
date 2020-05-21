@@ -8,6 +8,11 @@ import { UiService } from 'src/app/shared/ui.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { PlanTrabajo } from 'src/app/models/proyectos/plan-trabajo.model';
 import { PlanTrabajoService } from '../plan-trabajo/plan-trabajo.service';
+import { AgregarMiembroComponent } from '../plan-trabajo/agregar-miembro/agregar-miembro.component';
+import { DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
+import { MatDialog } from '@angular/material';
+import { EstadoProyectoComponent } from '../estado-proyecto/estado-proyecto.component';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,28 +27,35 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   planForm: FormGroup;
   planes: PlanTrabajo[] = [];
+  horasMes: number;
 
+  projectId: number;
   private subs: Subscription[] = [];
 
   constructor(
     private service: DashboardService,
     private activatedRoute: ActivatedRoute,
     private uiService: UiService,
-    private planTrabajoService: PlanTrabajoService
+    private planTrabajoService: PlanTrabajoService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
-    this.subs.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
+    this.subs.push(this.uiService.dashboardLoading.subscribe(state => this.isWaiting = state));
     this.subs.push(this.service.cliente.subscribe(cliente => this.cliente = cliente));
     this.subs.push(this.service.proyecto.subscribe(proyecto => this.proyecto = proyecto));
-    this.subs.push(this.planTrabajoService.planesSubject.subscribe(list => this.planes = list));
+    this.subs.push(this.planTrabajoService.planActualSubject.subscribe(plan =>
+      this.horasMes = plan && plan.planDeTrabajo ? plan.planDeTrabajo.horasMes : null));
     this.subs.push(this.activatedRoute.paramMap.subscribe(params => {
       const id = +params.get('id');
       if (id && id !== 0) {
+        this.projectId = id;
         this.service.fetchDashboard(id);
-        this.planTrabajoService.fetchPlanesDeTrabajo(id);
+        this.planTrabajoService.limpiarPlan(id);
+        this.subs.push(this.planTrabajoService.fetchPlanesDeTrabajo(id).subscribe(res => this.planes = res.body));
       }
     }));
+    this.planTrabajoService.fetchPlanActual();
     this.initForm();
   }
 
@@ -51,6 +63,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.planForm = new FormGroup({
       planTrabajo: new FormControl('', Validators.required)
     });
+  }
+
+  agregarMiembro() {
+    this.dialog.open(AgregarMiembroComponent, DIALOG_CONFIG);
+  }
+
+  pasarEstado() {
+    this.dialog.open(EstadoProyectoComponent, { ...DIALOG_CONFIG, data: this.proyecto })
+      .afterClosed().subscribe(result => {
+        if (!isNullOrUndefined(result.idProyecto)) {
+          this.service.recargarDashboard();
+        }
+      });
   }
 
   selectPlan() {

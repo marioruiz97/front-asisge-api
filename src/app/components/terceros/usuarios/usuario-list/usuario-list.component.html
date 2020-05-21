@@ -47,10 +47,10 @@
           <th mat-header-cell *matHeaderCellDef> Acciones </th>
           <td mat-cell *matCellDef="let doc">
             <div fxHide.lt-sm fxHide.sm>
-              <button mat-icon-button color="primary" [routerLink]="['/usuarios/'+doc.idUsuario]" matTooltip="Editar">
+              <button mat-icon-button color="primary" [routerLink]="['/usuarios/'+doc.idUsuario]" matTooltip="Editar" *ngIf="auth.hasRoles(['ROLE_ADMIN'])">
                 <mat-icon class="mat-18">edit</mat-icon>
               </button>
-              <button mat-icon-button color="warn" (click)="delete(doc.idUsuario)" matTooltip="Eliminar">
+              <button mat-icon-button color="warn" (click)="delete(doc.idUsuario)" matTooltip="Eliminar" *ngIf="auth.hasRoles(['ROLE_ADMIN'])">
                 <mat-icon class="mat-18">delete</mat-icon>
               </button>
               <button mat-icon-button color="accent" (click)="showClientes(doc)" matTooltip="Ver Clientes Asociados">
@@ -65,8 +65,8 @@
                 <mat-icon class="mat-18">more_horiz</mat-icon>
               </button>
               <mat-menu #actions="matMenu">
-                <button mat-menu-item [routerLink]="['/usuarios/'+doc.idUsuario]">Editar</button>
-                <button mat-menu-item (click)="delete(doc.idUsuario)">Eliminar</button>
+                <button mat-menu-item [routerLink]="['/usuarios/'+doc.idUsuario]" *ngIf="auth.hasRoles(['ROLE_ADMIN'])">Editar</button>
+                <button mat-menu-item (click)="delete(doc.idUsuario)" *ngIf="auth.hasRoles(['ROLE_ADMIN'])">Eliminar</button>
                 <button mat-menu-item (click)="showClientes(doc)">Ver Clientes</button>
                 <button mat-menu-item (click)="showDetails(doc)">Ver detalles</button>
               </mat-menu>

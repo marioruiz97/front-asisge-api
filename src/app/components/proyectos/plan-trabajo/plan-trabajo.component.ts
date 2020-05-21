@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { AgregarMiembroComponent } from './agregar-miembro/agregar-miembro.component';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
 import { AgregarEtapasComponent } from './agregar-etapas/agregar-etapas.component';
 import { PlanTrabajoService } from './plan-trabajo.service';
 import { Subscription } from 'rxjs';
 import { PlanTrabajo } from 'src/app/models/proyectos/plan-trabajo.model';
+import { ModalActividadComponent } from './modal-actividad/modal-actividad.component';
+import { AprobacionPlanComponent } from './aprobacion-plan/aprobacion-plan.component';
 
 @Component({
   selector: 'app-plan-trabajo',
@@ -20,7 +21,7 @@ export class PlanTrabajoComponent implements OnInit, OnDestroy {
   constructor(private dialog: MatDialog, private service: PlanTrabajoService) { }
 
   ngOnInit() {
-    this.subs.push(this.service.planActualSubject.subscribe(plan => this.planActual = plan));
+    this.subs.push(this.service.planActualSubject.subscribe(plan => this.planActual = plan.planDeTrabajo));
     this.service.fetchPlanActual();
   }
 
@@ -30,13 +31,28 @@ export class PlanTrabajoComponent implements OnInit, OnDestroy {
     }
   }
 
-  agregarMiembro() {
-    this.dialog.open(AgregarMiembroComponent, DIALOG_CONFIG);
-  }
-
   agregarEtapa() {
     if (this.verificarPlan()) {
       this.dialog.open(AgregarEtapasComponent, DIALOG_CONFIG);
+    }
+  }
+
+  agregarActividad() {
+    if (this.verificarPlan()) {
+      this.dialog.open(ModalActividadComponent, { ...DIALOG_CONFIG, data: {} });
+    }
+  }
+
+  aprobacionPlan() {
+    if (this.verificarPlan()) {
+      const config: MatDialogConfig = {
+        disableClose: true,
+        minHeight: '70vh',
+        maxHeight: '100vh',
+        minWidth: '80vw',
+        maxWidth: '100vw'
+      };
+      this.dialog.open(AprobacionPlanComponent, { ...config, data: this.planActual });
     }
   }
 

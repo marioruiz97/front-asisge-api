@@ -55,6 +55,10 @@ export class ProyectoListComponent implements OnInit, OnDestroy {
     this.proyectos.next(this.allProyectos);
   }
 
+  get auth() {
+    return this.authService;
+  }
+
   redirect(to: string) {
     return this.authService.redirect(to);
   }

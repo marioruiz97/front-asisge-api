@@ -1,0 +1,60 @@
+<div class="row">
+  <h3 class="mt-0">Aprobación Plan de Trabajo</h3>
+  <div fxFlex></div>
+  <button mat-icon-button matTooltip="Cerrar" [matDialogClose]="true">
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Plan de Trabajo: {{data.nombrePlan}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content fxLayout.lt-sm="column" fxLayout>
+    <div fxFlex fxLayout="column">
+      <span class="info-title" *ngIf="data.etapaActual">Etapa Actual:</span> <span *ngIf="data.etapaActual">{{data.etapaActual.nombreEtapa}}</span>
+      <span class="info-title">Fecha Inicio:</span> <span>{{data.fechaInicio | date: 'mediumDate'}}</span>
+      <span class="info-title">Fecha Fin Estimada:</span> <span>{{data.fechaFinEstimada | date: 'mediumDate'}}</span>
+    </div>
+    <div fxFlex fxLayout="column">
+      <span class="info-title">Horas Contratadas por Mes:</span> <span>{{data.horasMes}}</span>
+      <span class="info-title">Objetivo del Plan:</span> <p class="m-0">{{data.objetivoPlan}}</p>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<section class="my-3">
+  <form class="mt-4 mx-auto" autocomplete="off" [formGroup]="aprobacionForm" (ngSubmit)="onSubmit()" fxFlex="90" fxLayout="column">
+    <div class="form-group" fxLayoutAlign="space-between">
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Fecha aprobación</mat-label>
+        <input matInput [matDatepicker]="datePicker" formControlName="fechaAprobacion">
+        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker></mat-datepicker>
+      </mat-form-field>
+      <div class="pl-sm-4" fxFlex fxLayout="column">
+        <h4 class="mt-0 mb-2">Validación del cliente</h4>
+        <mat-slide-toggle class="my-auto" color="primary" formControlName="avalCliente" fxFlex>
+          <span>Pulse para {{aprobacionForm.value.avalCliente? 'No Aprobar' : 'Aprobar'}} Plan de trabajo</span>
+        </mat-slide-toggle>
+      </div>
+    </div>
+    <div class="form-group">
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Observaciones</mat-label>
+        <textarea matInput formControlName="observaciones"></textarea>
+        <mat-icon matPrefix>message</mat-icon>
+        <mat-hint> Máximo 255 caracteres / actual:{{aprobacionForm.value.observaciones.length}} </mat-hint>
+      </mat-form-field>
+    </div>
+    <div class="form-actions mt-4" fxLayout.lt-sm="column" fxLayoutAlign="space-evenly">
+      <button class="m-2" type="button" mat-raised-button color="warn" *ngIf="!isWaiting" fxFlex [matDialogClose]="true">
+        <mat-icon>arrow_back</mat-icon> Cancelar
+      </button>
+      <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!aprobacionForm.valid" *ngIf="!isWaiting" fxFlex>
+        <mat-icon>save</mat-icon> Registrar Aprobación
+      </button>
+      <mat-spinner *ngIf="isWaiting"></mat-spinner>
+    </div>
+  </form>
+</section>

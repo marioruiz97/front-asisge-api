@@ -1,6 +1,6 @@
 import { Proyecto } from './proyecto.model';
 
-// TODO: verificar este model y si es necesario implementar dto
+
 export interface PlanTrabajo {
   idPlanDeTrabajo?: number;
   nombrePlan: string;

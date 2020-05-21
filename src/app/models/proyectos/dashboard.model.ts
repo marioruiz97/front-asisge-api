@@ -1,6 +1,7 @@
 import { Cliente } from '../terceros/cliente.model';
 import { Miembros, Proyecto, EstadoProyecto, EstadoLineDto } from './proyecto.model';
 import { Usuario } from '../terceros/usuario.model';
+import { Actividad } from './actividad.model';
 
 export interface Dashboard {
   idDashboard: number;
@@ -10,6 +11,7 @@ export interface Dashboard {
   estadoActual: EstadoProyecto;
   notificaciones: Notificacion[];
   lineaEstados: EstadoLineDto[];
+  proximasActividades: Actividad[];
 }
 
 export interface Notificacion {

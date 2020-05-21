@@ -6,6 +6,7 @@ import { UsuarioService } from '../usuario.service';
 import { UsuarioDetailsComponent } from '../usuario-details/usuario-details.component';
 import { UsuarioClientesComponent } from '../usuario-clientes/usuario-clientes.component';
 import { BASIC_DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-usuario-list',
@@ -23,7 +24,7 @@ export class UsuarioListComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
-    private service: UsuarioService, private dialog: MatDialog
+    private service: UsuarioService, private dialog: MatDialog, public auth: AuthService
   ) { }
 
   ngOnInit() {

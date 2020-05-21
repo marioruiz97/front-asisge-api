@@ -12,21 +12,29 @@
     </div>
 
     <table mat-table [dataSource]="datasource" matSort class="mat-elevation-z1">
-      <ng-container matColumnDef="emailUsuario">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
-        <td mat-cell *matCellDef="let doc"> {{doc.emailUsuario}} </td>
+      <ng-container matColumnDef="idActividad">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Código </th>
+        <td mat-cell *matCellDef="let doc"> {{doc.idActividad}} </td>
       </ng-container>
-      <ng-container matColumnDef="accionRealizada">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Acción Realizada </th>
-        <td mat-cell *matCellDef="let doc"> {{doc.accionRealizada}} </td>
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+        <td mat-cell *matCellDef="let doc" [matTooltip]="doc.descipcion"> {{doc.nombre}} </td>
       </ng-container>
-      <ng-container matColumnDef="descripcionAccion">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide.lt-sm> Descripción Acción </th>
-        <td mat-cell *matCellDef="let doc" fxHide.lt-sm> {{doc.descripcionAccion}} </td>
+      <ng-container matColumnDef="etapa">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide.lt-sm> Etapa </th>
+        <td mat-cell *matCellDef="let doc" fxHide.lt-sm> {{doc.etapa.nombreEtapa}} </td>
       </ng-container>
-      <ng-container matColumnDef="fechaAccion">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Accion </th>
-        <td mat-cell *matCellDef="let doc"> {{doc.fechaAccion | date: 'medium' }} </td>
+      <ng-container matColumnDef="duracion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide.lt-sm> Duración en horas </th>
+        <td mat-cell *matCellDef="let doc" fxHide.lt-sm> {{doc.duracion }} </td>
+      </ng-container>
+      <ng-container matColumnDef="fechaVencimiento">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Vencimiento </th>
+        <td mat-cell *matCellDef="let doc"> {{doc.fechaVencimiento | date: 'medium' }} </td>
+      </ng-container>
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+        <td mat-cell *matCellDef="let doc"> {{ getVencida(doc) }} </td>
       </ng-container>
 
       <!-- elementos necesarios para el mat-table de angular material-->
@@ -34,7 +42,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <!-- paginador de angular material-->
-    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 30]" class="mat-elevation-z1">
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 30, 50]" class="mat-elevation-z1">
     </mat-paginator>
   </mat-card-content>
 </mat-card>

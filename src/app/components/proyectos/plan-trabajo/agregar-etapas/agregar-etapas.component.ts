@@ -14,8 +14,10 @@ import { EtapaPlan } from 'src/app/models/proyectos/plan-trabajo.model';
 export class AgregarEtapasComponent implements OnInit, OnDestroy {
 
   etapaForm: FormGroup;
+  minDate: Date;
+  maxDate: Date;
+
   isWaiting = false;
-  minDate = new Date();
   nombreEtapaActual: string;
   private idPlanTrabajo: number;
   private subs: Subscription[] = [];
@@ -36,9 +38,12 @@ export class AgregarEtapasComponent implements OnInit, OnDestroy {
 
   initNuevaEtapa() {
     this.subs.push(this.uiService.loadingState.subscribe(state => this.isWaiting = state));
-    this.subs.push(this.service.planActualSubject.subscribe(plan => {
+    this.subs.push(this.service.planActualSubject.subscribe(planBoard => {
+      const plan = planBoard.planDeTrabajo;
       this.idPlanTrabajo = plan.idPlanDeTrabajo;
       this.nombreEtapaActual = plan.etapaActual ? plan.etapaActual.nombreEtapa : undefined;
+      this.minDate = plan.fechaInicio ? plan.fechaInicio : new Date();
+      this.maxDate = plan.fechaFinEstimada ? plan.fechaFinEstimada : null;
       this.etapas = plan.etapas ? plan.etapas : [];
     }));
     this.initForm();
@@ -64,7 +69,8 @@ export class AgregarEtapasComponent implements OnInit, OnDestroy {
 
 
   pasarEtapa() {
-    alert('felicidades, ha seleccionado una etapa')
+    const etapa: number = this.selectEtapaForm.value.etapaActual;
+    this.service.changeEtapaActual(this.idPlanTrabajo, etapa);
   }
 
   guardarEtapa() {

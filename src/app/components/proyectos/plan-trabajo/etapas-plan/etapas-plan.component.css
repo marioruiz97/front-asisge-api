@@ -1,3 +1,11 @@
 mat-form-field {
   min-width: 300px;
 }
+
+.actual-500{
+  font-weight: 500;
+}
+
+.actual {
+  font-weight: 600;
+}

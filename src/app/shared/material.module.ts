@@ -30,7 +30,8 @@ import {
   MatStepperModule,
   MatProgressBarModule,
   MatCheckboxModule,
-  MatBottomSheetModule
+  MatBottomSheetModule,
+  MatRadioModule
 } from '@angular/material';
 
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -68,7 +69,8 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatStepperModule,
     MatProgressBarModule,
     MatCheckboxModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatRadioModule
   ],
   exports: [
     FlexLayoutModule,
@@ -100,7 +102,8 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatStepperModule,
     MatProgressBarModule,
     MatCheckboxModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatRadioModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es' }

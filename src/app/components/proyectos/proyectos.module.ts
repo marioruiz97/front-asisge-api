@@ -16,6 +16,18 @@ import { AgregarMiembroComponent } from './plan-trabajo/agregar-miembro/agregar-
 import { PlanFormComponent } from './plan-trabajo/plan-form/plan-form.component';
 import { AgregarEtapasComponent } from './plan-trabajo/agregar-etapas/agregar-etapas.component';
 import { EtapasPlanComponent } from './plan-trabajo/etapas-plan/etapas-plan.component';
+import { PlanDesdePlantillaComponent } from './plan-trabajo/plan-desde-plantilla/plan-desde-plantilla.component';
+import { EditarEtapaComponent } from './plan-trabajo/editar-etapa/editar-etapa.component';
+import { ModalActividadComponent } from './plan-trabajo/modal-actividad/modal-actividad.component';
+import { ActividadesPlanComponent } from './plan-trabajo/actividades-plan/actividades-plan.component';
+import { DetalleActividadComponent } from './plan-trabajo/detalle-actividad/detalle-actividad.component';
+import { SeguimientoListComponent } from './plan-trabajo/seguimiento-list/seguimiento-list.component';
+import { SeguimientoFormComponent } from './plan-trabajo/seguimiento-form/seguimiento-form.component';
+import { PasarActividadEstadoComponent } from './plan-trabajo/pasar-actividad-estado/pasar-actividad-estado.component';
+import { TiemposComponent } from './dashboard/tiempos/tiempos.component';
+import { TiempoService } from './dashboard/tiempos/tiempo.service';
+import { EstadoProyectoComponent } from './estado-proyecto/estado-proyecto.component';
+import { AprobacionPlanComponent } from './plan-trabajo/aprobacion-plan/aprobacion-plan.component';
 
 
 
@@ -33,12 +45,32 @@ import { EtapasPlanComponent } from './plan-trabajo/etapas-plan/etapas-plan.comp
     AgregarMiembroComponent,
     PlanFormComponent,
     AgregarEtapasComponent,
-    EtapasPlanComponent
+    EtapasPlanComponent,
+    PlanDesdePlantillaComponent,
+    EditarEtapaComponent,
+    ModalActividadComponent,
+    ActividadesPlanComponent,
+    DetalleActividadComponent,
+    SeguimientoListComponent,
+    SeguimientoFormComponent,
+    PasarActividadEstadoComponent,
+    TiemposComponent,
+    EstadoProyectoComponent,
+    AprobacionPlanComponent
   ],
   imports: [
     SharedModule
   ],
-  entryComponents: [AgregarMiembroComponent, AgregarEtapasComponent],
-  providers: [ProyectoService, DashboardService, PlanTrabajoService]
+  entryComponents: [
+    AgregarMiembroComponent,
+    AgregarEtapasComponent,
+    EditarEtapaComponent,
+    ModalActividadComponent,
+    DetalleActividadComponent,
+    PasarActividadEstadoComponent,
+    EstadoProyectoComponent,
+    AprobacionPlanComponent
+  ],
+  providers: [ProyectoService, DashboardService, PlanTrabajoService, TiempoService]
 })
 export class ProyectosModule { }

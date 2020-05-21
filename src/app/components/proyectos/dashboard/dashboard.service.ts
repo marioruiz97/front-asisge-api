@@ -7,7 +7,7 @@ import { Dashboard, Notificacion } from 'src/app/models/proyectos/dashboard.mode
 import { AppConstants as Cons } from 'src/app/shared/routing/app.constants';
 import { UiService } from 'src/app/shared/ui.service';
 import { Router } from '@angular/router';
-import { PlanTrabajoService } from '../plan-trabajo/plan-trabajo.service';
+import { Actividad } from 'src/app/models/proyectos/actividad.model';
 
 @Injectable()
 export class DashboardService {
@@ -18,6 +18,7 @@ export class DashboardService {
   proyecto = new Subject<Proyecto>();
   notificaciones = new Subject<Notificacion[]>();
   estados = new Subject<EstadoLineDto[]>();
+  proximasActividades = new Subject<Actividad[]>();
 
   private dashboardPath = Cons.PATH_DASHBOARD;
 
@@ -28,7 +29,7 @@ export class DashboardService {
   ) { }
 
   fetchDashboard(idDashboard: number) {
-    this.uiService.loadingState.next(true);
+    this.uiService.dashboardLoading.next(true);
     if (this.dashboard && this.dashboard.idDashboard && this.dashboard.idDashboard === idDashboard) {
       this.setDashboardProperties(this.dashboard);
     } else {
@@ -47,7 +48,7 @@ export class DashboardService {
 
   recargarDashboard() {
     if (this.dashboard && this.dashboard.idDashboard) {
-      this.uiService.loadingState.next(true);
+      this.uiService.dashboardLoading.next(true);
       const idDashboard = this.dashboard.idDashboard;
       this.appService.getRequest(`${this.dashboardPath}/${idDashboard}`).subscribe(res => {
         this.dashboard = res.body as Dashboard;
@@ -60,8 +61,9 @@ export class DashboardService {
     this.cliente.next(dashboard.cliente);
     this.miembros.next(dashboard.miembros);
     this.proyecto.next(dashboard.proyecto);
+    this.proximasActividades.next(dashboard.proximasActividades);
     this.notificaciones.next(dashboard.notificaciones);
-    this.uiService.loadingState.next(false);
+    this.uiService.dashboardLoading.next(false);
   }
 
   fetchInfoCliente() {
@@ -94,6 +96,11 @@ export class DashboardService {
     }
   }
 
+  fetchProximasActividades() {
+    if (this.dashboard && this.dashboard.proximasActividades) {
+      this.proximasActividades.next(this.dashboard.proximasActividades);
+    }
+  }
   /**
    * FIN DE METODOS DE PROPIEDADES BASICAS DEL DASHBOARD, DE AQUI EN ADELANTE SE ENCUENTRA METODOS ESPECIFICOS DE LA GESTION DE CADA PARTE
    */

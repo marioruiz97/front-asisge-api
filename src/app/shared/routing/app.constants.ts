@@ -4,6 +4,7 @@ export class AppConstants {
 
   public static PATH_TIPO_DOCUMENTO = 'tipo-documento';
   public static PATH_ESTADO_PROYECTO = 'estado-proyecto';
+  public static PATH_ESTADO_ACTIVIDAD = 'estado-actividad';
   public static PATH_AUDIT = 'audit';
 
   public static PATH_AUTH = 'auth';
@@ -28,6 +29,11 @@ export class AppConstants {
   public static PATH_PLANES_TRABAJO = 'proyectos/{idProyecto}/planes';
   public static PATH_PLAN_TRABAJO_ID = 'planes';
   public static PATH_ETAPA_PLAN = 'planes/{idPlan}/etapas';
+
+  public static PATH_ACTIVIDADES_PLAN = 'planes/{idPlan}/actividades';
+  public static PATH_ACTIVIDADES = 'actividades';
+  public static PATH_SEGUIMIENTOS = 'actividades/{idActividad}/seguimientos';
+  public static PATH_TIEMPOS = 'planes/{idPlan}/tiempos';
 }
 
 export const DIALOG_CONFIG: MatDialogConfig = {

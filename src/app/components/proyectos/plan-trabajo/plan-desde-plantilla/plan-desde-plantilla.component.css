@@ -1,0 +1,14 @@
+@import "../../../../../assets/css/header-styles.css";
+
+.form-group {
+  min-width: 100%;
+}
+
+.form-group mat-form-field {
+  min-width: 47%;
+  margin-bottom: 1rem;
+}
+
+.form-action button {
+  min-width: 30%;
+}

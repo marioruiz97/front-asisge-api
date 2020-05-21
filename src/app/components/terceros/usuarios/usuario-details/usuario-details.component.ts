@@ -5,6 +5,7 @@ import { TipoDocumento } from 'src/app/models/terceros/tipo-documento.model';
 import { Cliente } from 'src/app/models/terceros/cliente.model';
 import { Subscription } from 'rxjs';
 import { UsuarioService } from '../usuario.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-usuario-details',
@@ -19,7 +20,8 @@ export class UsuarioDetailsComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Usuario,
     private service: UsuarioService,
-    private dialogRef: MatDialogRef<UsuarioDetailsComponent>
+    private dialogRef: MatDialogRef<UsuarioDetailsComponent>,
+    public auth: AuthService
   ) {
     const doc = data.tipoDocumento as TipoDocumento;
     this.info.push({ property: 'Id usuario:', data: data.idUsuario });

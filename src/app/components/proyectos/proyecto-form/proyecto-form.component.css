@@ -13,6 +13,11 @@
   min-width: 30%;
 }
 
+.muted {
+  font-size: 90%;
+  color: rgba(0, 0, 0, 0.54);
+}
+
 @media (max-width: 600px) {
   .form-group mat-form-field {
     width: 100%;

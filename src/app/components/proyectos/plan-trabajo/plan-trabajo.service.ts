@@ -2,42 +2,47 @@ import { Injectable } from '@angular/core';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { AppService } from 'src/app/shared/app.service';
 import { UiService } from 'src/app/shared/ui.service';
-import { PlanTrabajo, EtapaPlan } from 'src/app/models/proyectos/plan-trabajo.model';
-import { Subject } from 'rxjs';
+import { EtapaPlan } from 'src/app/models/proyectos/plan-trabajo.model';
+import { Subject, Observable } from 'rxjs';
 import { AppConstants as Cons } from 'src/app/shared/routing/app.constants';
 import { Router } from '@angular/router';
+import { ActividadDto, Seguimiento, Actividad } from 'src/app/models/proyectos/actividad.model';
+import { PlanTrabajoBoard } from 'src/app/models/proyectos/plan-trabajo-board.model';
+import { TiempoService } from '../dashboard/tiempos/tiempo.service';
 
 @Injectable()
 export class PlanTrabajoService {
 
-  planActual: PlanTrabajo;
-  etapasSubject = new Subject<EtapaPlan[]>();
-  planActualSubject = new Subject<PlanTrabajo>();
-  planesSubject = new Subject<PlanTrabajo[]>();
+  private idProyecto: number;
+
+  planActual: PlanTrabajoBoard;
+  planActualSubject = new Subject<PlanTrabajoBoard>();
 
   private planTrabajoPath = Cons.PATH_PLANES_TRABAJO;
   private etapasPath = Cons.PATH_ETAPA_PLAN;
+  private actividadPath = Cons.PATH_ACTIVIDADES_PLAN;
+  private seguimientoPath = Cons.PATH_SEGUIMIENTOS;
 
   constructor(
-    private dashboardService: DashboardService, private appService: AppService,
-    private uiService: UiService, private router: Router
+    private dashboardService: DashboardService,
+    private appService: AppService,
+    private uiService: UiService,
+    private tiempoService: TiempoService,
+    private router: Router
   ) { }
 
   fetchPlanesDeTrabajo(idProyecto: number) {
     const path = this.planTrabajoPath.replace('{idProyecto}', idProyecto.toString());
-    this.appService.getRequest(path).subscribe(res => {
-      this.planesSubject.next(res.body);
-    }/* , err => {
-      const message = 'No se han obtenido planes de trabajo, intenta nuevamente';
-      this.uiService.showConfirm({ title: 'Error al obtener información', message, confirm: 'Sí, intentar nuevamente' })
-        .afterClosed().subscribe(result => {
-          if (result) {
-            this.fetchPlanesDeTrabajo(idProyecto);
-          }
-        });
-    } */);
+    this.idProyecto = idProyecto;
+    return this.appService.getRequest(path);
   }
 
+  limpiarPlan(id: number) {
+    if (!this.idProyecto || this.idProyecto !== id) {
+      this.planActual = null;
+      this.planActualSubject.next(null);
+    }
+  }
 
   selectActual(id: number) {
     if (this.planActual && this.planActual.idPlanDeTrabajo && this.planActual.idPlanDeTrabajo === id) {
@@ -45,18 +50,24 @@ export class PlanTrabajoService {
     } else {
       const path = Cons.PATH_PLAN_TRABAJO_ID;
       this.appService.getRequest(`${path}/${id}`).subscribe(res => {
-        this.planActual = res.body as PlanTrabajo;
-        this.setProperties(this.planActual);
+        this.setProperties(res.body as PlanTrabajoBoard);
       });
     }
   }
 
-  setProperties(plan: PlanTrabajo) {
+  recargarPlan(idPlan: number) {
+    const path = Cons.PATH_PLAN_TRABAJO_ID;
+    this.appService.getRequest(`${path}/${idPlan}`).subscribe(res => {
+      this.setProperties(res.body as PlanTrabajoBoard);
+      this.tiempoService.fetchTiempos(idPlan, true);
+    });
+  }
+
+  setProperties(plan: PlanTrabajoBoard) {
     if (plan) {
       this.uiService.showSnackBar('Se ha seleccionado plan correctamente', 2);
       this.planActual = plan;
       this.planActualSubject.next(this.planActual);
-      this.etapasSubject.next(this.planActual.etapas);
     } else {
       this.uiService.showSnackBar('No se ha podido seleccionar plan, intenta nuevamente', 3);
     }
@@ -68,11 +79,12 @@ export class PlanTrabajoService {
     }
   }
 
-  fetchEtapas() {
-    if (this.planActual && this.planActual.etapas) {
-      this.etapasSubject.next(this.planActual.etapas);
-    }
-  }
+
+  /*  FIN ACTUALIZACION DE OBSERVABLES  */
+
+  /**
+   *  METODOS PARA PLANES DE TRABAJO
+   */
 
   crearPlan(data: any, proyecto: number) {
     const path = this.planTrabajoPath.replace('{idProyecto}', proyecto.toString());
@@ -81,17 +93,31 @@ export class PlanTrabajoService {
     });
   }
 
+  crearPlanDesdeTemplate(data: any, proyecto: number, plantilla: number) {
+    const path = this.planTrabajoPath.replace('{idProyecto}', proyecto.toString());
+    this.uiService.putSnackBar(this.appService.postRequest(`${path}?plantilla=${plantilla}`, data)).subscribe(exito => {
+      if (exito) { this.returnToDashboard(); }
+    });
+  }
+
+  editarPlan(data: any, idPlan: number) {
+    const path = Cons.PATH_PLAN_TRABAJO_ID;
+    this.uiService.putSnackBar(this.appService.patchRequest(`${path}/${idPlan}`, data)).subscribe(exito => {
+      if (exito) { this.returnToDashboard(); }
+    });
+  }
+
+  /**
+   *  METODOS PARA ETAPAS
+   */
+
   crearEtapa(data: EtapaPlan, plan: number) {
     const path = this.etapasPath.replace('{idPlan}', plan.toString());
     this.uiService.loadingState.next(true);
     this.appService.postRequest(path, data).then(res => {
       this.uiService.loadingState.next(false);
       this.uiService.showSnackBar('Etapa agregada con éxito', 3);
-      if (this.planActual.etapas) {
-        this.planActual.etapas.push(res.body as EtapaPlan);
-      } else {
-        this.planActual.etapas = [res.body as EtapaPlan];
-      }
+      this.recargarPlan(plan);
     }).catch(err => {
       this.uiService.loadingState.next(false);
       if (err.error && err.status !== 403) {
@@ -103,13 +129,124 @@ export class PlanTrabajoService {
     });
   }
 
-  recargarPlan(idPlan: number) {
-    const path = Cons.PATH_PLAN_TRABAJO_ID;
-    this.appService.getRequest(`${path}/${idPlan}`).subscribe(res => {
-      this.planActual = res.body as PlanTrabajo;
-      this.setProperties(this.planActual);
+  changeEtapaActual(idPlan: number, etapaActual: number) {
+    const path = this.etapasPath.replace('{idPlan}', idPlan.toString());
+    this.uiService.putSnackBar(this.appService.postRequest(`${path}/${etapaActual}`, {})).subscribe(exito => {
+      if (exito) { this.recargarPlan(idPlan); }
     });
   }
+
+  editEtapa(idPlan: number, etapa: EtapaPlan) {
+    const path = this.etapasPath.replace('{idPlan}', idPlan.toString());
+    return this.uiService.putSnackBar(this.appService.patchRequest(`${path}/${etapa.idEtapaPDT}`, etapa));
+  }
+
+  deleteEtapa(idEtapa: number) {
+    const path = this.etapasPath.replace('{idPlan}', this.planActual.idPlanDeTrabajo.toString());
+    const data = {
+      title: 'Estás seguro de eliminar la Etapa?',
+      message: 'Esta acción es irreversible. \n¿Estás seguro?',
+      confirm: 'Sí, Eliminar'
+    };
+    const dialogRef = this.uiService.showConfirm(data);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.uiService.putSnackBar(this.appService.deleteRequest(`${path}/${idEtapa}`))
+          .subscribe(exito => {
+            if (exito) {
+              this.planActual.planDeTrabajo.etapas = this.planActual.planDeTrabajo.etapas.filter(etapa => etapa.idEtapaPDT !== idEtapa);
+              this.planActual.etapas = this.planActual.etapas.filter(etapa => etapa.etapa.idEtapaPDT !== idEtapa);
+              this.fetchPlanActual();
+            }
+          });
+      }
+    });
+  }
+
+
+  /**
+   *  METODOS PARA ACTIVIDADES
+   */
+  createActividad(plan: number, actividad: ActividadDto) {
+    const path = this.actividadPath.replace('{idPlan}', plan.toString());
+    return this.uiService.putSnackBar(this.appService.postRequest(path, actividad));
+  }
+
+  editActividad(plan: number, actividad: ActividadDto) {
+    const path = this.actividadPath.replace('{idPlan}', plan.toString());
+    return this.uiService.putSnackBar(this.appService.patchRequest(`${path}/${actividad.idActividad}`, actividad));
+  }
+
+  changeEstado(actividad: Actividad, nuevoEstado: number) {
+    const plan = this.planActual.idPlanDeTrabajo;
+    const path = Cons.PATH_ACTIVIDADES;
+    return this.appService
+      .patchRequest(`${path}/${actividad.idActividad}?plan=${plan}&aprobar=${false}&nuevo-estado=${nuevoEstado}`, actividad);
+  }
+
+  solicitarAprobacion(actividad: Actividad) {
+    const plan = this.planActual.idPlanDeTrabajo;
+    const path = Cons.PATH_ACTIVIDADES;
+    const data = { title: 'Solicitar aprobación', message: '¿Deseas solicitar aprobación para esta actividad?', confirm: 'Sí' };
+    this.uiService.showConfirm(data).afterClosed().subscribe(res => {
+      if (res) {
+        this.uiService.putSnackBar(this.appService
+          .patchRequest(`${path}/${actividad.idActividad}?plan=${plan}&aprobar=${true}&nuevo-estado=0`, actividad)).subscribe();
+      }
+    });
+  }
+
+  deleteActividad(idActividad: number) {
+    return new Observable(observer => {
+      const path = this.actividadPath.replace('{idPlan}', this.planActual.idPlanDeTrabajo.toString());
+      const data = {
+        title: 'Estás seguro de eliminar la Actividad?',
+        message: 'Esta acción es irreversible. \n¿Estás seguro?',
+        confirm: 'Sí, Eliminar'
+      };
+      const dialogRef = this.uiService.showConfirm(data);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.uiService.putSnackBar(this.appService.deleteRequest(`${path}/${idActividad}`))
+            .subscribe(exito => {
+              if (exito) {
+                // this.fetchPlanActual(); TODO: VERIFICAR SI SE DEBE RECARGAR EL PLAN COMPLETO
+                observer.next(true);
+              } else {
+                observer.error();
+              }
+            });
+        } else {
+          observer.complete();
+        }
+      });
+    });
+  }
+
+  /**
+   * METODOS PARA SEGUIMIENTOS
+   */
+  fetchSeguimientos(idActividad: number) {
+    const path = this.seguimientoPath.replace('{idActividad}', idActividad.toString());
+    return this.appService.getRequest(path);
+  }
+
+  crearSeguimiento(idActividad: number, data: Seguimiento) {
+    const path = this.seguimientoPath.replace('{idActividad}', idActividad.toString());
+    return this.uiService.putSnackBar(this.appService.postRequest(path, data));
+  }
+
+  editarSeguimiento(idActividad: number, data: Seguimiento) {
+    const path = this.seguimientoPath.replace('{idActividad}', idActividad.toString());
+    return this.uiService.putSnackBar(this.appService.patchRequest(`${path}/${data.idSeguimiento}`, data));
+  }
+
+  deleteSeguimiento(idActividad: number, idSeguimiento: number) {
+    const path = this.seguimientoPath.replace('{idActividad}', idActividad.toString());
+    return this.uiService.putSnackBar(this.appService.deleteRequest(`${path}/${idSeguimiento}`));
+  }
+
+
 
   returnToDashboard() {
     if (this.dashboardService && this.dashboardService.dashboard) {

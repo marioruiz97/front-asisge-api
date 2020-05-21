@@ -1,0 +1,60 @@
+<div gdAreas="header | content" gdGap="1em" gdRows="auto auto auto">
+
+  <header class="pt-4 m-2" gdArea="header" fxLayoutAlign="center center">
+    <h1 fxFlex="50">{{isUpdate ? 'Actualizar' : 'Crear'}} Estado Actividad</h1>
+  </header>
+
+  <section gdArea="content">
+    <form autocomplete="off" [formGroup]="estadoForm" (ngSubmit)="onSubmit()" fxLayoutAlign="center">
+      <mat-card class="mat-elevation-z8 py-4" fxFlex="80" fxFlex.lt-sm="100">
+        <mat-card-content>
+          <div class="form-group" fxLayoutAlign="space-between" fxLayout.lt-sm="column">
+            <mat-form-field appearance="outline">
+              <mat-label>Código Asignado</mat-label>
+              <input matInput formControlName="idEstado">
+              <mat-hint>El código es autoasignado por el sistema</mat-hint>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Nombre Estado</mat-label>
+              <input matInput placeholder="Ej. Creada" formControlName="nombreEstado">
+              <mat-hint>Ingrese un nombre hasta 100 caracteres ({{estadoForm.value.nombreEstado.length}}/max. 100)
+              </mat-hint>
+              <mat-error>El nombre es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field fxFlex appearance="outline">
+              <mat-label>Descripción</mat-label>
+              <textarea matInput placeholder="Ej. estado inicial de toda actividad"
+                formControlName="descripcion"></textarea>
+              <mat-icon matPrefix>message</mat-icon>
+              <mat-hint>Campo Obligatorio max. 255 caracteres / actual:{{estadoForm.value.descripcion.length}}
+              </mat-hint>
+              <mat-error>Ingrese una descripción válida</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group mt-3" fxLayout="column" fxLayoutGap="1rem">
+            <label id="radio-group">Selecciona si el estado tiene alguna condición especial</label>
+            <mat-radio-group color="primary" aria-labelledby="radio-group" formControlName="condicion" fxLayoutAlign="space-evenly" fxLayout.lt-sm="column">
+              <mat-radio-button [value]="0">Ninguna</mat-radio-button>
+              <mat-radio-button [value]="1">Estado Inicial</mat-radio-button>
+              <mat-radio-button [value]="2">Actividad No Aprobada</mat-radio-button>
+              <mat-radio-button [value]="3">Actividad Completada</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions class="form-action mt-4" fxLayoutAlign="center" fxLayout.lt-sm="column">
+          <button class="m-2" type="button" mat-raised-button (click)="goBack()" color="warn" *ngIf="!isWaiting">
+            <mat-icon>arrow_back</mat-icon>Regresar al listado
+          </button>
+          <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!estadoForm.valid"
+            *ngIf="!isWaiting">
+            <mat-icon>save</mat-icon> Guardar Estado
+          </button>
+          <mat-spinner *ngIf="isWaiting"></mat-spinner>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </section>
+</div>
