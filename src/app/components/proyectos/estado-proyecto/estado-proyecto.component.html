@@ -1,0 +1,38 @@
+<div>
+  <h2 matDialogTitle>Pasar Proyecto de estado</h2>
+  <div fxFlex></div>
+  <button mat-icon-button [matDialogClose]="true">
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>
+
+<mat-list>
+  <mat-list-item *ngIf="data">
+    <mat-icon matListIcon>done_outline</mat-icon>
+    <h3 mat-line>{{data.estadoProyecto.nombreEstado}}</h3>
+    <p mat-line>Estado Actual</p>
+  </mat-list-item>
+</mat-list>
+<form class="my-2" [formGroup]="estadoForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field appearance="outline" fxFlex>
+      <mat-label>Selecciona nuevo estado</mat-label>
+      <mat-select formControlName="estado" #select>
+        <mat-option>Seleccionar</mat-option>
+        <mat-option [value]="estado.id" *ngFor="let estado of estados">
+          <div fxLayoutAlign="space-between">
+            <span>{{estado.id + ' - ' + estado.nombreEstado}} </span>
+            <span class="muted">({{estado.idEstadoAnterior? 'Sigue al: '+estado.idEstadoAnterior : 'Estado inicial'}})</span>
+          </div>
+        </mat-option>
+        </mat-select>
+        <mat-hint>Selecciona un estado</mat-hint>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayoutAlign="center">
+    <button type="submit" mat-raised-button color="primary" [disabled]="estadoForm.invalid" *ngIf="!isWaiting">
+      Seleccionar Estado Actual
+    </button>
+    <mat-progress-spinner *ngIf="isWaiting"></mat-progress-spinner>
+  </mat-dialog-actions>
+</form>

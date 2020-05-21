@@ -2,7 +2,7 @@
 
 .form-group mat-form-field {
   width: 474px;
-  max-width: 474px; /* TODO: OJO con pixeles fijos */
+  max-width: 474px;
 }
 .form-action button {
   min-width: 30%;

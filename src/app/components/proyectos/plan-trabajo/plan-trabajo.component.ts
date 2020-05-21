@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
 import { AgregarEtapasComponent } from './agregar-etapas/agregar-etapas.component';
 import { PlanTrabajoService } from './plan-trabajo.service';
 import { Subscription } from 'rxjs';
 import { PlanTrabajo } from 'src/app/models/proyectos/plan-trabajo.model';
 import { ModalActividadComponent } from './modal-actividad/modal-actividad.component';
+import { AprobacionPlanComponent } from './aprobacion-plan/aprobacion-plan.component';
 
 @Component({
   selector: 'app-plan-trabajo',
@@ -39,6 +40,19 @@ export class PlanTrabajoComponent implements OnInit, OnDestroy {
   agregarActividad() {
     if (this.verificarPlan()) {
       this.dialog.open(ModalActividadComponent, { ...DIALOG_CONFIG, data: {} });
+    }
+  }
+
+  aprobacionPlan() {
+    if (this.verificarPlan()) {
+      const config: MatDialogConfig = {
+        disableClose: true,
+        minHeight: '70vh',
+        maxHeight: '100vh',
+        minWidth: '80vw',
+        maxWidth: '100vw'
+      };
+      this.dialog.open(AprobacionPlanComponent, { ...config, data: this.planActual });
     }
   }
 

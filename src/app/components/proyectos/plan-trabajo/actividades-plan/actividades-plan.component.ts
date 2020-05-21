@@ -47,6 +47,7 @@ export class ActividadesPlanComponent implements OnInit, AfterViewInit, OnDestro
 
   ngOnInit() {
     this.initForm();
+    this.setSortingAccesor();
     this.subs.push(this.service.planActualSubject.subscribe(planBoard => {
       let actividades: Actividad[] = [];
       this.etapas = planBoard.etapas.map(etapaBoard => etapaBoard.etapa);
@@ -123,6 +124,15 @@ export class ActividadesPlanComponent implements OnInit, AfterViewInit, OnDestro
     this.service.solicitarAprobacion(actividad);
   }
 
+  private setSortingAccesor() {
+    this.datasource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'etapa': return item.etapa.nombreEtapa;
+        case 'estadoActividad': return item.estadoActividad.nombreEstado;
+        default: return item[property];
+      }
+    };
+  }
 
   private createFilter(): (data: Actividad, filter: string) => boolean {
     const filterFunction = (data: Actividad, filter: string): boolean => {

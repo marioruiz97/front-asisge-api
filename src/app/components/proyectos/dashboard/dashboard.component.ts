@@ -11,6 +11,8 @@ import { PlanTrabajoService } from '../plan-trabajo/plan-trabajo.service';
 import { AgregarMiembroComponent } from '../plan-trabajo/agregar-miembro/agregar-miembro.component';
 import { DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
 import { MatDialog } from '@angular/material';
+import { EstadoProyectoComponent } from '../estado-proyecto/estado-proyecto.component';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-dashboard',
@@ -65,6 +67,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   agregarMiembro() {
     this.dialog.open(AgregarMiembroComponent, DIALOG_CONFIG);
+  }
+
+  pasarEstado() {
+    this.dialog.open(EstadoProyectoComponent, { ...DIALOG_CONFIG, data: this.proyecto })
+      .afterClosed().subscribe(result => {
+        if (!isNullOrUndefined(result.idProyecto)) {
+          this.service.recargarDashboard();
+        }
+      });
   }
 
   selectPlan() {

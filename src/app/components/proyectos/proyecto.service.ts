@@ -59,6 +59,10 @@ export class ProyectoService {
     });
   }
 
+  pasarEstadoProyecto(idProyecto: number, idEstado: number) {
+    return this.uiService.putSnackBar(this.appService.postRequest(`${this.proyectoPath}/${idProyecto}?estado=${idEstado}`, {}));
+  }
+
   gotoDashboard(idProyecto: number) {
     this.router.navigate(['/proyectos/' + idProyecto]);
   }

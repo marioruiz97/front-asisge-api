@@ -1,0 +1,14 @@
+span.info-title {
+  margin-top: 0.7rem;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.form-group,
+.form-actions {
+  min-width: 100%;
+}
+
+/* mat-slide-toggle {
+  display: inline-block;
+} */

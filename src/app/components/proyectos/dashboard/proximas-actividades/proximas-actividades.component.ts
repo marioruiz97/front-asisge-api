@@ -24,6 +24,7 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
   constructor(private dashboardService: DashboardService, private uiService: UiService) { }
 
   ngOnInit() {
+    this.setSortingAccesor();
     this.subs.push(this.dashboardService.proximasActividades.subscribe(list => {
       this.datasource.data = list;
       const date = new Date();
@@ -38,6 +39,16 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
   ngAfterViewInit() {
     this.datasource.sort = this.sort;
     this.datasource.paginator = this.paginator;
+  }
+
+  private setSortingAccesor() {
+    this.datasource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'etapa': return item.etapa.nombreEtapa;
+        case 'estado': return this.getVencida(item);
+        default: return item[property];
+      }
+    };
   }
 
   getVencida(actividad: Actividad) {
