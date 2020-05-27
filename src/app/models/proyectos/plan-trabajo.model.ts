@@ -22,3 +22,12 @@ export interface EtapaPlan {
   fechaInicio: Date;
   fechaFin: Date;
 }
+
+export interface AprobacionPlan {
+  id?: number;
+  createdDate?: Date;
+  plan: PlanTrabajo;
+  avalCliente: boolean;
+  observaciones: string;
+  rutaArchivo: string;
+}

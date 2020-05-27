@@ -15,13 +15,13 @@ export interface Response {
 @Injectable()
 export class AppService {
 
-  /* TODO: terminar implementación de imagen.
-   private httpOptionsImage = { //terminar esto
-     headers: new HttpHeaders({ enctype: 'multipart/form-data'})
-   }; */
+  private httpOptionsImage = {
+    headers: new HttpHeaders({ enctype: 'multipart/form-data' })
+  };
   private loginHeaders = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded', Authorization: environment.authorization
   });
+
   private API_ENDPOINT = environment.api_endpoint;
   private LOGIN_PATH = environment.token_path;
   constructor(private httpClient: HttpClient) { }
@@ -57,6 +57,13 @@ export class AppService {
     return this.httpClient.delete(`${this.API_ENDPOINT}/${path}`).pipe(
       map(result => result as Response)
     ).toPromise();
+  }
+
+  uploadFile(archivo: File, path: string, idRegistro: number = null) {
+    const formData = new FormData();
+    formData.append('archivo', archivo);
+    if (idRegistro) { formData.append('id', idRegistro.toString()); }
+    return this.httpClient.put(`${this.API_ENDPOINT}/${path}`, formData, this.httpOptionsImage);
   }
 
 }

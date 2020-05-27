@@ -5,6 +5,7 @@ export interface PlanTrabajoBoard {
   idPlanDeTrabajo: number;
   planDeTrabajo: PlanTrabajo;
   etapas: EtapaPlanBoard[];
+  aprobado: boolean;
 }
 
 export interface EtapaPlanBoard {

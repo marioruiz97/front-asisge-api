@@ -29,6 +29,7 @@ export class AppConstants {
   public static PATH_PLANES_TRABAJO = 'proyectos/{idProyecto}/planes';
   public static PATH_PLAN_TRABAJO_ID = 'planes';
   public static PATH_ETAPA_PLAN = 'planes/{idPlan}/etapas';
+  public static PATH_APROBACIONES = 'planes/{idPlan}/aprobaciones';
 
   public static PATH_ACTIVIDADES_PLAN = 'planes/{idPlan}/actividades';
   public static PATH_ACTIVIDADES = 'actividades';
@@ -47,4 +48,12 @@ export const BASIC_DIALOG_CONFIG: MatDialogConfig = {
   maxHeight: '100vh',
   maxWidth: '100vw',
   minWidth: '50vw',
+};
+
+export const WIDE_DIALOG_CONFIG: MatDialogConfig = {
+  disableClose: true,
+  minHeight: '70vh',
+  maxHeight: '100vh',
+  minWidth: '80vw',
+  maxWidth: '100vw'
 };
