@@ -25,10 +25,29 @@ export interface BusinessInfo {
 export class ContactComponent implements OnInit, OnDestroy {
 
   private subs: Subscription[] = [];
-  empresa: BusinessInfo[] = [];
-  equipo: ContactTeam[] = [];
   contactForm: FormGroup;
   isLoading = false;
+
+  empresa: BusinessInfo[] = [
+    { icon: 'phonelink_ring', title: 'Teléfono: 448 61 02', value: 'Consulta Gratis' },
+    { icon: 'apartment', title: 'Dirección: CRA. 42 # 3 Sur 81 Torre 1 Piso 15', value: 'Barrio El Poblado' }
+  ];
+
+  equipo: ContactTeam[] = [
+    {
+      nombre: 'JUAN ERASMO LAVERDE', cargo: 'GERENTE',
+      telefono: '313 748 20 30', email: 'gerencia@asisge.com'
+    },
+    {
+      nombre: 'OSCAR LAVERDE', cargo: 'ASISTENTE ADMINISTRATIVO',
+      telefono: '318 502 66 41', email: 'administrativo@asisge.com'
+    },
+    {
+      nombre: 'MATEO MORALES', cargo: 'SOPORTE TÉCNICO',
+      telefono: '311 300 00 51', email: 'soporteasisge@gmail.com'
+    },
+  ];
+
 
   constructor(
     private uiService: UiService, private httpClient: HttpClient
@@ -37,13 +56,6 @@ export class ContactComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.onBuildForm();
     this.subs.push(this.uiService.loadingState.subscribe(state => this.isLoading = state));
-
-    /* // TODO: subscription para info de la empresa
-    this.subs.push(this.firestore.doc('empresa-asisge/info-empresa').valueChanges()
-      .subscribe((infoArray: any) => this.empresa = infoArray.info));
-    // subscription para equipo de la empresa
-    this.subs.push(this.firestore.doc('empresa-asisge/equipo-empresa').valueChanges()
-      .subscribe((equipo: any) => this.equipo = equipo.miembros)); */
   }
 
   onBuildForm(): void {

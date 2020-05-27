@@ -62,6 +62,9 @@ export class DashboardService {
     this.miembros.next(dashboard.miembros);
     this.proyecto.next(dashboard.proyecto);
     this.proximasActividades.next(dashboard.proximasActividades);
+    if (!dashboard.proximasActividades) {
+      this.alertarProyecto('');
+    }
     this.notificaciones.next(dashboard.notificaciones);
     this.uiService.dashboardLoading.next(false);
   }
