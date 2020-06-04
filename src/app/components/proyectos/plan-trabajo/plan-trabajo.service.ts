@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { AppService } from 'src/app/shared/app.service';
 import { UiService } from 'src/app/shared/ui.service';
-import { EtapaPlan } from 'src/app/models/proyectos/plan-trabajo.model';
+import { EtapaPlan, AprobacionPlan } from 'src/app/models/proyectos/plan-trabajo.model';
 import { Subject, Observable } from 'rxjs';
 import { AppConstants as Cons } from 'src/app/shared/routing/app.constants';
 import { Router } from '@angular/router';
@@ -68,6 +68,12 @@ export class PlanTrabajoService {
       this.uiService.showSnackBar('Se ha seleccionado plan correctamente', 2);
       this.planActual = plan;
       this.planActualSubject.next(this.planActual);
+      if (!plan.aprobado) {
+        this.uiService.showConfirm({
+          title: 'Plan no aprobado', confirm: 'Ok',
+          message: 'El plan de trabajo "' + plan.planDeTrabajo.nombrePlan + '" no ha sido aprobado aún.'
+        });
+      }
     } else {
       this.uiService.showSnackBar('No se ha podido seleccionar plan, intenta nuevamente', 3);
     }
@@ -247,6 +253,25 @@ export class PlanTrabajoService {
   }
 
 
+  fetchAprobacion(idPlan: number) {
+    const path = Cons.PATH_APROBACIONES.replace('{idPlan}', idPlan.toString());
+    return this.appService.getRequest(path);
+  }
+
+  saveAprobacion(aprobacion: AprobacionPlan, idPlan: number, isUpdate: boolean, idAprobacion: number = null) {
+    const path = Cons.PATH_APROBACIONES.replace('{idPlan}', idPlan.toString());
+    aprobacion.avalCliente = aprobacion.avalCliente ? aprobacion.avalCliente : false;
+    if (isUpdate && idAprobacion) {
+      return this.uiService.putSnackBar(this.appService.patchRequest(`${path}/${idAprobacion}`, aprobacion));
+    } else {
+      return this.uiService.putSnackBar(this.appService.postRequest(path, aprobacion));
+    }
+  }
+
+  cargarArchivo(archivo: File, idPlan: number, idRegistro: number) {
+    const path = Cons.PATH_APROBACIONES.replace('{idPlan}', idPlan.toString());
+    return this.uiService.putSnackBar(this.appService.uploadFile(archivo, path, idRegistro).toPromise());
+  }
 
   returnToDashboard() {
     if (this.dashboardService && this.dashboardService.dashboard) {

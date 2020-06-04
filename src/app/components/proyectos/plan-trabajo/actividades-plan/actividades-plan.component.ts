@@ -1,11 +1,11 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MatTableDataSource, MatSort, MatPaginator, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/material';
 import { Actividad } from 'src/app/models/proyectos/actividad.model';
 import { PlanTrabajoService } from '../plan-trabajo.service';
 import { EtapaPlan } from 'src/app/models/proyectos/plan-trabajo.model';
 import { ModalActividadComponent } from '../modal-actividad/modal-actividad.component';
-import { DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
+import { DIALOG_CONFIG, WIDE_DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
 import { isNullOrUndefined } from 'util';
 import { DetalleActividadComponent } from '../detalle-actividad/detalle-actividad.component';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -99,14 +99,7 @@ export class ActividadesPlanComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   showDetails(actividad: Actividad) {
-    const config: MatDialogConfig = {
-      disableClose: true,
-      minHeight: '70vh',
-      maxHeight: '100vh',
-      minWidth: '80vw',
-      maxWidth: '100vw'
-    };
-    this.dialog.open(DetalleActividadComponent, { ...config, data: actividad });
+    this.dialog.open(DetalleActividadComponent, { ...WIDE_DIALOG_CONFIG, data: actividad });
   }
 
   changeEstado(actividad: Actividad) {

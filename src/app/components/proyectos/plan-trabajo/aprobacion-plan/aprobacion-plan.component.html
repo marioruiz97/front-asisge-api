@@ -18,14 +18,15 @@
     </div>
     <div fxFlex fxLayout="column">
       <span class="info-title">Horas Contratadas por Mes:</span> <span>{{data.horasMes}}</span>
-      <span class="info-title">Objetivo del Plan:</span> <p class="m-0">{{data.objetivoPlan}}</p>
+      <span class="info-title">Objetivo del Plan:</span>
+      <p class="m-0">{{data.objetivoPlan}}</p>
     </div>
   </mat-card-content>
 </mat-card>
 
 <section class="my-3">
   <form class="mt-4 mx-auto" autocomplete="off" [formGroup]="aprobacionForm" (ngSubmit)="onSubmit()" fxFlex="90" fxLayout="column">
-    <div class="form-group" fxLayoutAlign="space-between">
+    <div class="form-group" fxLayoutAlign="space-between" fxLayout fxLayout.lt-sm="column">
       <mat-form-field appearance="outline" fxFlex>
         <mat-label>Fecha aprobación</mat-label>
         <input matInput [matDatepicker]="datePicker" formControlName="fechaAprobacion">
@@ -37,6 +38,22 @@
         <mat-slide-toggle class="my-auto" color="primary" formControlName="avalCliente" fxFlex>
           <span>Pulse para {{aprobacionForm.value.avalCliente? 'No Aprobar' : 'Aprobar'}} Plan de trabajo</span>
         </mat-slide-toggle>
+      </div>
+    </div>
+    <div class="form-group mb-3" fxLayout fxLayout.lt-sm="column">
+      <div fxFlex>
+        <label for="archivo">Archivo aprobación</label>
+        <br />
+        <input type="file" name="archivo" id="archivo" (change)="seleccionarArchivo($event)">
+      </div>
+      <div fxFlex *ngIf="showArchivo">
+        <mat-form-field appearance="outline" fxFlex>
+          <mat-label>Archivo cargado</mat-label>
+          <input matInput type="text" formControlName="rutaArchivo" #cargado>
+          <mat-hint>
+            <a [href]="cargado.value" target="_blank">Descargar archivo</a>
+          </mat-hint>
+        </mat-form-field>
       </div>
     </div>
     <div class="form-group">

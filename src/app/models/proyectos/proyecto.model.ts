@@ -10,6 +10,8 @@ export interface Proyecto {
   cliente: Cliente;
   lastModifiedDate?: Date;
   createdDate?: Date;
+  contrato?: string;
+  anticipo?: string;
 }
 
 export interface ProyectoDto {

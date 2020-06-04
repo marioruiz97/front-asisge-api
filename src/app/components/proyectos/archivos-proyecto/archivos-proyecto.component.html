@@ -1,0 +1,58 @@
+<div class="row">
+  <h3 class="mt-0">Archivos del Proyecto</h3>
+  <div fxFlex></div>
+  <button mat-icon-button matTooltip="Cerrar" [matDialogClose]="true">
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Proyecto: {{data.nombreProyecto}}</mat-card-title>
+    <mat-card-subtitle>Estado: {{data.estadoProyecto.nombreEstado}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content fxLayout.lt-sm="column" fxLayout>
+    <div fxFlex fxLayout="column">
+      <h4>Cargar Archivos</h4>
+      <div fxLayout="column">
+        <label for="fileContrato">Archivo aprobación</label>
+        <input type="file" name="fileContrato" id="fileContrato" (change)="seleccionarContrato($event)" #contrato>
+        <div class="mx-auto">
+          <button mat-button type="button" color="warn" (click)="quitarArchivo(contrato, 0)">
+            <mat-icon>clear</mat-icon> Quitar
+          </button>
+          <button mat-button type="button" color="primary" (click)="cargarContrato()" [disabled]="isWaiting">
+            <mat-icon>cloud_upload</mat-icon> Subir
+          </button>
+        </div>
+      </div>
+      <div class="mt-3" fxLayout="column">
+        <label for="fileAnticipo">Archivo aprobación</label>
+        <input type="file" name="fileAnticipo" id="fileAnticipo" (change)="seleccionarAnticipo($event)" #anticipo>
+        <div class="mx-auto">
+          <button mat-button type="button" color="warn" (click)="quitarArchivo(anticipo, 1)">
+            <mat-icon>clear</mat-icon> Quitar
+          </button>
+          <button class="mx-auto" mat-button type="button" color="primary" (click)="cargarAnticipo()" [disabled]="isWaiting">
+            <mat-icon>cloud_upload</mat-icon> Subir
+          </button>
+        </div>
+      </div>
+    </div>
+    <div fxFlex fxLayout="column">
+      <h4>Descargar Archivos</h4>
+      <mat-action-list>
+        <mat-list-item>
+          <mat-icon matListIcon>cloud_download</mat-icon>
+          <span *ngIf="!data.contrato">Adjunta el contrato para poder ver el enlace</span>
+          <a mat-line [href]="data.contrato" *ngIf="data.contrato"><span> Descargar Contrato</span></a>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListIcon>cloud_download</mat-icon>
+          <span *ngIf="!data.anticipo">Adjunta el anticipo para poder ver el enlace</span>
+          <a mat-line [href]="data.anticipo" *ngIf="data.anticipo"><span> Descargar Anticipo</span></a>
+        </mat-list-item>
+      </mat-action-list>
+    </div>
+  </mat-card-content>
+</mat-card>

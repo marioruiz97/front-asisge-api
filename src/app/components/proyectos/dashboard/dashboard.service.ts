@@ -62,6 +62,9 @@ export class DashboardService {
     this.miembros.next(dashboard.miembros);
     this.proyecto.next(dashboard.proyecto);
     this.proximasActividades.next(dashboard.proximasActividades);
+    if (!dashboard.proximasActividades) {
+      this.alertarProyecto('');
+    }
     this.notificaciones.next(dashboard.notificaciones);
     this.uiService.dashboardLoading.next(false);
   }
@@ -137,7 +140,36 @@ export class DashboardService {
    *  FIN METODOS DE GESTION DE MIEMBROS
    */
 
+  alertarProyecto(message: string, actividades: boolean = false) {
+    let checkArchivos = true;
+    if (this.dashboard.proyecto && (this.dashboard.proyecto.anticipo || this.dashboard.proyecto.contrato)) {
+      checkArchivos = false;
+    }
+    if (checkArchivos && actividades) {
+      const errors = [message, 'No se ha cargado anticipo o contrato para el proyecto'];
+      this.uiService.showConfirm({
+        title: 'Alertas en el proyecto', errors,
+        message: 'Debe revisar las próximas actividades y los archivos del proyecto', confirm: 'Ok'
+      });
+    } else if (checkArchivos && !actividades) {
+      this.uiService.showConfirm({
+        title: 'Proyecto iniciado sin anticipo o contrato', confirm: 'Ok',
+        message: 'No se ha cargado anticipo o contrato para el proyecto'
+      });
+    } else if (!checkArchivos && actividades) {
+      this.uiService.showConfirm({ title: 'Hay actividades vencidas', message, confirm: 'Ok' });
+    }
+  }
 
+  cargarContrato(archivo: File, idProyecto: number) {
+    const path = Cons.PATH_PROYECTOS + `/${idProyecto}?contrato=${true}`;
+    return this.appService.uploadFile(archivo, path);
+  }
+
+  cargarAnticipo(archivo: File, idProyecto: number) {
+    const path = Cons.PATH_PROYECTOS + `/${idProyecto}?contrato=${false}`;
+    return this.appService.uploadFile(archivo, path);
+  }
 
   returnToList() {
     this.router.navigate(['/proyectos']);

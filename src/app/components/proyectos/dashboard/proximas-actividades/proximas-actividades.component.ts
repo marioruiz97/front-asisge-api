@@ -30,7 +30,9 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
       const date = new Date();
       if (this.datasource.data.filter(actividad => date.getTime() > new Date(actividad.fechaVencimiento).getTime()).length > 0) {
         const message = 'Hay actividades cuyas fechas de vencimiento ya han pasado';
-        this.uiService.showConfirm({ title: 'Hay actividades vencidas', message, confirm: 'Ok' });
+        this.dashboardService.alertarProyecto(message, true);
+      } else {
+        this.dashboardService.alertarProyecto('');
       }
     }));
     this.dashboardService.fetchProximasActividades();

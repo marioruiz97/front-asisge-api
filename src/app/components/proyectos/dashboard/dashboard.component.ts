@@ -9,10 +9,11 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { PlanTrabajo } from 'src/app/models/proyectos/plan-trabajo.model';
 import { PlanTrabajoService } from '../plan-trabajo/plan-trabajo.service';
 import { AgregarMiembroComponent } from '../plan-trabajo/agregar-miembro/agregar-miembro.component';
-import { DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
+import { DIALOG_CONFIG, WIDE_DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
 import { MatDialog } from '@angular/material';
 import { EstadoProyectoComponent } from '../estado-proyecto/estado-proyecto.component';
 import { isNullOrUndefined } from 'util';
+import { ArchivosProyectoComponent } from '../archivos-proyecto/archivos-proyecto.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -76,6 +77,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.service.recargarDashboard();
         }
       });
+  }
+
+  cargarArchivos() {
+    this.dialog.open(ArchivosProyectoComponent, { ...WIDE_DIALOG_CONFIG, data: this.proyecto });
   }
 
   selectPlan() {
