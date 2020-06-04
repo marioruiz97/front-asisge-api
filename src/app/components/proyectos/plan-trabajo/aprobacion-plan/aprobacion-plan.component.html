@@ -26,7 +26,7 @@
 
 <section class="my-3">
   <form class="mt-4 mx-auto" autocomplete="off" [formGroup]="aprobacionForm" (ngSubmit)="onSubmit()" fxFlex="90" fxLayout="column">
-    <div class="form-group" fxLayoutAlign="space-between">
+    <div class="form-group" fxLayoutAlign="space-between" fxLayout fxLayout.lt-sm="column">
       <mat-form-field appearance="outline" fxFlex>
         <mat-label>Fecha aprobación</mat-label>
         <input matInput [matDatepicker]="datePicker" formControlName="fechaAprobacion">
@@ -40,7 +40,7 @@
         </mat-slide-toggle>
       </div>
     </div>
-    <div class="form-group mb-3">
+    <div class="form-group mb-3" fxLayout fxLayout.lt-sm="column">
       <div fxFlex>
         <label for="archivo">Archivo aprobación</label>
         <br />
