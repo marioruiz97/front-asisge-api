@@ -52,6 +52,9 @@ export class ActividadesPlanComponent implements OnInit, AfterViewInit, OnDestro
       let actividades: Actividad[] = [];
       this.etapas = planBoard.etapas.map(etapaBoard => etapaBoard.etapa);
       planBoard.etapas.forEach(etapa => {
+        let showAccion = true;
+        if (etapa.etapa.cierre || planBoard.planDeTrabajo.cierre) { showAccion = false; }
+        etapa.actividades.forEach(actividad => actividad.showAcciones = showAccion);
         actividades = actividades.concat(etapa.actividades);
       });
       this.datasource.data = actividades;

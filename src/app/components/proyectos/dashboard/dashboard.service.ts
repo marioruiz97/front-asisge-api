@@ -18,6 +18,7 @@ export class DashboardService {
   proyecto = new Subject<Proyecto>();
   notificaciones = new Subject<Notificacion[]>();
   estados = new Subject<EstadoLineDto[]>();
+  avance = new Subject<number>();
   proximasActividades = new Subject<Actividad[]>();
 
   private dashboardPath = Cons.PATH_DASHBOARD;
@@ -66,6 +67,7 @@ export class DashboardService {
       this.alertarProyecto('');
     }
     this.notificaciones.next(dashboard.notificaciones);
+    this.avance.next(dashboard.avance);
     this.uiService.dashboardLoading.next(false);
   }
 
@@ -96,6 +98,12 @@ export class DashboardService {
   fetchEstadosLine() {
     if (this.dashboard && this.dashboard.lineaEstados) {
       this.estados.next(this.dashboard.lineaEstados);
+    }
+  }
+
+  fetchAvances() {
+    if (this.dashboard && this.dashboard.avance) {
+      this.avance.next(this.dashboard.avance);
     }
   }
 

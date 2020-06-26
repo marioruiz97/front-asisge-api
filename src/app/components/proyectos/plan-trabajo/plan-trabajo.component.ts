@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { PlanTrabajo } from 'src/app/models/proyectos/plan-trabajo.model';
 import { ModalActividadComponent } from './modal-actividad/modal-actividad.component';
 import { AprobacionPlanComponent } from './aprobacion-plan/aprobacion-plan.component';
+import { CierresComponent } from './cierres/cierres.component';
 
 @Component({
   selector: 'app-plan-trabajo',
@@ -46,6 +47,17 @@ export class PlanTrabajoComponent implements OnInit, OnDestroy {
   aprobacionPlan() {
     if (this.verificarPlan()) {
       this.dialog.open(AprobacionPlanComponent, { ...WIDE_DIALOG_CONFIG, data: this.planActual });
+    }
+  }
+
+  cerrarPlan() {
+    if (this.verificarPlan()) {
+      this.dialog.open(CierresComponent, { ...DIALOG_CONFIG, data: this.planActual }).afterClosed().subscribe(result => {
+        if (result.idCierre) {
+          this.service.planActual.planDeTrabajo.cierre = result;
+          this.service.fetchPlanActual();
+        }
+      });
     }
   }
 

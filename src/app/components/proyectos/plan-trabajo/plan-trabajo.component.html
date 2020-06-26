@@ -5,7 +5,7 @@
 <mat-drawer-container class="mt-4 py-4" *ngIf="planActual">
   <mat-drawer #aside class="sidenav" role="directory" mode="side">
     <mat-action-list>
-      <mat-list-item [routerLink]="['/proyectos/'+ planActual.proyecto.idProyecto +'/plan/'+ planActual.idPlanDeTrabajo]">
+      <mat-list-item [routerLink]="['/proyectos/'+ planActual.proyecto.idProyecto +'/plan/'+ planActual.idPlanDeTrabajo]" *ngIf="!planActual.cierre">
         <div mat-line><mat-icon mat-list-icon>edit</mat-icon></div>
         <div mat-line><span>Editar Plan</span></div>
       </mat-list-item>
@@ -13,11 +13,15 @@
         <div mat-line><mat-icon mat-list-icon>thumb_up_alt</mat-icon></div>
         <div mat-line><span>Aprobar Plan de Trabajo</span></div>
       </mat-list-item>
-      <mat-list-item (click)="agregarEtapa()">
+      <mat-list-item (click)="cerrarPlan()">
+        <div mat-line><mat-icon mat-list-icon>assignment_turned_in</mat-icon></div>
+        <div mat-line><span>Cerrar Plan</span></div>
+      </mat-list-item>
+      <mat-list-item (click)="agregarEtapa()" *ngIf="!planActual.cierre">
         <div mat-line><mat-icon mat-list-icon>queue</mat-icon></div>
         <div mat-line><span>Agregar Etapa</span></div>
       </mat-list-item>
-      <mat-list-item (click)="agregarActividad()">
+      <mat-list-item (click)="agregarActividad()" *ngIf="!planActual.cierre">
         <div mat-line><mat-icon mat-list-icon>post_add</mat-icon></div>
         <div mat-line><span>Agregar Actividad</span></div>
       </mat-list-item>
@@ -37,6 +41,7 @@
         <mat-icon>{{ aside.opened ? 'keyboard_arrow_left' : 'keyboard_arrow_right'}}</mat-icon>
       </button>
       <h3 class="pl-4 my-auto">Plan de trabajo</h3>
+      <h4 *ngIf="planActual.cierre">  (Este plan ya está cerrado. No se pueden hacer modificaciones) </h4>
       <div fxFlex></div>
       <button class="mr-3" mat-icon-button (click)="recargarPlan()" matTooltip="Recargar Plan">
         <mat-icon class="mat-18">refresh</mat-icon>

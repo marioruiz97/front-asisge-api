@@ -12,6 +12,7 @@ export interface Dashboard {
   notificaciones: Notificacion[];
   lineaEstados: EstadoLineDto[];
   proximasActividades: Actividad[];
+  avance: number;
 }
 
 export interface Notificacion {

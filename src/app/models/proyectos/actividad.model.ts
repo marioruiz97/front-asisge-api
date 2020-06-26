@@ -11,6 +11,7 @@ export interface Actividad {
   fechaVencimiento: Date;
   duracion: number;
   descripcion: string;
+  showAcciones?: boolean;
 }
 
 export interface ActividadDto {

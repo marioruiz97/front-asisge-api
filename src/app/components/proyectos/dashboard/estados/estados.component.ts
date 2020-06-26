@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 export class EstadosComponent implements OnInit, OnDestroy {
 
   @Input() estado: EstadoProyecto;
+  avance = 5;
   estadosLine: EstadoLineDto[] = [];
   private subs: Subscription[] = [];
 
@@ -25,7 +26,9 @@ export class EstadosComponent implements OnInit, OnDestroy {
 
   fetchLine() {
     this.subs.push(this.service.estados.subscribe(list => this.estadosLine = list));
+    this.subs.push(this.service.avance.subscribe(avance => this.avance = avance));
     this.service.fetchEstadosLine();
+    this.service.fetchAvances();
   }
 
   refreshIndex(): number {

@@ -29,6 +29,7 @@ import { TiempoService } from './dashboard/tiempos/tiempo.service';
 import { EstadoProyectoComponent } from './estado-proyecto/estado-proyecto.component';
 import { AprobacionPlanComponent } from './plan-trabajo/aprobacion-plan/aprobacion-plan.component';
 import { ArchivosProyectoComponent } from './archivos-proyecto/archivos-proyecto.component';
+import { CierresComponent } from './plan-trabajo/cierres/cierres.component';
 
 
 
@@ -58,7 +59,8 @@ import { ArchivosProyectoComponent } from './archivos-proyecto/archivos-proyecto
     TiemposComponent,
     EstadoProyectoComponent,
     AprobacionPlanComponent,
-    ArchivosProyectoComponent
+    ArchivosProyectoComponent,
+    CierresComponent
   ],
   imports: [
     SharedModule
@@ -72,7 +74,8 @@ import { ArchivosProyectoComponent } from './archivos-proyecto/archivos-proyecto
     PasarActividadEstadoComponent,
     EstadoProyectoComponent,
     AprobacionPlanComponent,
-    ArchivosProyectoComponent
+    ArchivosProyectoComponent,
+    CierresComponent
   ],
   providers: [ProyectoService, DashboardService, PlanTrabajoService, TiempoService]
 })

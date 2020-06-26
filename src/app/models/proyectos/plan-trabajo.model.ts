@@ -13,6 +13,7 @@ export interface PlanTrabajo {
   proyecto: Proyecto;
   etapaActual?: EtapaPlan;
   etapas?: EtapaPlan[];
+  cierre?: Cierre;
 }
 
 export interface EtapaPlan {
@@ -21,6 +22,7 @@ export interface EtapaPlan {
   nombreEtapa: string;
   fechaInicio: Date;
   fechaFin: Date;
+  cierre?: Cierre;
 }
 
 export interface AprobacionPlan {
@@ -30,4 +32,11 @@ export interface AprobacionPlan {
   avalCliente: boolean;
   observaciones: string;
   rutaArchivo: string;
+}
+
+export interface Cierre {
+  idCierre?: number;
+  avalCliente: boolean;
+  observaciones: string;
+  createdDate?: Date;
 }
