@@ -1,6 +1,6 @@
 .about-header {
   height: 90vh;
-  background-image: url("https://demo.s4ds.com/images/about/banner-about-us.jpg");
+  background-image: url("/assets/img/acerca.jpg");
   background-position: center;
   background-attachment: fixed;
   background-size: cover;

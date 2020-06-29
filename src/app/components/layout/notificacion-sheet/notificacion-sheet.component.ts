@@ -15,7 +15,6 @@ export class NotificacionSheetComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
 
   constructor(
-    /* private bottomSheetRef: MatBottomSheetRef<NotificacionSheetComponent>, */
     private appService: AppService,
     private changeDetectorRef: ChangeDetectorRef
   ) { }

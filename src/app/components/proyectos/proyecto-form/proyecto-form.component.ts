@@ -117,8 +117,6 @@ export class ProyectoFormComponent implements OnInit, OnDestroy {
 
   setClienteValue(cliente: Cliente) {
     return `${cliente.idCliente} - ${cliente.razonSocial}`;
-    /* const value = `${cliente.idCliente} - ${cliente.nombreComercial}`;
-    this.proyectoForm.get('cliente').setValue(value); */
   }
 
   private _filter(value: string): Cliente[] {

@@ -39,7 +39,7 @@ export class ModalActividadComponent implements OnInit, OnDestroy {
     this.subs.push(this.service.planActualSubject.subscribe(planBoard => {
       const plan = planBoard.planDeTrabajo;
       this.idPlanTrabajo = plan.idPlanDeTrabajo;
-      this.etapas = plan.etapas;
+      this.etapas = plan.etapas.filter(etapa => !etapa.cierre).slice();
       this.minDate = plan.fechaInicio ? plan.fechaInicio : new Date();
       this.maxDate = plan.fechaFinEstimada ? plan.fechaFinEstimada : null;
     }));
