@@ -35,7 +35,7 @@ export class AppMenu {
     {
       name: 'Proyectos', url: '/', icon: 'dashboard',
       children: [
-        { name: 'Ver Planes de Trabajo', url: '/plantillas', icon: 'next_week' },
+        { name: 'Ver Plantillas', url: '/plantillas', icon: 'next_week' },
         { name: 'Tablero de Proyectos', url: '/proyectos', icon: 'dashboard' }
       ]
     },

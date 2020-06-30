@@ -8,6 +8,7 @@ import { PlanTrabajo } from 'src/app/models/proyectos/plan-trabajo.model';
 import { ModalActividadComponent } from './modal-actividad/modal-actividad.component';
 import { AprobacionPlanComponent } from './aprobacion-plan/aprobacion-plan.component';
 import { CierresComponent } from './cierres/cierres.component';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-plan-trabajo',
@@ -19,7 +20,7 @@ export class PlanTrabajoComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
   planActual: PlanTrabajo;
 
-  constructor(private dialog: MatDialog, private service: PlanTrabajoService) { }
+  constructor(private dialog: MatDialog, private service: PlanTrabajoService, public auth: AuthService) { }
 
   ngOnInit() {
     this.subs.push(this.service.planActualSubject.subscribe(plan => this.planActual = plan.planDeTrabajo));
