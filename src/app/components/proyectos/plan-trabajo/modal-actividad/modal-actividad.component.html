@@ -78,7 +78,7 @@
     <button type="button" mat-raised-button [matDialogClose]="true" color="warn" *ngIf="!isWaiting">
       Volver al plan de trabajo
     </button>
-    <button type="submit" mat-raised-button [matDialogClose]="false" color="primary" *ngIf="!isWaiting" [disabled]="actividadForm.invalid">
+    <button type="submit" mat-raised-button color="primary" *ngIf="!isWaiting" [disabled]="actividadForm.invalid">
       Guardar Actividad
     </button>
     <mat-spinner *ngIf="isWaiting"></mat-spinner>

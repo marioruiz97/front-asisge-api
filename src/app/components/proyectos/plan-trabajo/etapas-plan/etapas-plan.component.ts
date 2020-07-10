@@ -16,7 +16,7 @@ import { CierresComponent } from '../cierres/cierres.component';
 })
 export class EtapasPlanComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['idEtapaPDT', 'nombreEtapa', 'fechaInicio', 'fechaFin', 'acciones'];
+  displayedColumns = ['idEtapaPDT', 'nombreEtapa', 'fechaInicio', 'fechaFin', 'cierre', 'acciones'];
   datasource = new MatTableDataSource<EtapaPlan>();
   etapaActual: EtapaPlan;
   showAcciones = true;
@@ -51,7 +51,7 @@ export class EtapasPlanComponent implements OnInit, AfterViewInit, OnDestroy {
     const ref = this.dialog.open(EditarEtapaComponent, { ...DIALOG_CONFIG, data: etapa });
     // recibir la etapa modificada
     ref.afterClosed().subscribe(result => {
-      if (!isNullOrUndefined(result.idEtapaPDT) && result.idEtapaPDT !== 0) {
+      if (result.idEtapaPDT && result.idEtapaPDT !== 0) {
         this.datasource.data.filter(e => e.idEtapaPDT === result.idEtapaPDT).map(et => {
           et.nombreEtapa = result.nombreEtapa;
           et.fechaFin = result.fechaFin;

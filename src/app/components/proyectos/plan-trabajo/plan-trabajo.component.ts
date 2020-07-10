@@ -41,7 +41,11 @@ export class PlanTrabajoComponent implements OnInit, OnDestroy {
 
   agregarActividad() {
     if (this.verificarPlan()) {
-      this.dialog.open(ModalActividadComponent, { ...DIALOG_CONFIG, data: {} });
+      this.dialog.open(ModalActividadComponent, { ...DIALOG_CONFIG, data: {} }).afterClosed().subscribe(result => {
+        if (result.idActividad) {
+          this.recargarPlan();
+        }
+      });
     }
   }
 

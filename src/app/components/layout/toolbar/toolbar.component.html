@@ -30,6 +30,9 @@
         <button mat-menu-item *ngFor="let setting of settings" [routerLink]="[setting.url]">
           <mat-icon>{{setting.icon}}</mat-icon> {{setting.name}}
         </button>
+        <a class="link-manual-usuario" href="https://firebasestorage.googleapis.com/v0/b/proyectos-asisge.appspot.com/o/Manual%20de%20usuario%20Asisge.pdf?alt=media&token=18fd2fc7-d375-4aaf-98b5-787855a5ef84" target="_blank" mat-menu-item>
+          <mat-icon>import_contacts</mat-icon> Manual de Usuario
+        </a>
         <button mat-menu-item (click)="onLogout()">
           <mat-icon>exit_to_app</mat-icon> Cerrar Sesión
         </button>

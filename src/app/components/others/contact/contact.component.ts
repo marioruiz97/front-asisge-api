@@ -83,7 +83,8 @@ export class ContactComponent implements OnInit, OnDestroy {
           this.uiService.showSnackBar(res.success, 3);
           this.uiService.loadingState.next(false);
           this.onBuildForm();
-        }, _ => {
+        }, error => {
+          console.log('error', error);
           this.uiService.showSnackBar('hubo un error enviando el correo, intenta más tarde', 3);
           this.uiService.loadingState.next(false);
         }));

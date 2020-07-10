@@ -45,8 +45,7 @@ export class AppMenu {
   private $settings = [
     { name: 'Mi Perfil', url: '/micuenta', icon: 'account_circle' },
     { name: 'Acerca de', url: '/acerca', icon: 'account_tree' },
-    { name: 'Contacto', url: '/contacto', icon: 'contacts' },
-    { name: 'Manual de Usuario', url: '/', icon: 'import_contacts' }
+    { name: 'Contacto', url: '/contacto', icon: 'contacts' }
   ];
 
 

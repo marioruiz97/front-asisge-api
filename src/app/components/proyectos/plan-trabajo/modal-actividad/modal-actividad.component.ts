@@ -89,7 +89,7 @@ export class ModalActividadComponent implements OnInit, OnDestroy {
       // crear
       const actividad = { ...this.actividadForm.value, estadoActividad: 0 };
       this.subs.push(this.service.createActividad(this.idPlanTrabajo, actividad).subscribe(exito => {
-        if (exito) { this.initForm(); }
+        if (exito) { this.dialogRef.close(actividad); }
       }));
     }
   }

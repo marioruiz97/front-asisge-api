@@ -40,7 +40,7 @@
     <button type="button" mat-raised-button [matDialogClose]="true" color="warn" *ngIf="!isWaiting">
       Volver al plan de trabajo
     </button>
-    <button type="submit" mat-button [matDialogClose]="false" color="primary" *ngIf="!isWaiting" [disabled]="etapaForm.invalid">
+    <button type="submit" mat-button color="primary" *ngIf="!isWaiting" [disabled]="etapaForm.invalid">
       Editar Etapa
     </button>
     <mat-spinner *ngIf="isWaiting"></mat-spinner>

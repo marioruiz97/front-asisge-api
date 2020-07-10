@@ -48,6 +48,7 @@ export class ActividadesPlanComponent implements OnInit, AfterViewInit, OnDestro
   ngOnInit() {
     this.initForm();
     this.setSortingAccesor();
+    this.datasource.filterPredicate = this.createFilter();
     this.subs.push(this.service.planActualSubject.subscribe(planBoard => {
       let actividades: Actividad[] = [];
       this.etapas = planBoard.etapas.map(etapaBoard => etapaBoard.etapa);
@@ -58,7 +59,6 @@ export class ActividadesPlanComponent implements OnInit, AfterViewInit, OnDestro
         actividades = actividades.concat(etapa.actividades);
       });
       this.datasource.data = actividades;
-      this.datasource.filterPredicate = this.createFilter();
     }));
     this.subs.push(this.dashboardService.miembros.subscribe(miembros => this.miembrosProyecto = miembros.map(miembro => miembro.usuario)));
     this.service.fetchPlanActual();
@@ -83,11 +83,10 @@ export class ActividadesPlanComponent implements OnInit, AfterViewInit, OnDestro
     const ref = this.dialog.open(ModalActividadComponent, { ...DIALOG_CONFIG, data: actividad });
     // recibir la actividad modificada
     ref.afterClosed().subscribe(result => {
-      if (!isNullOrUndefined(result.idActividad) && result.idActividad !== 0) {
+      if (result.idActividad && result.idActividad !== 0) {
         this.datasource.data.filter(e => e.idActividad === result.idActividad).map(act => {
           act.nombre = result.nombre;
           act.fechaVencimiento = result.fechaVencimiento;
-          /* actividad.etapa = result.etapa; */
           act.duracion = result.duracion;
           act.descripcion = result.descripcion;
         });
@@ -134,8 +133,12 @@ export class ActividadesPlanComponent implements OnInit, AfterViewInit, OnDestro
     const filterFunction = (data: Actividad, filter: string): boolean => {
       const filtro = JSON.parse(filter) as FiltroActividad;
       const filtroEtapa = !filtro.etapa || (filtro.etapa && filtro.etapa === data.etapa.idEtapaPDT);
-      const filtroNombre = data.nombre.toLowerCase().indexOf(filtro.nombre) !== -1
-        || data.descripcion.toLowerCase().indexOf(filtro.nombre) !== -1;
+      let filtroNombre = true;
+      if (filtro.nombre) {
+        filtro.nombre = filtro.nombre.toLowerCase();
+        filtroNombre = data.nombre.toLowerCase().indexOf(filtro.nombre) !== -1 ||
+          (data.descripcion && data.descripcion.toLowerCase().indexOf(filtro.nombre) !== -1);
+      }
       const filtroFecha = !filtro.fechaVencimiento || (filtro.fechaVencimiento
         && new Date(data.fechaVencimiento).getTime() < new Date(filtro.fechaVencimiento).getTime());
       const filtroUsuario = !filtro.usuario || (filtro.usuario

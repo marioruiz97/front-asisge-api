@@ -40,8 +40,19 @@ app-toolbar {
   z-index: 2;
 }
 
+a.link-manual-usuario,
+a.link-manual-usuario:active, a.link-manual-usuario:checked {
+  text-decoration: none;
+}
+
+p.invalid-form, div.invalid-form {
+  text-align: center !important;
+  color: var(--darken-orange);
+  font-weight: 400;
+}
+
 tr.mat-row:hover {
-  background-color: #EEE;
+  background-color: #eee;
 }
 
 ngx-avatar {
