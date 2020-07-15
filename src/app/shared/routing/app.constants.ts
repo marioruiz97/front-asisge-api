@@ -31,6 +31,9 @@ export class AppConstants {
   public static PATH_ETAPA_PLAN = 'planes/{idPlan}/etapas';
   public static PATH_APROBACIONES = 'planes/{idPlan}/aprobaciones';
 
+  public static PATH_CIERRE_PLAN = 'cierres/planes';
+  public static PATH_CIERRE_ETAPA = 'cierres/etapas';
+
   public static PATH_ACTIVIDADES_PLAN = 'planes/{idPlan}/actividades';
   public static PATH_ACTIVIDADES = 'actividades';
   public static PATH_SEGUIMIENTOS = 'actividades/{idActividad}/seguimientos';

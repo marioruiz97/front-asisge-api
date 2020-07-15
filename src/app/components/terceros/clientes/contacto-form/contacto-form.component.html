@@ -9,29 +9,29 @@
 
   <span mat-subheader>Los campos con * son obligatorios</span>
 
-  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+  <form [formGroup]="contactoForm" (ngSubmit)="onSubmit()">
     <mat-dialog-content fxLayout="column">
-      <input type="hidden" name="idCliente" [value]="data.idCliente ? data.idCliente : 0">
-      <input type="hidden" name="id" [value]="data.id ? data.id : 0">
+      <!-- <input type="hidden" name="idCliente" [value]="data.idCliente ? data.idCliente : 0">
+      <input type="hidden" name="id" [value]="data.id ? data.id : 0"> -->
       <mat-form-field>
         <mat-label>Nombre contacto</mat-label>
-        <input type="text" matInput name="nombre" [(ngModel)]="nombre" required>
+        <input type="text" matInput formControlName="nombre">
         <mat-hint>Ingrese nombre del contacto</mat-hint>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Telefono</mat-label>
-        <input type="tel" maxlength="11" pattern="[0-9]*" matInput name="telefono" [(ngModel)]="telefono">
+        <input type="tel" maxlength="11" pattern="[0-9]*" matInput formControlName="telefono">
         <mat-hint>Ingrese el teléfono (hasta 11 caracteres)</mat-hint>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Correo electrónico</mat-label>
-        <input type="email" matInput name="correo" [(ngModel)]="correo" required>
+        <input type="email" matInput formControlName="correo">
         <mat-hint>Ingrese el correo electrónico</mat-hint>
       </mat-form-field>
     </mat-dialog-content>
 
     <mat-dialog-actions class="my-4">
-      <button type="submit" mat-button fxFlex [matDialogClose]="false" [disabled]="form.invalid" color="primary">Guardar Contacto</button>
+      <button type="submit" mat-button fxFlex [disabled]="contactoForm.invalid" color="primary">Guardar Contacto</button>
       <button type="button" mat-button fxFlex [matDialogClose]="true">Cancelar</button>
     </mat-dialog-actions>
   </form>

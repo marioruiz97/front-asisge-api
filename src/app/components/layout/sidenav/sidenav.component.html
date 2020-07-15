@@ -42,6 +42,9 @@
         <a mat-list-item (click)="onToggle()" [routerLink]="[item.url]" *ngFor="let item of settings">
           <mat-icon>{{item.icon}}</mat-icon> <span class="nav-caption">{{item.name}}</span>
         </a>
+        <a href="https://firebasestorage.googleapis.com/v0/b/proyectos-asisge.appspot.com/o/Manual%20de%20usuario%20Asisge.pdf?alt=media&token=18fd2fc7-d375-4aaf-98b5-787855a5ef84" target="_blank" mat-list-item>
+          <mat-icon>import_contacts</mat-icon> <span class="nav-caption">Manual de Usuario</span>
+        </a>
         <a mat-list-item (click)="onLogout()">
           <mat-icon>exit_to_app</mat-icon> <span class="nav-caption">Cerrar Sesión</span>
         </a>

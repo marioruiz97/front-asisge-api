@@ -117,8 +117,6 @@ export class ProyectoFormComponent implements OnInit, OnDestroy {
 
   setClienteValue(cliente: Cliente) {
     return `${cliente.idCliente} - ${cliente.razonSocial}`;
-    /* const value = `${cliente.idCliente} - ${cliente.nombreComercial}`;
-    this.proyectoForm.get('cliente').setValue(value); */
   }
 
   private _filter(value: string): Cliente[] {
@@ -126,6 +124,19 @@ export class ProyectoFormComponent implements OnInit, OnDestroy {
     return this.clientes.filter(c =>
       c.razonSocial.toLowerCase().includes(filterValue) || c.nombreComercial.toLowerCase().includes(filterValue)
     ).slice();
+  }
+
+  printErrors(): string[] {
+    const controls = ['nombreProyecto', 'fechaCierreProyecto', 'cliente'];
+    const result: string[] = [];
+    controls.forEach(control => {
+      if (this.proyectoForm.controls[control].errors !== null) {
+        const printable = control === 'nombreProyecto' ? 'Nombre Proyecto' :
+          (control === 'fechaCierreProyecto' ? 'Fecha de Cierre' : 'Cliente');
+        result.push(printable);
+      }
+    });
+    return result;
   }
 
 

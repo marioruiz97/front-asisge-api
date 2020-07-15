@@ -57,7 +57,7 @@
               <mat-label>Número de identificación</mat-label>
               <input matInput type="number" placeholder="Ej. 1017251545" formControlName="identificacion">
               <mat-hint>Ingrese el número de identificación sin puntos</mat-hint>
-              <mat-error>El número de identificación debe tener entre 6 y 20 caracteres (Actual: {{usuarioForm.value.identificacion.length}}) </mat-error>
+              <mat-error>El número de identificación debe tener entre 6 y 15 caracteres (Actual: {{usuarioForm.value.identificacion?.length}}) </mat-error>
             </mat-form-field>
           </div>
         </mat-expansion-panel>
@@ -83,7 +83,7 @@
             <mat-form-field appearance="outline" class="form-input">
               <mat-label>Correo electrónico</mat-label>
               <input matInput type="email" placeholder="Ej. MarioRuiz@gmail.com" formControlName="correo" autocomplete="off">
-              <mat-hint>Ingrese su correo para recuperación de contraseña</mat-hint>
+              <mat-hint>Ingrese su correo para inicio de sesión y recuperación de contraseña</mat-hint>
             </mat-form-field>
           </div>
           <!-- contraseña -->
@@ -91,7 +91,7 @@
             <mat-form-field appearance="outline" class="form-input">
               <mat-label>Contraseña</mat-label>
               <input matInput type="password" formControlName="contrasena" autocomplete="off">
-              <mat-hint>Ingrese su contraseña</mat-hint>
+              <mat-hint>Ingrese su contraseña (mínimo 6 caracteres)</mat-hint>
             </mat-form-field>
             <!-- confirmar contraseña -->
             <mat-form-field appearance="outline" class="form-input">
@@ -118,6 +118,13 @@
           </div>
 
           <!-- BOTONERA -->
+          <p class="invalid-form" *ngIf="usuarioForm.invalid">**El formulario posee errores, verifica los campos.</p>
+          <div class="invalid-form" *ngIf="usuarioForm.invalid">
+            <h4>Campos con errores:</h4>
+            <ul style="list-style: none;">
+              <li *ngFor="let campo of printErrors()">{{campo}}</li>
+            </ul>
+          </div>
           <mat-action-row class="form-action" fxLayoutAlign.gt-sm="center center" fxLayout.lt-sm="column">
             <button class="m-2" type="button" mat-raised-button (click)="goBack()" color="warn" *ngIf="!isWaiting">
               <mat-icon>arrow_back</mat-icon>Regresar <span fxHide.lt-sm> a Usuarios</span>

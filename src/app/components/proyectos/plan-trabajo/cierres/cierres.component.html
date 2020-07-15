@@ -1,0 +1,45 @@
+<div class="row">
+  <h3>{{getTitulo()}}</h3>
+  <div fxFlex></div>
+  <button mat-icon-button matTooltip="Cerrar" [matDialogClose]="true">
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>
+
+<form autocomplete="off" [formGroup]="cierreForm" (ngSubmit)="onSubmit()">
+  <div class="form-group mt-3 mb-4" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between"
+    fxLayoutGap="1rem">
+    <mat-form-field appearance="outline" fxFlex>
+      <mat-label>Fecha del cierre</mat-label>
+      <input matInput [matDatepicker]="fechaCierre" formControlName="createdDate">
+      <mat-datepicker-toggle matSuffix [for]="fechaCierre"></mat-datepicker-toggle>
+      <mat-datepicker #fechaCierre></mat-datepicker>
+      <mat-hint>Fecha del cierre. (Campo diligenciado por el sistema)</mat-hint>
+    </mat-form-field>
+    <div class="pl-sm-4" fxFlex fxLayout="column">
+      <h4 class="mt-0 mb-2">Validación del cliente</h4>
+      <mat-slide-toggle class="my-auto" color="primary" formControlName="avalCliente" fxFlex>
+        <span>Se cumplieron los estándares de aceptación</span>
+      </mat-slide-toggle>
+    </div>
+  </div>
+  <div class="form-group my-2">
+    <mat-form-field appearance="outline" fxFlex>
+      <mat-label>Observaciones</mat-label>
+      <textarea matInput formControlName="observaciones"></textarea>
+      <mat-icon matPrefix>message</mat-icon>
+      <mat-hint> Máximo 255 caracteres / actual:{{cierreForm.value.observaciones.length}} </mat-hint>
+    </mat-form-field>
+  </div>
+
+  <div class="form-actions" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-evenly"
+    fxLayoutGap="20px">
+    <button type="button" mat-raised-button [matDialogClose]="true" color="warn" *ngIf="!isWaiting">
+      Cancelar
+    </button>
+    <button type="submit" mat-button color="primary" *ngIf="!isWaiting" [disabled]="cierreForm.invalid">
+      Guardar cierre
+    </button>
+    <mat-spinner *ngIf="isWaiting"></mat-spinner>
+  </div>
+</form>

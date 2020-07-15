@@ -6,6 +6,7 @@ import { PlanTrabajoService } from '../plan-trabajo.service';
 import { EditarEtapaComponent } from '../editar-etapa/editar-etapa.component';
 import { DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
 import { isNullOrUndefined } from 'util';
+import { CierresComponent } from '../cierres/cierres.component';
 
 
 @Component({
@@ -15,9 +16,10 @@ import { isNullOrUndefined } from 'util';
 })
 export class EtapasPlanComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  displayedColumns = ['idEtapaPDT', 'nombreEtapa', 'fechaInicio', 'fechaFin', 'acciones'];
+  displayedColumns = ['idEtapaPDT', 'nombreEtapa', 'fechaInicio', 'fechaFin', 'cierre', 'acciones'];
   datasource = new MatTableDataSource<EtapaPlan>();
   etapaActual: EtapaPlan;
+  showAcciones = true;
 
   private subs: Subscription[] = [];
 
@@ -31,6 +33,7 @@ export class EtapasPlanComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subs.push(this.service.planActualSubject.subscribe(plan => {
       this.datasource.data = plan.planDeTrabajo.etapas;
       this.etapaActual = plan.planDeTrabajo.etapaActual ? plan.planDeTrabajo.etapaActual : null;
+      this.showAcciones = !plan.planDeTrabajo.cierre;
     }));
     this.service.fetchPlanActual();
   }
@@ -48,12 +51,20 @@ export class EtapasPlanComponent implements OnInit, AfterViewInit, OnDestroy {
     const ref = this.dialog.open(EditarEtapaComponent, { ...DIALOG_CONFIG, data: etapa });
     // recibir la etapa modificada
     ref.afterClosed().subscribe(result => {
-      if (!isNullOrUndefined(result.idEtapaPDT) && result.idEtapaPDT !== 0) {
+      if (result.idEtapaPDT && result.idEtapaPDT !== 0) {
         this.datasource.data.filter(e => e.idEtapaPDT === result.idEtapaPDT).map(et => {
           et.nombreEtapa = result.nombreEtapa;
           et.fechaFin = result.fechaFin;
           et.fechaInicio = result.fechaInicio;
         });
+      }
+    });
+  }
+
+  cerrarEtapa(etapa: EtapaPlan) {
+    this.dialog.open(CierresComponent, { ...DIALOG_CONFIG, data: etapa }).afterClosed().subscribe(result => {
+      if (result.idCierre) {
+        etapa.cierre = result;
       }
     });
   }

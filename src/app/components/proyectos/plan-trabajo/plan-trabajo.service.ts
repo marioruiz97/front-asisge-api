@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { AppService } from 'src/app/shared/app.service';
 import { UiService } from 'src/app/shared/ui.service';
-import { EtapaPlan, AprobacionPlan } from 'src/app/models/proyectos/plan-trabajo.model';
+import { EtapaPlan, AprobacionPlan, Cierre } from 'src/app/models/proyectos/plan-trabajo.model';
 import { Subject, Observable } from 'rxjs';
 import { AppConstants as Cons } from 'src/app/shared/routing/app.constants';
 import { Router } from '@angular/router';
@@ -113,6 +113,23 @@ export class PlanTrabajoService {
     });
   }
 
+  cerrarPlan(idPlan: number, cierre: Cierre): Observable<Cierre> {
+    const path = Cons.PATH_CIERRE_PLAN + `/${idPlan}`;
+    this.uiService.loadingState.next(true);
+    return new Observable(result => {
+      this.appService.postRequest(path, cierre).then(res => {
+        this.uiService.showSnackBar(res.message, 4);
+        this.uiService.loadingState.next(false);
+        result.next(res.body);
+      }).catch(err => {
+        const message = err.error ? err.error.message : 'Ha ocurrido un error interno';
+        const errors: string[] = err.error && err.error.errors ? err.error.errors : [];
+        this.uiService.showConfirm({ title: 'Error', message, errors, confirm: 'Ok' });
+        this.uiService.loadingState.next(false);
+      });
+    });
+  }
+
   /**
    *  METODOS PARA ETAPAS
    */
@@ -169,6 +186,22 @@ export class PlanTrabajoService {
     });
   }
 
+  cerrarEtapa(idEtapa: number, cierre: Cierre): Observable<Cierre> {
+    const path = Cons.PATH_CIERRE_ETAPA + `/${idEtapa}`;
+    this.uiService.loadingState.next(true);
+    return new Observable(result => {
+      this.appService.postRequest(path, cierre).then(res => {
+        this.uiService.showSnackBar(res.message, 4);
+        this.uiService.loadingState.next(false);
+        result.next(res.body);
+      }).catch(err => {
+        const message = err.error ? err.error.message : 'Ha ocurrido un error interno';
+        const errors: string[] = err.error && err.error.errors ? err.error.errors : [];
+        this.uiService.showConfirm({ title: 'Error', message, errors, confirm: 'Ok' });
+        this.uiService.loadingState.next(false);
+      });
+    });
+  }
 
   /**
    *  METODOS PARA ACTIVIDADES

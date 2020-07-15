@@ -4,7 +4,7 @@
     <mat-card-subtitle class="actual-500" *ngIf="etapaActual">Etapa Actual: {{etapaActual.idEtapaPDT + ' - ' + etapaActual.nombreEtapa}}</mat-card-subtitle>
   </mat-card-header>
 
-<!--   <mat-card-content *ngIf="!mostrarTabla" fxLayoutAlign="center">
+  <!--   <mat-card-content *ngIf="!mostrarTabla" fxLayoutAlign="center">
     <h3>Debes seleccionar un plan de trabajo para ver las etapas</h3>
   </mat-card-content> -->
 
@@ -34,15 +34,26 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Fin Estimada </th>
         <td mat-cell *matCellDef="let doc" [ngClass]="(etapaActual && doc.idEtapaPDT === etapaActual.idEtapaPDT) ? 'actual' : ''"> {{doc.fechaFin | date: 'medium' }} </td>
       </ng-container>
+      <ng-container matColumnDef="cierre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cierre </th>
+        <td mat-cell *matCellDef="let doc" [ngClass]="(etapaActual && doc.idEtapaPDT === etapaActual.idEtapaPDT) ? 'actual' : ''">
+          {{doc.cierre ? (doc.cierre.createdDate | date: 'medium') : 'No se ha cerrado' }}
+        </td>
+      </ng-container>
       <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let doc">
-          <button mat-icon-button color="primary" (click)="editEtapa(doc)" matTooltip="Editar Etapa">
+          <div *ngIf="showAcciones && !doc.cierre">
+            <button mat-icon-button color="primary" (click)="editEtapa(doc)" matTooltip="Editar Etapa">
               <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="deleteEtapa(doc.idEtapaPDT)" matTooltip="Eliminar Etapa">
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteEtapa(doc.idEtapaPDT)" matTooltip="Eliminar Etapa">
               <mat-icon>delete</mat-icon>
-          </button>
+            </button>
+            <button mat-icon-button (click)="cerrarEtapa(doc)" matTooltip="Cerrar Etapa">
+              <mat-icon>assignment_turned_in</mat-icon>
+            </button>
+          </div>
         </td>
       </ng-container>
 

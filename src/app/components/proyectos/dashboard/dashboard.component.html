@@ -53,7 +53,7 @@
           </button>
         </form>
         <p>
-          <button mat-mini-fab [routerLink]="['/proyectos/'+ proyecto.idProyecto +'/nuevo-plan']" color="primary" matTooltip="Crear Plan de trabajo">
+          <button mat-mini-fab [routerLink]="['/proyectos/'+ proyecto.idProyecto +'/nuevo-plan']" color="primary" matTooltip="Crear Plan de trabajo" *ngIf="auth.hasRoles(['ROLE_ADMIN', 'ROLE_ASESOR'])">
             <mat-icon>add</mat-icon>
           </button>
         </p>
@@ -67,15 +67,15 @@
       <mat-drawer-container class="mt-4 py-4">
         <mat-drawer #aside class="sidenav" role="directory" mode="side">
           <mat-action-list>
-            <mat-list-item (click)="agregarMiembro()">
+            <mat-list-item (click)="agregarMiembro()" *ngIf="auth.hasRoles(['ROLE_ADMIN', 'ROLE_ASESOR'])">
               <div mat-line><mat-icon mat-list-icon>person_add</mat-icon></div>
               <div mat-line><span>Gestionar Miembros</span></div>
             </mat-list-item>
-            <mat-list-item [routerLink]="['/proyectos/'+projectId+'/editar']">
+            <mat-list-item [routerLink]="['/proyectos/'+projectId+'/editar']" *ngIf="auth.hasRoles(['ROLE_ADMIN', 'ROLE_ASESOR'])">
               <div mat-line><mat-icon mat-list-icon>edit</mat-icon></div>
               <div mat-line><span>Editar Proyecto</span></div>
             </mat-list-item>
-            <mat-list-item (click)="pasarEstado()">
+            <mat-list-item (click)="pasarEstado()" *ngIf="auth.hasRoles(['ROLE_ADMIN', 'ROLE_ASESOR'])">
               <div mat-line><mat-icon mat-list-icon>swap_horiz</mat-icon></div>
               <div mat-line><span>Pasar Estado Proyecto</span></div>
             </mat-list-item>

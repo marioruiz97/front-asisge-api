@@ -73,19 +73,19 @@
             <mat-icon class="mat-18">more_horiz</mat-icon>
           </button>
           <mat-menu #actions="matMenu">
-            <button mat-menu-item color="primary" (click)="editActividad(doc)" *ngIf="! doc.estadoActividad.actividadCompletada">
+            <button mat-menu-item color="primary" (click)="editActividad(doc)" *ngIf="! doc.estadoActividad.actividadCompletada && doc.showAcciones">
               <mat-icon>edit</mat-icon> Editar Actividad
             </button>
-            <button mat-menu-item color="warn" (click)="deleteActividad(doc.idActividad)">
+            <button mat-menu-item color="warn" (click)="deleteActividad(doc.idActividad)" *ngIf="doc.showAcciones">
               <mat-icon>delete</mat-icon> Eliminar Actividad
             </button>
             <button mat-menu-item (click)="showDetails(doc)">
               <mat-icon>description</mat-icon> Detalles y Seguimiento
             </button>
-            <button mat-menu-item (click)="changeEstado(doc)" *ngIf="! doc.estadoActividad.actividadCompletada">
+            <button mat-menu-item (click)="changeEstado(doc)" *ngIf="! doc.estadoActividad.actividadCompletada && doc.showAcciones">
               <mat-icon>swap_horiz</mat-icon> Pasar Estado
             </button>
-            <button mat-menu-item (click)="showApproval(doc)" *ngIf="! doc.estadoActividad.actividadCompletada">
+            <button mat-menu-item (click)="showApproval(doc)" *ngIf="! doc.estadoActividad.actividadCompletada && doc.showAcciones">
               <mat-icon>security</mat-icon> Solicitar Aprobación
             </button>
           </mat-menu>

@@ -34,7 +34,6 @@ export class FooterComponent implements OnInit, OnDestroy {
     ];
     this.contacto = [
       { name: 'Contacto', url: '/contacto' },
-      { name: 'Manual de Usuario', url: '/' },
       { name: 'Acerca del Equipo', url: '/acerca' },
     ];
   }

@@ -47,7 +47,7 @@ export class UsuarioFormComponent implements OnInit, OnDestroy {
     this.usuarioForm = new FormGroup({
       idUsuario: new FormControl({ value: '', disabled: true }),
       tipoDocumento: new FormControl('', [Validators.required]),
-      identificacion: new FormControl([Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
+      identificacion: new FormControl('', [Validators.required, Validators.min(99999), Validators.max(999999999999999)]),
       nombre: new FormControl('', [Validators.required, Validators.maxLength(80)]),
       apellido1: new FormControl('', [Validators.required, Validators.maxLength(40)]),
       apellido2: new FormControl('', [Validators.maxLength(40)]),
@@ -83,8 +83,20 @@ export class UsuarioFormComponent implements OnInit, OnDestroy {
       correo: usuario.correo,
       estado: usuario.estado,
       perfil: rol,
-      contrasena: '....', matchContrasena: '....'
+      contrasena: '', matchContrasena: ''
     });
+  }
+
+  printErrors(): string[] {
+    const controls = ['nombre', 'apellido1', 'tipoDocumento', 'identificacion', 'telefono', 'correo'];
+    const result: string[] = [];
+    controls.forEach(control => {
+      if (this.usuarioForm.controls[control].errors !== null) { result.push(control !== 'tipoDocumento' ? control : 'tipo de documento'); }
+    });
+    if (this.usuarioForm.get('contrasena').value.length > 0 && this.usuarioForm.get('contrasena').value.length < 6) {
+      result.push('Contraseña y verificar contraseña');
+    }
+    return result;
   }
 
   goBack() {

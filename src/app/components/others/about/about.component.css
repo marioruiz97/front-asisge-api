@@ -1,6 +1,6 @@
 .about-header {
   height: 90vh;
-  background-image: url("https://demo.s4ds.com/images/about/banner-about-us.jpg");
+  background-image: url("/assets/img/acerca.jpg");
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
@@ -61,7 +61,7 @@ mat-card-title {
 }
 
 .juliana-photo {
-  background-image: url("https://cdn.pixabay.com/photo/2015/03/17/14/05/sparkler-677774_960_720.jpg");
+  background-image: url("/assets/img/juliana-correa.jpeg");
 }
 
 .fab-icon {

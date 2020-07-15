@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material';
 import { EstadoProyectoComponent } from '../estado-proyecto/estado-proyecto.component';
 import { isNullOrUndefined } from 'util';
 import { ArchivosProyectoComponent } from '../archivos-proyecto/archivos-proyecto.component';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -38,7 +39,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private uiService: UiService,
     private planTrabajoService: PlanTrabajoService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public auth: AuthService
   ) { }
 
   ngOnInit() {

@@ -11,6 +11,7 @@ export interface Actividad {
   fechaVencimiento: Date;
   duracion: number;
   descripcion: string;
+  showAcciones?: boolean;
 }
 
 export interface ActividadDto {
@@ -27,7 +28,6 @@ export interface ActividadDto {
 export interface Seguimiento {
   idSeguimiento?: number;
   actividadAsociada: Actividad;
-  /* fechaSeguimiento?: Date; */
   createdDate?: Date;
   lastModifiedDate?: Date;
   horasTrabajadas: number;

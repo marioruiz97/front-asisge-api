@@ -78,12 +78,13 @@ export class ContactComponent implements OnInit, OnDestroy {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
     this.subs.push(
-      this.httpClient.post('https://us-central1-elenchos-software.cloudfunctions.net/sendEmail', data, httpOptions)
+      this.httpClient.post('https://us-central1-proyectos-asisge.cloudfunctions.net/sendEmail', data, httpOptions)
         .subscribe((res: any) => {
           this.uiService.showSnackBar(res.success, 3);
           this.uiService.loadingState.next(false);
           this.onBuildForm();
         }, error => {
+          console.log('error', error);
           this.uiService.showSnackBar('hubo un error enviando el correo, intenta más tarde', 3);
           this.uiService.loadingState.next(false);
         }));
