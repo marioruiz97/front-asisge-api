@@ -66,6 +66,13 @@
           </div>
         </mat-card-content>
 
+        <p class="invalid-form pt-4" *ngIf="proyectoForm.invalid">**El formulario posee errores, verifica los campos.</p>
+        <div class="invalid-form" *ngIf="proyectoForm.invalid">
+          <h4 class="mx-0">Campos con errores:</h4>
+          <ul style="list-style: none;">
+            <li *ngFor="let campo of printErrors()">{{campo}}</li>
+          </ul>
+        </div>
         <mat-card-actions class="form-action mt-4" fxLayoutAlign="center" fxLayout.lt-sm="column">
           <button class="m-2" type="button" mat-raised-button (click)="goBack()" color="warn" *ngIf="!isWaiting" >
             <mat-icon>arrow_back</mat-icon> Cancelar

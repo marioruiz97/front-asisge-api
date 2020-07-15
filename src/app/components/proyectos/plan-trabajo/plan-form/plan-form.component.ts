@@ -65,7 +65,7 @@ export class PlanFormComponent implements OnInit, OnDestroy {
       nombrePlan: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       fechaInicio: new FormControl('', Validators.required),
       fechaFinEstimada: new FormControl('', Validators.required),
-      horasMes: new FormControl(0, [Validators.required, Validators.min(1)]),
+      horasMes: new FormControl(1, [Validators.required, Validators.min(1)]),
       objetivoPlan: new FormControl('', [Validators.required, Validators.maxLength(255)])
     });
   }
@@ -88,6 +88,38 @@ export class PlanFormComponent implements OnInit, OnDestroy {
     } else {
       this.service.crearPlan(this.planForm.value, this.idProyecto);
     }
+  }
+
+  printErrors(): string[] {
+    const controls = ['nombrePlan', 'horasMes', 'fechaInicio', 'fechaFinEstimada', 'objetivoPlan'];
+    const result: string[] = [];
+    controls.forEach(control => {
+      if (this.planForm.controls[control].errors !== null) {
+        let printable: string;
+        switch (control) {
+          case 'nombrePlan':
+            printable = 'Nombre del plan';
+            break;
+          case 'horasMes':
+            printable = 'Horas por mes';
+            break;
+          case 'fechaInicio':
+            printable = 'Fecha de inicio';
+            break;
+          case 'fechaFinEstimada':
+            printable = 'Fecha fin estimada';
+            break;
+          case 'objetivoPlan':
+            printable = 'Objetivo del Plan';
+            break;
+          default:
+            printable = control;
+            break;
+        }
+        result.push(printable);
+      }
+    });
+    return result;
   }
 
   goBack() {

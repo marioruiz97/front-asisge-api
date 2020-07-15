@@ -126,6 +126,19 @@ export class ProyectoFormComponent implements OnInit, OnDestroy {
     ).slice();
   }
 
+  printErrors(): string[] {
+    const controls = ['nombreProyecto', 'fechaCierreProyecto', 'cliente'];
+    const result: string[] = [];
+    controls.forEach(control => {
+      if (this.proyectoForm.controls[control].errors !== null) {
+        const printable = control === 'nombreProyecto' ? 'Nombre Proyecto' :
+          (control === 'fechaCierreProyecto' ? 'Fecha de Cierre' : 'Cliente');
+        result.push(printable);
+      }
+    });
+    return result;
+  }
+
 
   onSubmit() {
     if (this.isUpdate) {

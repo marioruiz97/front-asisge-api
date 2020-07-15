@@ -56,6 +56,7 @@
           </app-contacto-list>
 
         </mat-card-content>
+        <p class="invalid-form" *ngIf="clienteForm.invalid">**El formulario posee errores, verifica los campos.</p>
         <mat-card-actions class="form-action mt-4" fxLayoutAlign="center" fxLayout.lt-sm="column">
           <button class="m-2" type="button" mat-raised-button (click)="goBack()" color="warn" *ngIf="!isWaiting">
             <mat-icon>arrow_back</mat-icon>Regresar <span fxHide.lt-sm> al listado</span>

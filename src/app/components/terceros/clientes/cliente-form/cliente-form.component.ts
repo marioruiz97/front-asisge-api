@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { ContactoFormComponent } from '../contacto-form/contacto-form.component';
 import { BASIC_DIALOG_CONFIG } from 'src/app/shared/routing/app.constants';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-cliente-form',
@@ -122,7 +123,7 @@ export class ClienteFormComponent implements OnInit, OnDestroy {
     };
     const dialogRef = this.dialog.open(ContactoFormComponent, { ...BASIC_DIALOG_CONFIG, disableClose: true, data });
     this.subscriptions.push(dialogRef.afterClosed().subscribe(result => {
-      if (result.id) {
+      if (!isNullOrUndefined(result.id)) {
         result.id = result.id !== 0 ? result.id : this.contactos.length;
         this.contactos.push(result);
         this.refrescarContactos();
@@ -133,7 +134,7 @@ export class ClienteFormComponent implements OnInit, OnDestroy {
   editarContacto(contacto: Contacto) {
     const dialogRef = this.dialog.open(ContactoFormComponent, { disableClose: true, data: contacto });
     this.subscriptions.push(dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (!isNullOrUndefined(result.id)) {
         this.contactos = this.contactos.filter(c => c.id !== result.id);
         this.contactos.push(result);
         this.refrescarContactos();
